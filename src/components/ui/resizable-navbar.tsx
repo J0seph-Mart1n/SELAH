@@ -69,7 +69,7 @@ export const Navbar = ({ children, className }: NavbarProps) => {
     <motion.div
       ref={ref}
       // IMPORTANT: Change this to class of `fixed` if you want the navbar to be fixed
-      className={cn("fixed inset-x-0 top-0 z-50 w-full pt-4", className)}
+      className={cn("fixed inset-x-0 top-0 z-50 w-full pt-3", className)}
     >
       {React.Children.map(children, (child) =>
         React.isValidElement(child)
@@ -129,17 +129,24 @@ export const NavItems = ({ items, className, onItemClick }: NavItemsProps) => {
         <a
           onMouseEnter={() => setHovered(idx)}
           onClick={onItemClick}
-          className="relative px-4 py-2 text-[#93a2c4] transition-colors hover:text-[#00b8e8]"
+          className="relative px-4 py-2"
           key={`link-${idx}`}
           href={item.link}
         >
           {hovered === idx && (
             <motion.div
               layoutId="hovered"
-              className="absolute inset-0 h-full w-full rounded-full bg-[#00b8e8]/15"
+              className="absolute inset-0 h-full w-full rounded-full bg-[#f69b22]"
             />
           )}
-          <span className="relative z-20">{item.name}</span>
+          <span
+            className={cn(
+              "relative z-20 transition-colors duration-200",
+              hovered === idx ? "text-[#060d23]" : "text-[#93a2c4]"
+            )}
+          >
+            {item.name}
+          </span>
         </a>
       ))}
     </motion.div>

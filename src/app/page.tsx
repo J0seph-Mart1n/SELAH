@@ -283,7 +283,7 @@ function App() {
   const [anthemPlaying, setAnthemPlaying] = useState(false);
   const [audioPlaying, setAudioPlaying] = useState(false);
   const [audioProgress, setAudioProgress] = useState(0);
-  const target = useMemo(() => new Date("2026-07-17T09:00:00"), []);
+  const target = useMemo(() => new Date("2026-12-05T00:00:00+05:30"), []);
   const [countdown, setCountdown] = useState({
     days: 0,
     hours: 0,
@@ -335,7 +335,6 @@ function App() {
 
   return (
     <div className="app-shell bg-transparent">
-      <GlobalCursor />
       <Navbar>
         <NavBody>
           <a className="brand relative z-20" href="#top" aria-label="SELAH 2026 home">
@@ -407,6 +406,9 @@ function App() {
               Pause. Reflect and Lift Up
               <br className="desktop-only" />{" "}
             </p>
+            <div className="text-[#f69b22] font-semibold tracking-widest text-sm mt-8 uppercase text-center w-full">
+              Starting In
+            </div>
             <div className="countdown" aria-label="Countdown to SELAH festival">
               {[
                 ["days", countdown.days],
@@ -427,11 +429,11 @@ function App() {
                 </div>
               ))}
             </div>
-            <div className="hero-actions">
-              <a className="button button-primary button-large" href="#pricing">
+            <div className="hero-actions flex !flex-row !flex-nowrap w-full sm:w-auto justify-center gap-3">
+              <a className="button button-primary button-large flex-1 sm:flex-none flex items-center justify-center gap-2 whitespace-nowrap px-2" href="#pricing">
                 <Users size={17} /> Register
               </a>
-              <a className="button button-outline button-large" href="#events">
+              <a className="button button-outline button-large flex-1 sm:flex-none flex items-center justify-center gap-2 whitespace-nowrap px-2" href="#events">
                 <Trophy size={17} /> Explore Events
               </a>
             </div>
