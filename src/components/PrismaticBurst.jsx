@@ -251,7 +251,8 @@ const PrismaticBurst = ({
     const container = containerRef.current;
     if (!container) return;
 
-    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    // Performance Optimization: Cap DPR to 1.25 (was 2) to massively boost frame rates on high-res displays
+    const dpr = Math.min(window.devicePixelRatio || 1, 1.25);
     const renderer = new Renderer({
       dpr,
       alpha: false,

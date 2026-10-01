@@ -3,7 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import React from "react";
 import Link from "next/link";
-
+import { SparklesText } from "@/components/ui/sparkles-text"
 import {
   Navbar,
   NavBody,
@@ -13,6 +13,7 @@ import { GlobalCursor } from "@/components/ui/skiper-ui/skiper61";
 import StaggeredMenu from "@/components/StaggeredMenu";
 import PrismaticBurst from "@/components/PrismaticBurst";
 import { MorphingText } from "@/components/ui/morphing-text";
+import BorderGlow from "@/components/BorderGlow";
 import {
   ArrowRight,
   Check,
@@ -278,8 +279,6 @@ function App() {
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [mobileNav, setMobileNav] = useState(false);
   const [anthemPlaying, setAnthemPlaying] = useState(false);
-  const [audioPlaying, setAudioPlaying] = useState(false);
-  const [audioProgress, setAudioProgress] = useState(0);
   const target = useMemo(() => new Date("2026-12-05T00:00:00+05:30"), []);
   const [countdown, setCountdown] = useState({
     days: 0,
@@ -303,19 +302,7 @@ function App() {
     return () => window.clearInterval(timer);
   }, [target]);
 
-  useEffect(() => {
-    if (!audioPlaying) return;
-    const timer = window.setInterval(() => {
-      setAudioProgress((value) => {
-        if (value >= 100) {
-          setAudioPlaying(false);
-          return 0;
-        }
-        return value + 12.5;
-      });
-    }, 300);
-    return () => window.clearInterval(timer);
-  }, [audioPlaying]);
+
 
   useEffect(() => {
     if (!anthemPlaying) return;
@@ -384,7 +371,7 @@ function App() {
               colors={["#00b8e8", "#f69b22", "#fa6347"]}
               intensity={4}
               speed={0.6}
-              rayCount={8}
+              rayCount={6}
             />
           </div>
           <section className="hero relative z-10" id="about">
@@ -436,72 +423,81 @@ function App() {
         </section>
         </div>
 
-        <section className="section foundation" id="foundation">
-          <div className="section-heading split-heading">
-            <div>
-              <span className="eyebrow gold-text">
-                THE SPIRITUAL FOUNDATION
-              </span>
-              <h2>
-                Understanding ‘<span className="script-word">סֶלָה</span>’
-              </h2>
-            </div>
-            <p>
-              A timeless musical and meditative term found over 70 times in the
-              Psalms. It commands an intentional break: to weigh God's word,
-              recalibrate our hearts, and launch forward in victory.
-            </p>
-          </div>
-          <div className="pillar-grid">
-            <Pillar
-              number="01"
-              title="PAUSE"
-              icon={<Hourglass />}
-              tone="cyan"
-              text="Step away from the secular grind, screens, and isolation. Stand side-by-side with young believers to breathe, fellowship, and recalibrate soul focus."
-              verse="Psalm 46:10"
-              quote="Be still, and know that I am God..."
-            />
-            <Pillar
-              number="02"
-              title="REFLECT"
-              icon={<Sparkles />}
-              tone="gold"
-              text="Honor God through raw discipline, court etiquette, and artistic integrity. Every gift mirrors the Creator's heart."
-              verse="1 Cor. 9:24"
-              quote="Run in such a way as to get the prize."
-            />
-            <Pillar
-              number="03"
-              title="LIFT UP"
-              icon={<Flame />}
-              tone="coral"
-              text="Triumphant united worship. We celebrate not personal ego, but the elevation of Jesus Christ through prayer huddles and festival benediction."
-              verse="Psalm 3:3"
-              quote="You are the lifter of my head."
-            />
-          </div>
-          <div className="audio-bar">
-            <button
-              className="play-disc"
-              onClick={() => setAudioPlaying(!audioPlaying)}
-              aria-label="Play Hebrew pronunciation"
+        <section className="section prize-pool relative py-24" id="prizepool">
+          <div className="absolute inset-0 bg-[#060d23] z-[-1]" />
+          <div className="glow glow-gold opacity-30" />
+          <div className="glow glow-cyan opacity-20" />
+          
+          <div className="section-heading flex flex-col items-center text-center max-w-2xl mx-auto mb-20 px-4">
+            <h2 className="text-4xl md:text-6xl font-black mb-6 text-white leading-tight">
+              Mega <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#f69b22] to-[#fa6347]">Prize Pool</span>
+            </h2>
+            <SparklesText 
+              className="text-4xl md:text-5xl font-black mb-6 leading-tight"
+              colors={{ first: "#f69b22", second: "#fa6347" }}
+              sparklesCount={12}
             >
-              {audioPlaying ? <Pause size={19} /> : <Play size={19} />}
-            </button>
-            <div className="audio-copy">
-              <strong>Hear the Ancient Hebrew Liturgical Intonation</strong>
-              <span>
-                Pronunciation: ‘seh-law’ · Liturgical Hebrew cantillation by
-                Cantor David Levi
-              </span>
-            </div>
-            <div className="audio-progress">
-              <div className="progress-track">
-                <span style={{ width: `${audioProgress}%` }} />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#f69b22] to-[#fa6347]">₹25,000</span>
+            </SparklesText>
+           
+          </div>
+
+          <div className="grid grid-cols-1 gap-8 max-w-3xl mx-auto px-4 lg:px-8">
+            {/* First Prize */}
+            <BorderGlow 
+              glowColor="24 93 54" // #f69b22 HSL approximation
+              backgroundColor="#060d23"
+              colors={["#f69b22", "#fa6347", "#00b8e8"]}
+              animated={true}
+              glowIntensity={1.5}
+              className="h-full w-full shadow-2xl"
+            >
+              <div className="relative h-full rounded-[30px] p-6 lg:p-10 flex flex-col sm:flex-row items-center justify-between text-center sm:text-left gap-6">
+                <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6">
+                  <div className="flex items-center justify-center shrink-0 group-hover:scale-110 group-hover:rotate-3 transition-all duration-500">
+                    <Trophy className="text-[#f69b22]" size={48} strokeWidth={1.5} />
+                  </div>
+                  <h3 className="text-transparent bg-clip-text bg-gradient-to-r from-[#f69b22] to-[#fa6347] text-2xl sm:text-3xl font-bold tracking-[0.2em] uppercase">1st Prize</h3>
+                </div>
+                <div className="text-5xl lg:text-6xl font-black text-white tracking-tight">₹12,000</div>
               </div>
-              <small>0:0{Math.floor(audioProgress / 12.5)} / 0:08</small>
-            </div>
+            </BorderGlow>
+
+            {/* Second Prize */}
+            <BorderGlow 
+              glowColor="221 34 57" // #8b9abb HSL approx
+              backgroundColor="#060d23"
+              colors={["#8b9abb", "#ffffff", "#8b9abb"]}
+              className="h-full w-full shadow-2xl"
+            >
+              <div className="relative h-full rounded-[30px] p-6 lg:p-10 flex flex-col sm:flex-row items-center justify-between text-center sm:text-left gap-6">
+                <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6">
+                  <div className="flex items-center justify-center shrink-0 group-hover:scale-110 group-hover:rotate-3 transition-all duration-500">
+                    <Trophy className="text-[#8b9abb]" size={40} strokeWidth={1.5} />
+                  </div>
+                  <h3 className="text-[#8b9abb] text-xl sm:text-2xl font-bold tracking-[0.2em] uppercase">2nd Prize</h3>
+                </div>
+                <div className="text-4xl lg:text-5xl font-black text-white tracking-tight">₹8,000</div>
+              </div>
+            </BorderGlow>
+
+            {/* Third Prize */}
+            <BorderGlow 
+              glowColor="28 61 49" // #cd7f32 HSL approx
+              backgroundColor="#060d23"
+              colors={["#cd7f32", "#e69c55", "#cd7f32"]}
+              className="h-full w-full shadow-2xl"
+            >
+              <div className="relative h-full rounded-[30px] p-6 lg:p-10 flex flex-col sm:flex-row items-center justify-between text-center sm:text-left gap-6">
+                <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6">
+                  <div className="flex items-center justify-center shrink-0 group-hover:scale-110 group-hover:rotate-3 transition-all duration-500">
+                    <Trophy className="text-[#cd7f32]" size={40} strokeWidth={1.5} />
+                  </div>
+                  <h3 className="text-[#cd7f32] text-xl sm:text-2xl font-bold tracking-[0.2em] uppercase">3rd Prize</h3>
+                </div>
+                <div className="text-4xl lg:text-5xl font-black text-white tracking-tight">₹5,000</div>
+              </div>
+            </BorderGlow>
           </div>
         </section>
 
@@ -849,40 +845,7 @@ function Stat({
     </div>
   );
 }
-function Pillar({
-  number,
-  title,
-  icon,
-  tone,
-  text,
-  verse,
-  quote,
-}: {
-  number: string;
-  title: string;
-  icon: React.ReactNode;
-  tone: string;
-  text: string;
-  verse: string;
-  quote: string;
-}) {
-  return (
-    <article className={`pillar ${tone}`}>
-      <div>
-        <div className="pillar-top">
-          <span>PILLAR {number}</span>
-          {icon}
-        </div>
-        <h3>{title}</h3>
-        <p>{text}</p>
-      </div>
-      <footer>
-        <small>KEYNOTE VERSE: {verse}</small>
-        <em>&ldquo;{quote}&rdquo;</em>
-      </footer>
-    </article>
-  );
-}
+
 function EventCardView({ card }: { card: EventCard }) {
   return (
     <article className="event-card">
