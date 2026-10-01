@@ -78,7 +78,7 @@ button {
 }
 .brand strong {
   display: block;
-  font: 700 16px/1 "Space Grotesk";
+  font: 700 25px/1 "Space Grotesk";
   letter-spacing: -0.03em;
 }
 .brand strong span {
@@ -678,6 +678,12 @@ h3 {
   color: #eef2ff;
   font-size: 19px;
   line-height: 1.15;
+}
+
+@media (min-width: 768px) {
+  .event-content h3 {
+    font-size: 24px;
+  }
 }
 .event-content p {
   margin-top: 8px;
@@ -1301,7 +1307,7 @@ h3 {
     min-width: auto;
   }
   .brand strong {
-    font-size: 14px;
+    font-size: 24px;
   }
   .brand small {
     font-size: 6px;

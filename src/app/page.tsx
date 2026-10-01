@@ -3,18 +3,15 @@
 import { useEffect, useMemo, useState } from "react";
 import React from "react";
 import Link from "next/link";
+
 import {
   Navbar,
   NavBody,
   NavItems,
-  MobileNav,
-  MobileNavHeader,
-  MobileNavMenu,
-  MobileNavToggle,
-  NavbarButton,
 } from "@/components/ui/resizable-navbar";
 import { GlobalCursor } from "@/components/ui/skiper-ui/skiper61";
-import { AuroraBackground } from "@/components/ui/aurora-background";
+import StaggeredMenu from "@/components/StaggeredMenu";
+import PrismaticBurst from "@/components/PrismaticBurst";
 import { MorphingText } from "@/components/ui/morphing-text";
 import {
   ArrowRight,
@@ -338,11 +335,8 @@ function App() {
       <Navbar>
         <NavBody>
           <a className="brand relative z-20" href="#top" aria-label="SELAH 2026 home">
-            <div className="brand-mark text-[#00b8e8]">
-              <Sparkles size={19} />
-            </div>
             <div className="transition-all duration-300 group-data-[shrunk=true]:w-0 group-data-[shrunk=true]:opacity-0 overflow-hidden whitespace-nowrap">
-              <strong>
+              <strong className="text-2xl">
                 SELAH <span className="text-[#f69b22]">2026</span>
               </strong>
             </div>
@@ -356,50 +350,51 @@ function App() {
             ]} 
           />
         </NavBody>
-
-        <MobileNav>
-          <MobileNavHeader className="justify-start gap-4">
-            <MobileNavToggle isOpen={mobileNav} onClick={() => setMobileNav(!mobileNav)} />
-            <a className="brand relative z-20" href="#top" aria-label="SELAH 2026 home">
-              <div className="brand-mark text-[#00b8e8]">
-                <Sparkles size={19} />
-              </div>
-              <div>
-                <strong>
-                  SELAH <span className="text-[#f69b22]">2026</span>
-                </strong>
-              </div>
-            </a>
-          </MobileNavHeader>
-          <MobileNavMenu isOpen={mobileNav} onClose={() => setMobileNav(false)}>
-            {[
-              { name: "Registration", link: "#events" },
-              { name: "Rules", link: "#delegations" },
-              { name: "About CYA", link: "#faq" },
-              { name: "Gallery", link: "#faq" },
-            ].map((item, idx) => (
-              <a 
-                key={idx} 
-                href={item.link} 
-                onClick={() => setMobileNav(false)}
-                className="text-lg font-medium text-[#93a2c4] hover:text-[#00b8e8]"
-              >
-                {item.name}
-              </a>
-            ))}
-          </MobileNavMenu>
-        </MobileNav>
       </Navbar>
 
+      <div className="relative z-50 lg:hidden">
+        <StaggeredMenu
+          isFixed={true}
+          logo={
+            <div className="brand relative z-20 flex items-center">
+              <a href="#top" aria-label="SELAH 2026 home" style={{ textDecoration: 'none' }}>
+                <strong className="text-2xl text-white">
+                  SELAH <span className="text-[#f69b22]">2026</span>
+                </strong>
+              </a>
+            </div>
+          }
+          items={[
+            { label: "Registration", link: "#events" },
+            { label: "Rules", link: "#delegations" },
+            { label: "About CYA", link: "#faq" },
+            { label: "Gallery", link: "#faq" },
+          ] as any}
+          colors={['#060d23', '#00b8e8', '#f69b22', '#fa6347']}
+          accentColor="#00b8e8"
+          menuButtonColor="#93a2c4"
+          openMenuButtonColor="#fff"
+        />
+      </div>
+
       <main id="top">
-        <AuroraBackground className="!h-auto !min-h-0 w-full">
-          <section className="hero" id="about">
+        <div className="relative w-full overflow-hidden">
+          <div className="absolute inset-0 z-0 pointer-events-none">
+            <PrismaticBurst 
+              colors={["#00b8e8", "#f69b22", "#fa6347"]}
+              intensity={4}
+              speed={0.6}
+              rayCount={8}
+            />
+          </div>
+          <section className="hero relative z-10" id="about">
           <div className="glow glow-coral" />
           <div className="glow glow-gold" />
           <div className="glow glow-cyan" />
           <div className="hero-inner">
             <h1>
-              <MorphingText texts={["सेलाह", "സേലാ", "סֶלָה", "SELAH"]} />{" "}
+              <MorphingText texts={["SELAH", "सेलाह", "സേലാ", "סֶלָה", "SELAH"]} />
+              <br />
               <span>2026</span>
             </h1>
             <p className="hero-subtitle">
@@ -439,7 +434,7 @@ function App() {
             </div>
           </div>
         </section>
-        </AuroraBackground>
+        </div>
 
         <section className="section foundation" id="foundation">
           <div className="section-heading split-heading">
