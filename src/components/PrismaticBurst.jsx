@@ -395,17 +395,17 @@ const PrismaticBurst = ({
       }
       try {
         meshRef.current?.remove?.();
-      } catch (e) {
+      } catch {
         /* ignore dispose errors */
       }
       try {
         triRef.current?.remove?.();
-      } catch (e) {
+      } catch {
         /* ignore dispose errors */
       }
       try {
         programRef.current?.remove?.();
-      } catch (e) {
+      } catch {
         /* ignore dispose errors */
       }
       try {
@@ -413,7 +413,7 @@ const PrismaticBurst = ({
         if (glCtx && gradTexRef.current?.texture) {
           glCtx.deleteTexture(gradTexRef.current.texture);
         }
-      } catch (e) {
+      } catch {
         /* ignore texture delete errors */
       }
       programRef.current = null;

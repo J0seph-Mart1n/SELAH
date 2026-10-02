@@ -2,23 +2,19 @@
 
 import { useEffect, useMemo, useState } from "react";
 import React from "react";
-import Link from "next/link";
 import { SparklesText } from "@/components/ui/sparkles-text"
 import {
   Navbar,
   NavBody,
   NavItems,
 } from "@/components/ui/resizable-navbar";
-import { GlobalCursor } from "@/components/ui/skiper-ui/skiper61";
 import StaggeredMenu from "@/components/StaggeredMenu";
 import PrismaticBurst from "@/components/PrismaticBurst";
 import { MorphingText } from "@/components/ui/morphing-text";
 import BorderGlow from "@/components/BorderGlow";
+import ScrollVelocity from "@/components/ScrollVelocity";
 import {
   ArrowRight,
-  Award,
-  BadgeCheck,
-  Calendar,
   Check,
   ChevronDown,
   Church,
@@ -26,20 +22,14 @@ import {
   Flame,
   Headphones,
   HeartHandshake,
-  Hourglass,
   Medal,
-  Menu,
-  Mic,
   Music2,
-  Pause,
-  Play,
   Search,
   ShieldCheck,
   Sparkles,
   Trophy,
   UserRound,
   Users,
-  X,
 } from "lucide-react";
 
 type Track = "sports" | "culture" | "worship";
@@ -282,7 +272,6 @@ function App() {
   const [day, setDay] = useState(1);
   const [query, setQuery] = useState("");
   const [openFaq, setOpenFaq] = useState<number | null>(null);
-  const [mobileNav, setMobileNav] = useState(false);
   const [anthemPlaying, setAnthemPlaying] = useState(false);
   const target = useMemo(() => new Date("2026-12-05T00:00:00+05:30"), []);
   const [countdown, setCountdown] = useState({
@@ -580,6 +569,39 @@ function App() {
                   </>
                 )}
               </div>
+            </div>
+          </div>
+        </section>
+
+        {/* SPONSORSHIP SECTION */}
+        <section className="section relative py-24" id="sponsors">
+          <div className="absolute inset-0 bg-[#0a1024] z-[-1]" />
+          
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="section-heading flex flex-col items-center text-center max-w-2xl mx-auto mb-16 px-4">
+              <h2 className="text-4xl md:text-5xl font-black mb-6 text-white leading-tight">
+                Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00b8e8] to-[#8b9abb]">Sponsors</span>
+              </h2>
+            </div>
+            
+            <div className="w-[100vw] relative left-1/2 -translate-x-1/2 overflow-hidden py-4">
+              <ScrollVelocity
+                texts={[
+                  "Sponser 1 • Sponser 2 •",
+                  "Sponsor 3 • Sponsor 4 •"
+                ]}
+                className="text-4xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#8b9abb] via-[#f69b22] to-[#8b9abb] tracking-[0.2em] uppercase inline-block py-2 mb-4 drop-shadow-[0_0_15px_rgba(246,155,34,0.3)]"
+                velocity={40}
+              />
+            </div>
+            
+            <div className="mt-16 text-center">
+              <button className="relative inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50">
+                <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
+                <span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-slate-950 px-3 py-1 text-sm font-medium text-white backdrop-blur-3xl">
+                  Become a Sponsor
+                </span>
+              </button>
             </div>
           </div>
         </section>
@@ -909,25 +931,6 @@ function App() {
   );
 }
 
-function Stat({
-  icon,
-  number,
-  label,
-}: {
-  icon: React.ReactNode;
-  number: string;
-  label: string;
-}) {
-  return (
-    <div className="stat">
-      <span>{icon}</span>
-      <div>
-        <strong>{number}</strong>
-        <small>{label}</small>
-      </div>
-    </div>
-  );
-}
 
 function EventCardView({ card }: { card: EventCard }) {
   return (
