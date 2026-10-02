@@ -105,8 +105,10 @@ const Texts: React.FC<Pick<MorphingTextProps, "texts">> = ({ texts }) => {
   const { text1Ref, text2Ref } = useMorphingText(texts)
   return (
     <>
-      <span className="invisible relative block">
-        {texts.reduce((a, b) => a.length > b.length ? a : b)}
+      <span className="invisible relative inline-grid items-center justify-items-center">
+        {texts.map((text, index) => (
+          <span key={index} className="col-start-1 row-start-1">{text}</span>
+        ))}
       </span>
       <span
         className="absolute inset-x-0 top-0 m-auto inline-block w-full"

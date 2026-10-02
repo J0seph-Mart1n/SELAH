@@ -16,6 +16,9 @@ import { MorphingText } from "@/components/ui/morphing-text";
 import BorderGlow from "@/components/BorderGlow";
 import {
   ArrowRight,
+  Award,
+  BadgeCheck,
+  Calendar,
   Check,
   ChevronDown,
   Church,
@@ -26,6 +29,7 @@ import {
   Hourglass,
   Medal,
   Menu,
+  Mic,
   Music2,
   Pause,
   Play,
@@ -273,6 +277,7 @@ const scheduleByDay: Record<
 };
 
 function App() {
+  const isChiefGuestFinalized = false;
   const [track, setTrack] = useState<Track>("sports");
   const [day, setDay] = useState(1);
   const [query, setQuery] = useState("");
@@ -371,7 +376,7 @@ function App() {
               colors={["#00b8e8", "#f69b22", "#fa6347"]}
               intensity={4}
               speed={0.6}
-              rayCount={6}
+              rayCount={5}
             />
           </div>
           <section className="hero relative z-10" id="about">
@@ -433,7 +438,7 @@ function App() {
               Mega <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#f69b22] to-[#fa6347]">Prize Pool</span>
             </h2>
             <SparklesText 
-              className="text-4xl md:text-5xl font-black mb-6 leading-tight"
+              className="text-4xl md:text-5xl font-black mb-1 leading-tight"
               colors={{ first: "#f69b22", second: "#fa6347" }}
               sparklesCount={12}
             >
@@ -498,6 +503,84 @@ function App() {
                 <div className="text-4xl lg:text-5xl font-black text-white tracking-tight">₹5,000</div>
               </div>
             </BorderGlow>
+          </div>
+        </section>
+
+        <section className="section relative py-24" id="chief-guest">
+          <div className="absolute inset-0 bg-[#060d23] z-[-1]" />
+          <div className="glow glow-gold opacity-20" />
+          <div className="glow glow-coral opacity-10" />
+          
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="section-heading flex flex-col items-center text-center max-w-2xl mx-auto mb-16 px-4">
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-black mb-6 text-white leading-tight">
+                Special Chief <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#f69b22] to-[#fa6347]">Guest</span>
+              </h2>
+            </div>
+            
+            {/* Chief Guest Feature Card */}
+            <div className="max-w-5xl mx-auto p-8 sm:p-12 rounded-[32px] bg-gradient-to-b from-[#8b9abb]/10 to-[#0a1024] border border-[#8b9abb]/20 shadow-2xl relative overflow-hidden backdrop-blur-sm">
+              
+              <div className="relative grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                
+                {isChiefGuestFinalized ? (
+                  <>
+                    {/* Avatar / Dignitary Portrait Placeholder */}
+                    <div className="lg:col-span-4 flex flex-col items-center text-center">
+                      <div className="relative">
+                        <div className="w-44 h-44 sm:w-52 sm:h-52 rounded-2xl bg-gradient-to-tr from-[#f69b22] to-[#fa6347] p-1 shadow-[0_0_40px_rgba(246,155,34,0.3)]">
+                          <div className="w-full h-full rounded-2xl bg-[#060d23] flex flex-col items-center justify-center p-4 text-center overflow-hidden relative">
+                            <UserRound className="text-[#f69b22] mb-3" size={64} strokeWidth={1.5} />
+                            <span className="text-[10px] sm:text-xs font-bold text-white uppercase tracking-widest">Metropolitan &amp; Archbishop</span>
+                            <div className="absolute inset-0 bg-[#f69b22]/5 pointer-events-none"></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    {/* Dignitary Bio & Keynote Details */}
+                    <div className="lg:col-span-8 flex flex-col">
+                      
+                      <h3 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white mb-2 leading-tight text-center lg:text-left">
+                        Most Rev. Dr. Alexander Mor Baselios
+                      </h3>
+                      <div className="flex flex-wrap items-center justify-center lg:justify-start gap-3 mb-6">
+                        <span className="px-3 py-1 rounded-md bg-[#00b8e8]/10 border border-[#00b8e8]/20 text-[#00b8e8] text-[10px] sm:text-xs font-bold uppercase tracking-widest">Chief Guest of Honor</span>
+                        <span className="px-3 py-1 rounded-md bg-[#f69b22]/10 border border-[#f69b22]/20 text-[#f69b22] text-[10px] sm:text-xs font-bold uppercase tracking-widest">Olympic Ambassador</span>
+                      </div>
+                      
+                      <p className="text-[#8b9abb] text-sm md:text-base leading-relaxed mb-8 text-center lg:text-left">
+                        Dr. Alexander Mor Baselios has spearheaded ecumenical youth movements across four continents, championing character-driven athletics and liturgical renewal. Joining him on the dais is former Olympic sprinter and Christian Youth Ambassador <span className="text-white font-bold">Marcus Vance</span>, leading the Opening Ceremony Dedication and Oath of Sportsmanship.
+                      </p>
+                      
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    <div className="lg:col-span-4 flex flex-col items-center text-center">
+                      <div className="relative">
+                        <div className="w-44 h-44 sm:w-52 sm:h-52 rounded-2xl bg-[#060d23] border-2 border-dashed border-[#8b9abb]/30 p-1 flex items-center justify-center shadow-lg">
+                          <div className="w-full h-full rounded-2xl bg-gradient-to-br from-[#8b9abb]/5 to-transparent flex flex-col items-center justify-center p-4 text-center">
+                            <ShieldCheck className="text-[#8b9abb]/50 mb-3" size={64} strokeWidth={1} />
+                            <span className="text-[10px] sm:text-xs font-bold text-[#8b9abb]/70 uppercase tracking-widest">To Be Revealed</span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    
+                    <div className="lg:col-span-8 flex flex-col items-center lg:items-start text-center lg:text-left py-6">
+                      <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#f69b22]/10 border border-[#f69b22]/30 text-[#f69b22] text-xs font-bold tracking-[0.1em] uppercase mb-6">
+                        <Sparkles className="w-4 h-4" />
+                        Announcement Pending
+                      </div>
+                      <h3 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white mb-4 leading-tight">
+                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#8b9abb] to-[#4a5568]">Revealing Soon</span>
+                      </h3>
+                    </div>
+                  </>
+                )}
+              </div>
+            </div>
           </div>
         </section>
 
