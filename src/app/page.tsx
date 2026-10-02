@@ -431,7 +431,7 @@ function App() {
               colors={{ first: "#f69b22", second: "#fa6347" }}
               sparklesCount={12}
             >
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#f69b22] to-[#fa6347]">₹25,000</span>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#f69b22] to-[#fa6347]">₹30,000</span>
             </SparklesText>
            
           </div>
@@ -453,7 +453,7 @@ function App() {
                   </div>
                   <h3 className="text-transparent bg-clip-text bg-gradient-to-r from-[#f69b22] to-[#fa6347] text-2xl sm:text-3xl font-bold tracking-[0.2em] uppercase">1st Prize</h3>
                 </div>
-                <div className="text-5xl lg:text-6xl font-black text-white tracking-tight">₹12,000</div>
+                <div className="text-5xl lg:text-6xl font-black text-white tracking-tight">₹15,000</div>
               </div>
             </BorderGlow>
 
@@ -471,7 +471,7 @@ function App() {
                   </div>
                   <h3 className="text-[#8b9abb] text-xl sm:text-2xl font-bold tracking-[0.2em] uppercase">2nd Prize</h3>
                 </div>
-                <div className="text-4xl lg:text-5xl font-black text-white tracking-tight">₹8,000</div>
+                <div className="text-4xl lg:text-5xl font-black text-white tracking-tight">₹10,000</div>
               </div>
             </BorderGlow>
 
@@ -586,12 +586,18 @@ function App() {
             
             <div className="w-[100vw] relative left-1/2 -translate-x-1/2 overflow-hidden py-4">
               <ScrollVelocity
+                scrollContainerRef={undefined}
+                parallaxStyle={undefined}
+                scrollerStyle={undefined}
+                velocity={100}
+                numCopies={6}
+                damping={50}
+                stiffness={400}
                 texts={[
                   "Sponser 1 • Sponser 2 •",
                   "Sponsor 3 • Sponsor 4 •"
-                ]}
+                ] as any}
                 className="text-4xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#8b9abb] via-[#f69b22] to-[#8b9abb] tracking-[0.2em] uppercase inline-block py-2 mb-4 drop-shadow-[0_0_15px_rgba(246,155,34,0.3)]"
-                velocity={40}
               />
             </div>
             
@@ -694,180 +700,6 @@ function App() {
                 <span className="status-pill">{item.status}</span>
               </div>
             ))}
-          </div>
-        </section>
-
-        <section className="section delegations-section" id="delegations">
-          <div className="section-heading split-heading">
-            <div>
-              <span className="eyebrow coral-text">DELEGATION DIRECTORY</span>
-              <h2>Confirmed Church Fellowships</h2>
-              <p>
-                Over 35 congregations across 14 dioceses and independent
-                fellowships have fielded squads.
-              </p>
-            </div>
-            <label className="search-box">
-              <Search size={17} />
-              <input
-                value={query}
-                onChange={(event) => setQuery(event.target.value)}
-                placeholder="Search by name or city..."
-              />
-            </label>
-          </div>
-          <div className="filter-row">
-            <span>QUICK FILTER:</span>
-            <button className="selected">All (35+)</button>
-            <button>Grace City Chapel</button>
-            <button>Redeemer United</button>
-            <button>Zion Youth Cathedral</button>
-            <button>Trinity Metro Fellowship</button>
-          </div>
-          <div className="delegation-grid">
-            {filteredDelegations.map((delegation) => (
-              <div className="delegation-card" key={delegation.name}>
-                <div className="delegation-top">
-                  <span className={`initials ${delegation.accent}`}>
-                    {delegation.initials}
-                  </span>
-                  <span className={`mini-badge ${delegation.accent}`}>
-                    {delegation.badge}
-                  </span>
-                </div>
-                <h3>{delegation.name}</h3>
-                <p>{delegation.location}</p>
-                <div className="tag-list">
-                  {delegation.tags.map((tag) => (
-                    <span key={tag}>{tag}</span>
-                  ))}
-                </div>
-                <small>Spirit Award Holder</small>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        <section className="section pricing-section" id="pricing">
-          <div className="center-heading">
-            <span className="eyebrow gold-text">ENROLLMENT PORTAL</span>
-            <h2>Official Delegation Tiers</h2>
-            <p>
-              Subsidized entry packages for youth groups, sanctioned multi-team
-              delegations, and general spectators.
-            </p>
-          </div>
-          <div className="pricing-grid">
-            <PriceCard
-              title="Spectator & Supporter"
-              eyebrow="COMMUNITY PASS"
-              price="$25"
-              suffix="/ individual pass"
-              text="Full access to 4 days of sports arenas, concerts, community dining, and praise rallies."
-              features={[
-                "All Sports Court General Bleacher Access",
-                "SELAH Elevation Concert Entry",
-                "Festival Badge & Lanyard",
-              ]}
-              button="Get Spectator Badges"
-            />
-            <PriceCard
-              featured
-              title="Church Delegation Pack"
-              eyebrow="FULL PARISH ACCESS"
-              price="$490"
-              suffix="/ whole church delegation"
-              text="Complete entry for your church youth ministry with sport rosters, arts stages, and 30 spectator passes."
-              features={[
-                "Up to 4 Sports Tournaments",
-                "Choir & Worship Band Entries",
-                "Parade Banner Rights & Stage Entry",
-                "30 Free Youth Spectator Lanyards",
-                "Eligible for Kingdom Impact Grants",
-              ]}
-              button="Enroll Church Delegation"
-            />
-            <PriceCard
-              title="Single Team Roster"
-              eyebrow="SINGLE DISCIPLINE"
-              price="$160"
-              suffix="/ specific squad"
-              text="For one sports team or arts squad representing an affiliated church body."
-              features={[
-                "1 Sanctioned Tournament Registration",
-                "Official Referee & Scoring Fees",
-                "Athlete Passes for 12 Athletes + 2 Coaches",
-              ]}
-              button="Register Single Squad"
-            />
-          </div>
-          <Faq openFaq={openFaq} setOpenFaq={setOpenFaq} />
-        </section>
-
-        <section className="section crew-section">
-          <div className="crew-panel">
-            <div>
-              <span className="eyebrow gold-text">SERVANT LEADERSHIP</span>
-              <h2>Serve on the 2026 SELAH Crew</h2>
-              <p>
-                It takes over 200 volunteer leaders to make SELAH happen — from
-                medical first responders and scorekeepers to stage tech crew and
-                the 24-hour prayer tent team.
-              </p>
-              <div className="crew-list">
-                <span>
-                  <ShieldCheck /> Medical & Safety
-                </span>
-                <span>
-                  <Trophy /> Court Referees
-                </span>
-                <span>
-                  <Headphones /> Audio & Visual Tech
-                </span>
-                <span>
-                  <HeartHandshake /> Chaplaincy & Prayer
-                </span>
-              </div>
-              <button className="button button-gold">
-                Apply as Volunteer Crew <ArrowRight size={16} />
-              </button>
-            </div>
-            <blockquote>
-              <span className="quote-mark">“</span>
-              <p>
-                SELAH wasn't just another tournament where churches competed
-                fiercely and left strangers. In the semi-finals, both teams
-                knelt together at center court to pray.
-              </p>
-              <footer>
-                <span className="avatar">MV</span>
-                <span>
-                  <strong>Pastor Marcus Vance</strong>
-                  <small>Youth Director, Redeemer Fellowship</small>
-                </span>
-              </footer>
-            </blockquote>
-          </div>
-        </section>
-
-        <section className="final-cta">
-          <span className="eyebrow coral-text">THE HISTORIC GATHERING</span>
-          <h2>
-            Unite with 3,000+
-            <br />
-            Believers.
-          </h2>
-          <p>
-            Registration closes June 15, 2026. Guarantee your church's banner in
-            the arena parade and tournament brackets today.
-          </p>
-          <div>
-            <a className="button button-primary button-large" href="#pricing">
-              <HeartHandshake size={17} /> Claim Delegation Spot
-            </a>
-            <button className="button button-outline button-large">
-              <Download size={17} /> Download 2026 Rulebook PDF
-            </button>
           </div>
         </section>
       </main>
