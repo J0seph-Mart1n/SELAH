@@ -38,9 +38,7 @@ type EventCard = {
   title: string;
   meta: string;
   description: string;
-  award: string;
   image: string;
-  tag: string;
   color: "coral" | "gold" | "cyan";
 };
 
@@ -51,10 +49,8 @@ const eventCards: Record<Track, EventCard[]> = {
       meta: "Coliseum Court Alpha · Squad: 5–10 Players",
       description:
         "Full-court FIBA rules, shot clock enforced, with regional officials and sudden-death overtime.",
-      award: "$3,000 Kingdom Trophy",
       image:
         "https://lh3.googleusercontent.com/aida-public/AB6AXuD_MgBQqlCaE0D9s9ikq9urx3TVRvWK4d_CXayjhBvlE4cma1QhTLrnABflk_QhfrS53J-VwSQNvpFUjgVir3mS37ZZKPb8jJXpagiQQw4Nj-f5GAHat9f2l9773nFtBAVvq9cMNX626l3FJe2-x1xE6yxrYIK_I_cDTvHA4q0U5HraS3NpXF4hnKfX-zspP268oCVxVMLbFfPrR5V2-uOGEYkPi-_cL1qXBEjwj5sM6gekATqtcYq9mQ",
-      tag: "8 spots left",
       color: "coral",
     },
     {
@@ -62,10 +58,8 @@ const eventCards: Record<Track, EventCard[]> = {
       meta: "Pavilion Courts 1–3 · Squad: 6–8 Players",
       description:
         "Best of three sets with group double elimination leading to the stadium finals.",
-      award: "$2,000 Fellowship Cup",
       image:
         "https://lh3.googleusercontent.com/aida-public/AB6AXuC1mLa9BPurNBgrm_siweKjUq5MdGfVpMihs3s7po7Zjm36ZuM45dSl0PMqVhBXPP8dpOLFgO1-dP7o3B6oZEzGRg6Dp5EgBzNuN4wa_mBrlZO8t9PlgDceSp8oJMG-zQN7WcsvZXD_P_zAQ26zc-a6vvqWzRFaoopdqp_tamBB_m_HBTf1TUCiBivmhJWLxzymom_HcvGPNhH3I8HG9-kPjS0l3sBoPjHLmc3W8Y2b-hGPyK_4BsSb8w",
-      tag: "4 spots left",
       color: "gold",
     },
     {
@@ -73,10 +67,8 @@ const eventCards: Record<Track, EventCard[]> = {
       meta: "East Fieldhouse · Squad: 7–12 Players",
       description:
         "Rapid 20-minute halves on pro turf surfaces. Precision touch, discipline, and teamwork.",
-      award: "$2,500 Mission Cup",
       image:
         "https://lh3.googleusercontent.com/aida-public/AB6AXuBSxQNHKGeYPkw7aYNJFG69KqXRdf0_Gv3tMkvC_nw5eQAV4_ua-4DP1SXo496cum1ys80Z4OKE39Ggxx0YS-OKvprWtjX34bwrjdkIlkZKsRoryo_VVfmCYZavPwv_r-QBxOqDUXdpdfbfALFiqCiGLCVbGrKmxG2LMVZ2JeYbw730AANbEeXhgvVcrQEcF60S9bbv-T9aqxel8bYxQQZ2fNdnMpS2Ae9reeTSQ2PID2PgtcwPvmdmWw",
-      tag: "12 teams registered",
       color: "cyan",
     },
   ],
@@ -86,10 +78,8 @@ const eventCards: Record<Track, EventCard[]> = {
       meta: "Main Auditorium · 15–40 Voices",
       description:
         "Sacred hymnody reimagined through four-part harmony and original congregational ballads.",
-      award: "$2,000 Choral Endowment",
       image:
         "https://lh3.googleusercontent.com/aida-public/AB6AXuCxGZxptsdpFYn8UC0NxBBJg2jsmri_oPNZM-ev2bsLnPxLCM0uaXVrtIgYCI4toDiSlc7aAT7AyiwUdfbi_Fk__A_R-Lhg8pk8aZTFlTgSsvlIDwFkT2oInxssjN_4DvTngPYFZFsxOXWWyRoad5Dp2DFTEVgdTSJn8PDKMaWBBew95xve4lu1JDzV-0QNnOzuxBbZVCQSAdZpNp8z7h77W09Tv1MNoYrB_1GhLmcOUmGN3WeXv9Hfbw",
-      tag: "Grace Amphitheater",
       color: "gold",
     },
     {
@@ -97,10 +87,8 @@ const eventCards: Record<Track, EventCard[]> = {
       meta: "Stage Beta · 4–8 Musicians",
       description:
         "Original composition plus a classic hymn arrangement, scored for musicality and resonance.",
-      award: "$2,500 Studio Grant",
       image:
         "https://lh3.googleusercontent.com/aida-public/AB6AXuBroCxqgPOErw5rNoGbrtLdsfPVz8jOa9N7Z9hCZwQAOnSAr7M2Labw3MGEw_XNzQAleLoAnE4q6m5aeQQ7_y-W1--EQHK_wSxx_HFuV7HL3PIkJg5gKw8S1mpMv0DsKZAaxKi3NZyIDVbtNOHNph89vMfNfEuGPMUMvInYbvvah1AzbxxVBNtegs0x-_LN99HMV6f3CIoLwYEbKU4E9hJNjdPExCLABbXsrBwMH2pSki9R_H1E2ugmyA",
-      tag: "Auditorium B",
       color: "coral",
     },
     {
@@ -108,10 +96,8 @@ const eventCards: Record<Track, EventCard[]> = {
       meta: "Upper Room Stage · Solo / Duo",
       description:
         "Original rhythmic narratives addressing redemption, mental health, and contemporary faith.",
-      award: "$1,000 Author Award",
       image:
         "https://lh3.googleusercontent.com/aida-public/AB6AXuBYZLrutwH34A0Twoz6lajNO8lX6qCwANKRY_ApV6eMW-PNZdb8QdipYDrdZEboe5fyvZXDWfAhvyoDjz27cIUd93X8W_GxWp-mdkBcAlgLSuX9iKhwHXKtXsAe6qLvSReVTbkelvKXqgYf-CGAdxenP8m20N0ATZn4aW6p3aVwamlm6oyQuZrKU_jM5fMWGsklj7CwZXxFAYPVNE8aOk9_w9LexCRZb_KHLrpWqObMY8bAci4Z9XeR6w",
-      tag: "Gallery Loft",
       color: "cyan",
     },
   ],
@@ -604,7 +590,7 @@ function App() {
             <div className="mt-16 text-center">
               <button className="relative inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50">
                 <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
-                <span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-slate-950 px-3 py-1 text-sm font-medium text-white backdrop-blur-3xl">
+                <span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-slate-950 px-3 py-1 text-sm font-bold text-white backdrop-blur-3xl">
                   Become a Sponsor
                 </span>
               </button>
@@ -612,16 +598,54 @@ function App() {
           </div>
         </section>
 
+        {/* Father Vicar's Message Section */}
+        <section className="section relative py-24" id="vicar-message">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div className="section-heading flex flex-col items-center text-center max-w-2xl mx-auto mb-16 px-4">
+              <h2 className="text-4xl md:text-5xl font-black mb-6 text-white leading-tight">
+                Father Vicar's <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#f69b22] to-[#fa6347]">Message</span>
+              </h2>
+            </div>
+            
+            <div className="max-w-5xl mx-auto p-8 sm:p-12 rounded-[32px] bg-gradient-to-b from-[#f69b22] to-[#fa6347] border border-[#f69b22]/50 shadow-[0_0_40px_rgba(246,155,34,0.3)] relative overflow-hidden">
+              <div className="relative grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                
+                {/* Avatar Placeholder */}
+                <div className="lg:col-span-4 flex flex-col items-center text-center">
+                  <div className="relative">
+                    <div className="w-44 h-44 sm:w-52 sm:h-52 rounded-2xl bg-[#060d23] p-1 shadow-2xl">
+                      <div className="w-full h-full rounded-2xl bg-[#0a1024] flex flex-col items-center justify-center p-4 text-center overflow-hidden relative">
+                        <Church className="text-[#00b8e8] mb-3" size={64} strokeWidth={1.5} />
+                        <span className="text-[10px] sm:text-xs font-bold text-white uppercase tracking-widest">Father Vicar</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                
+                {/* Message Content */}
+                <div className="lg:col-span-8 flex flex-col">
+                  <h3 className="text-3xl sm:text-4xl lg:text-4xl font-black text-[#060d23] mb-2 leading-tight text-center lg:text-left">
+                    Fr. Joy Philip Kakkanattu 
+                  </h3>
+                  <div className="flex flex-wrap items-center justify-center lg:justify-start gap-3 mb-6">
+                    <span className="px-3 py-1 rounded-md bg-[#060d23]/10 border border-[#060d23]/20 text-[#060d23] text-[10px] sm:text-xs font-bold uppercase tracking-widest">Vicar</span>
+                  </div>
+                  
+                  <p className="text-[#0a1024] text-sm md:text-base font-medium leading-relaxed mb-8 text-center lg:text-left">
+                    "I am delighted to welcome you to SELAH 2026. This festival is a celebration of our youth's talent, energy, and dedication. Let us come together to witness the incredible performances, foster fellowship, and glorify His name through arts and sports. May this event inspire and uplift everyone involved."
+                  </p>
+                </div>
+                
+              </div>
+            </div>
+          </div>
+        </section>
+
         <section className="section arena-section" id="events">
           <div className="center-heading">
-            <span className="eyebrow coral-text">
-              COMPETITION & WORSHIP HUB
-            </span>
-            <h2>Dual-Arena Festival Tracks</h2>
+            <h2>Cultural and Sport Events</h2>
             <p>
-              Explore sanctioned athletic tournaments and accredited creative
-              arts stages. Toggle below to review brackets, squad sizes, and
-              current spots.
+              Explore the different Cultural and Sport events in SELAH 2026. Click on the event card for further information and rules about the event.
             </p>
           </div>
           <div className="tabs">
@@ -629,11 +653,6 @@ function App() {
               [
                 ["sports", "Sports Tournaments (12)", <Medal size={16} />],
                 ["culture", "Cultural & Arts (8)", <Music2 size={16} />],
-                [
-                  "worship",
-                  "Sacred Gatherings (4)",
-                  <HeartHandshake size={16} />,
-                ],
               ] as [Track, string, React.ReactNode][]
             ).map(([value, label, icon]) => (
               <button
@@ -778,14 +797,12 @@ function EventCardView({ card }: { card: EventCard }) {
               ? "Mixed Co-Ed"
               : "Open Youth"}
         </span>
-        <span className="spots">{card.tag}</span>
       </div>
       <div className="event-content">
         <span className="event-meta">{card.meta}</span>
         <h3>{card.title}</h3>
         <p>{card.description}</p>
         <div className="event-footer">
-          <strong>{card.award}</strong>
           <button>Rules & Roster</button>
         </div>
       </div>
