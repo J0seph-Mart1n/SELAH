@@ -13,6 +13,8 @@ import PrismaticBurst from "@/components/PrismaticBurst";
 import { MorphingText } from "@/components/ui/morphing-text";
 import BorderGlow from "@/components/BorderGlow";
 import ScrollVelocity from "@/components/ScrollVelocity";
+import MagicBento from "@/components/MagicBento";
+import ParticleText from '@/components/ParticleText';
 import {
   ArrowRight,
   Check,
@@ -36,69 +38,69 @@ type Track = "sports" | "culture" | "worship";
 
 type EventCard = {
   title: string;
-  meta: string;
   description: string;
   image: string;
-  color: "coral" | "gold" | "cyan";
 };
 
 const eventCards: Record<Track, EventCard[]> = {
   sports: [
     {
-      title: "SELAH 5v5 Basketball Championship",
-      meta: "Coliseum Court Alpha · Squad: 5–10 Players",
+      title: "Chess",
       description:
         "Full-court FIBA rules, shot clock enforced, with regional officials and sudden-death overtime.",
       image:
         "https://lh3.googleusercontent.com/aida-public/AB6AXuD_MgBQqlCaE0D9s9ikq9urx3TVRvWK4d_CXayjhBvlE4cma1QhTLrnABflk_QhfrS53J-VwSQNvpFUjgVir3mS37ZZKPb8jJXpagiQQw4Nj-f5GAHat9f2l9773nFtBAVvq9cMNX626l3FJe2-x1xE6yxrYIK_I_cDTvHA4q0U5HraS3NpXF4hnKfX-zspP268oCVxVMLbFfPrR5V2-uOGEYkPi-_cL1qXBEjwj5sM6gekATqtcYq9mQ",
-      color: "coral",
     },
     {
-      title: "Unity Volleyball Blitz",
-      meta: "Pavilion Courts 1–3 · Squad: 6–8 Players",
+      title: "Throwball",
       description:
         "Best of three sets with group double elimination leading to the stadium finals.",
       image:
         "https://lh3.googleusercontent.com/aida-public/AB6AXuC1mLa9BPurNBgrm_siweKjUq5MdGfVpMihs3s7po7Zjm36ZuM45dSl0PMqVhBXPP8dpOLFgO1-dP7o3B6oZEzGRg6Dp5EgBzNuN4wa_mBrlZO8t9PlgDceSp8oJMG-zQN7WcsvZXD_P_zAQ26zc-a6vvqWzRFaoopdqp_tamBB_m_HBTf1TUCiBivmhJWLxzymom_HcvGPNhH3I8HG9-kPjS0l3sBoPjHLmc3W8Y2b-hGPyK_4BsSb8w",
-      color: "gold",
     },
     {
-      title: "7-a-Side Futsal Challenge",
-      meta: "East Fieldhouse · Squad: 7–12 Players",
+      title: "Football",
       description:
         "Rapid 20-minute halves on pro turf surfaces. Precision touch, discipline, and teamwork.",
       image:
         "https://lh3.googleusercontent.com/aida-public/AB6AXuBSxQNHKGeYPkw7aYNJFG69KqXRdf0_Gv3tMkvC_nw5eQAV4_ua-4DP1SXo496cum1ys80Z4OKE39Ggxx0YS-OKvprWtjX34bwrjdkIlkZKsRoryo_VVfmCYZavPwv_r-QBxOqDUXdpdfbfALFiqCiGLCVbGrKmxG2LMVZ2JeYbw730AANbEeXhgvVcrQEcF60S9bbv-T9aqxel8bYxQQZ2fNdnMpS2Ae9reeTSQ2PID2PgtcwPvmdmWw",
-      color: "cyan",
+    },
+    {
+      title: "Tug of War",
+      description:
+        "Rapid 20-minute halves on pro turf surfaces. Precision touch, discipline, and teamwork.",
+      image:
+        "https://lh3.googleusercontent.com/aida-public/AB6AXuBSxQNHKGeYPkw7aYNJFG69KqXRdf0_Gv3tMkvC_nw5eQAV4_ua-4DP1SXo496cum1ys80Z4OKE39Ggxx0YS-OKvprWtjX34bwrjdkIlkZKsRoryo_VVfmCYZavPwv_r-QBxOqDUXdpdfbfALFiqCiGLCVbGrKmxG2LMVZ2JeYbw730AANbEeXhgvVcrQEcF60S9bbv-T9aqxel8bYxQQZ2fNdnMpS2Ae9reeTSQ2PID2PgtcwPvmdmWw",
+    },
+    {
+      title: "Mixed Relay",
+      description:
+        "Rapid 20-minute halves on pro turf surfaces. Precision touch, discipline, and teamwork.",
+      image:
+        "https://lh3.googleusercontent.com/aida-public/AB6AXuBSxQNHKGeYPkw7aYNJFG69KqXRdf0_Gv3tMkvC_nw5eQAV4_ua-4DP1SXo496cum1ys80Z4OKE39Ggxx0YS-OKvprWtjX34bwrjdkIlkZKsRoryo_VVfmCYZavPwv_r-QBxOqDUXdpdfbfALFiqCiGLCVbGrKmxG2LMVZ2JeYbw730AANbEeXhgvVcrQEcF60S9bbv-T9aqxel8bYxQQZ2fNdnMpS2Ae9reeTSQ2PID2PgtcwPvmdmWw",
     },
   ],
   culture: [
     {
       title: "A Cappella & Choral Symphony",
-      meta: "Main Auditorium · 15–40 Voices",
       description:
         "Sacred hymnody reimagined through four-part harmony and original congregational ballads.",
       image:
         "https://lh3.googleusercontent.com/aida-public/AB6AXuCxGZxptsdpFYn8UC0NxBBJg2jsmri_oPNZM-ev2bsLnPxLCM0uaXVrtIgYCI4toDiSlc7aAT7AyiwUdfbi_Fk__A_R-Lhg8pk8aZTFlTgSsvlIDwFkT2oInxssjN_4DvTngPYFZFsxOXWWyRoad5Dp2DFTEVgdTSJn8PDKMaWBBew95xve4lu1JDzV-0QNnOzuxBbZVCQSAdZpNp8z7h77W09Tv1MNoYrB_1GhLmcOUmGN3WeXv9Hfbw",
-      color: "gold",
     },
     {
       title: "Contemporary Worship Battle",
-      meta: "Stage Beta · 4–8 Musicians",
       description:
         "Original composition plus a classic hymn arrangement, scored for musicality and resonance.",
       image:
         "https://lh3.googleusercontent.com/aida-public/AB6AXuBroCxqgPOErw5rNoGbrtLdsfPVz8jOa9N7Z9hCZwQAOnSAr7M2Labw3MGEw_XNzQAleLoAnE4q6m5aeQQ7_y-W1--EQHK_wSxx_HFuV7HL3PIkJg5gKw8S1mpMv0DsKZAaxKi3NZyIDVbtNOHNph89vMfNfEuGPMUMvInYbvvah1AzbxxVBNtegs0x-_LN99HMV6f3CIoLwYEbKU4E9hJNjdPExCLABbXsrBwMH2pSki9R_H1E2ugmyA",
-      color: "coral",
     },
     {
       title: "Gospel Poetry & Sacred Drama",
-      meta: "Upper Room Stage · Solo / Duo",
       description:
         "Original rhythmic narratives addressing redemption, mental health, and contemporary faith.",
       image:
         "https://lh3.googleusercontent.com/aida-public/AB6AXuBYZLrutwH34A0Twoz6lajNO8lX6qCwANKRY_ApV6eMW-PNZdb8QdipYDrdZEboe5fyvZXDWfAhvyoDjz27cIUd93X8W_GxWp-mdkBcAlgLSuX9iKhwHXKtXsAe6qLvSReVTbkelvKXqgYf-CGAdxenP8m20N0ATZn4aW6p3aVwamlm6oyQuZrKU_jM5fMWGsklj7CwZXxFAYPVNE8aOk9_w9LexCRZb_KHLrpWqObMY8bAci4Z9XeR6w",
-      color: "cyan",
     },
   ],
   worship: [],
@@ -487,10 +489,6 @@ function App() {
                     </div>
                     
                     <div className="lg:col-span-8 flex flex-col items-center lg:items-start text-center lg:text-left py-6">
-                      <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#f69b22]/10 border border-[#f69b22]/30 text-[#f69b22] text-xs font-bold tracking-[0.1em] uppercase mb-6">
-                        <Sparkles className="w-4 h-4" />
-                        Announcement Pending
-                      </div>
                       <h3 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white mb-4 leading-tight">
                         <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#8b9abb] to-[#4a5568]">Revealing Soon</span>
                       </h3>
@@ -624,11 +622,21 @@ function App() {
               />
             </div>
           ) : (
-            <div className="event-grid">
-              {visibleEvents.map((event) => (
-                <EventCardView card={event} key={event.title} />
-              ))}
-            </div>
+            <MagicBento 
+              cards={visibleEvents}
+              gridClassName="event-grid"
+              cardClassName="event-bento-card group"
+              enableTilt={false}
+              enableBorderGlow={true}
+              enableMagnetism
+              enableStars={false}
+              enableSpotlight
+              spotlightRadius={460}
+              glowColor="59, 130, 246"
+              renderItem={(event) => (
+                <EventCardView card={event} />
+              )}
+            />
           )}
         </section>
 
@@ -640,22 +648,22 @@ function App() {
                 Event <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#f69b22] to-[#fa6347]">Schedule</span>
               </h2>
               <p className="text-[#8b9abb] text-sm md:text-base leading-relaxed">
-                A full day of cultural performances and sports tournaments.
+                A full day schedule of cultural performances and sports tournaments.
               </p>
             </div>
 
             {/* Calendar Container */}
-            <div className="relative" style={{ height: `${12 * 72 + 48}px` }}>
+            <div className="relative max-w-5xl mx-auto" style={{ height: `${12 * 72 + 48}px` }}>
 
               {/* Column Headers - sits above the grid */}
-              <div className="absolute top-0 left-[60px] md:left-[76px] right-0 grid grid-cols-2 h-[48px] z-10">
-                <div className="flex items-center justify-center gap-2 border-b border-r border-[#8b9abb]/20 bg-[#0a1024]/90 backdrop-blur-sm rounded-tl-xl">
-                  <Music2 size={14} className="text-[#f69b22]" />
-                  <span className="text-xs md:text-sm font-bold text-white tracking-wider">Cultural Events</span>
+              <div className="absolute top-0 left-[48px] md:left-[76px] right-0 grid grid-cols-2 h-[48px] z-10">
+                <div className="flex items-center justify-center gap-1 md:gap-2 border-b border-r border-[#8b9abb]/20 bg-[#0a1024]/90 backdrop-blur-sm rounded-tl-xl overflow-hidden px-1">
+                  <Music2 size={14} className="text-[#f69b22] shrink-0" />
+                  <span className="text-xs md:text-sm font-bold text-white tracking-wider truncate">Cultural<span className="hidden sm:inline"> Events</span></span>
                 </div>
-                <div className="flex items-center justify-center gap-2 border-b border-[#8b9abb]/20 bg-[#0a1024]/90 backdrop-blur-sm rounded-tr-xl">
-                  <Medal size={14} className="text-[#00b8e8]" />
-                  <span className="text-xs md:text-sm font-bold text-white tracking-wider">Sport Events</span>
+                <div className="flex items-center justify-center gap-1 md:gap-2 border-b border-[#8b9abb]/20 bg-[#0a1024]/90 backdrop-blur-sm rounded-tr-xl overflow-hidden px-1">
+                  <Medal size={14} className="text-[#00b8e8] shrink-0" />
+                  <span className="text-xs md:text-sm font-bold text-white tracking-wider truncate">Sport<span className="hidden sm:inline"> Events</span></span>
                 </div>
               </div>
 
@@ -663,18 +671,18 @@ function App() {
               {Array.from({ length: 13 }, (_, i) => i + 8).map((hour) => (
                 <div key={hour} className="absolute left-0 right-0" style={{ top: `${48 + (hour - 8) * 72}px` }}>
                   {/* Time label */}
-                  <span className="absolute right-[calc(100%-54px)] md:right-[calc(100%-70px)] text-[11px] md:text-xs text-[#8b9abb] font-medium tabular-nums" style={{ transform: 'translateY(-50%)' }}>
+                  <span className="absolute left-0 w-[44px] md:w-[68px] text-right pr-1 md:pr-2 text-[10px] md:text-xs text-[#8b9abb] font-medium tabular-nums" style={{ transform: 'translateY(-50%)' }}>
                     {hour === 12 ? '12 PM' : hour < 12 ? `${hour} AM` : `${hour - 12} PM`}
                   </span>
                   {/* Grid line */}
-                  <div className="absolute left-[60px] md:left-[76px] right-0 border-t border-[#8b9abb]/15" />
+                  <div className="absolute left-[48px] md:left-[76px] right-0 border-t border-[#8b9abb]/15" />
                 </div>
               ))}
 
               {/* Live Time Tracker Line */}
               {currentHour !== null && (
                 <div
-                  className="absolute left-[60px] md:left-[76px] right-0 z-20 pointer-events-none"
+                  className="absolute left-[48px] md:left-[76px] right-0 z-20 pointer-events-none"
                   style={{ top: `${48 + (currentHour - 8) * 72}px` }}
                 >
                   {/* Dot */}
@@ -685,7 +693,7 @@ function App() {
               )}
 
               {/* Event Columns */}
-              <div className="absolute top-[48px] left-[60px] md:left-[76px] right-0 bottom-0 grid grid-cols-2">
+              <div className="absolute top-[48px] left-[48px] md:left-[76px] right-0 bottom-0 grid grid-cols-2">
                 {/* Column divider */}
                 <div className="absolute top-0 bottom-0 left-1/2 border-l border-[#8b9abb]/15 z-[1]" />
 
@@ -774,59 +782,73 @@ function App() {
         </section>
       </main>
 
-      <footer className="site-footer">
-        <div className="footer-grid">
-          <div>
-            <a className="brand" href="#top">
-              <div className="brand-mark">
-                <Sparkles size={17} />
+      <footer className="site-footer relative overflow-hidden flex flex-col justify-between min-h-[500px] bg-[#050b20]">
+        <div className="footer-grid relative z-10 w-full max-w-7xl mx-auto px-6 md:px-12 pt-16">
+          <div className="flex flex-col h-full">
+            <a className="brand flex items-center gap-3 text-white mb-6" href="#top">
+              <div className="brand-mark bg-[#ffbd61] text-[#281506] p-1.5 rounded flex items-center justify-center">
+                <Sparkles size={18} />
               </div>
-              <div>
-                <strong>
-                  SELAH <span>2026</span>
-                </strong>
-                <small>FEST · ARENA · STAGE</small>
+              <div className="text-xl font-bold tracking-wide">
+                SELAH
               </div>
             </a>
-            <p>
+            <p className="text-[#8492b1] text-sm leading-relaxed max-w-sm">
               The official biennial inter-church youth cultural & sports
               festival uniting congregations in athletics, creative expression,
               and holy reverence.
             </p>
-            <span className="footer-chip">PAUSE · REFLECT · LIFT UP</span>
           </div>
           <FooterColumn
-            title="Arena & Stage Hubs"
+            title="Venues"
             items={[
-              "Memorial Coliseum Complex",
-              "Grace Amphitheater & Arts Center",
-              "Tournament Brackets & Schedule",
-              "Delegation Lodging & Campuses",
+              "Coliseum Complex",
+              "Grace Amphitheater",
+              "Festival Grounds",
+              "Lodging Campuses",
             ]}
           />
           <FooterColumn
-            title="Delegation Support"
+            title="Support"
             items={[
-              "Team Registration Portal",
-              "Spectator Badging & Passes",
-              "Code of Conduct & Rules",
-              "Federation Desk: contact@selah2026.org",
+              "Team Portal",
+              "Spectator Passes",
+              "Rules & Conduct",
+              "Contact Us",
             ]}
           />
-          <div>
-            <h3>Sanctioning Body</h3>
-            <p>
-              Sanctioned by the United Inter-Church Athletic & Arts Council.
-              Powered by youth ministries across 14 regional fellowships.
-            </p>
-            <span className="verified">
-              <ShieldCheck size={16} /> Official Festival Ground
-            </span>
-          </div>
+          <FooterColumn
+            title="Legal"
+            items={[
+              "Sanctioning Info",
+              "Festival Charter",
+              "Safety Guidelines",
+              "Privacy Policy",
+            ]}
+          />
         </div>
-        <div className="footer-bottom">
-          <span>© 2026 SELAH Festival Council. All rights reserved.</span>
-          <span>Festival Charter · Safety Guidelines · Privacy Policy</span>
+
+        {/* Massive Background Text */}
+        <div className="w-full h-[20vw] min-h-[240px] flex justify-center items-end mt-auto select-none relative z-0 translate-y-[22%] overflow-hidden">
+          <ParticleText
+            text="SELAH"
+            particleSize={2.2}
+            density={5}
+            color="#ffffff"
+            highlightColor="#ffffff"
+            scatter={190}
+            gatherDuration={1600}
+            stagger={420}
+            pointerRepel={42}
+            repelRadius={120}
+            idleDrift={0.8}
+            trigger="click"
+            fontSize="24vw"
+            fontWeight={900}
+            fontFamily="inherit"
+            className="leading-none tracking-tighter opacity-40"
+            glow={false}
+          />
         </div>
       </footer>
     </div>
@@ -836,28 +858,29 @@ function App() {
 
 function EventCardView({ card }: { card: EventCard }) {
   return (
-    <article className="event-card">
+    <>
+      {/* Background Image integrated beneath MagicBento's content */}
       <div
-        className="event-image"
+        className="absolute inset-0 bg-cover bg-center transition-all duration-700 ease-out group-hover:scale-110 group-hover:opacity-30 opacity-80 mix-blend-screen pointer-events-none z-0"
         style={{ backgroundImage: `url(${card.image})` }}
-      >
-        <span className={`event-tag ${card.color}`}>
-          {card.color === "coral"
-            ? "Men & Women Div"
-            : card.color === "gold"
-              ? "Mixed Co-Ed"
-              : "Open Youth"}
-        </span>
-      </div>
-      <div className="event-content">
-        <span className="event-meta">{card.meta}</span>
-        <h3>{card.title}</h3>
-        <p>{card.description}</p>
-        <div className="event-footer">
-          <button>Rules & Roster</button>
+      />
+      
+      {/* Gradient overlay to ensure text remains highly readable */}
+      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none z-0" />
+      
+      {/* MagicBento native layout structure */}
+      <div className="relative z-10 flex flex-col h-full justify-end">
+        <div className="magic-bento-card__content">
+          <h2 className="magic-bento-card__title !font-bold !text-white !text-xl !mb-2 drop-shadow-md pr-12">{card.title}</h2>
+          <p className="magic-bento-card__description !text-white/80 !opacity-100 line-clamp-3 pr-12">{card.description}</p>
         </div>
       </div>
-    </article>
+      
+      <div className="absolute bottom-6 right-6 z-20 w-10 h-10 rounded-full flex items-center justify-center shrink-0 transition-all duration-300 opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 group-hover:bg-blue-500/20 group-hover:border-blue-500/50 group-hover:shadow-[0_0_15px_rgba(59,130,246,0.3)]">
+        <ArrowRight className="text-white w-5 h-5 transition-transform duration-300 group-hover:translate-x-0.5" />
+      </div>
+
+    </>
   );
 }
 function WorshipCard({
