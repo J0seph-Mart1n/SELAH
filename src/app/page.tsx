@@ -623,7 +623,8 @@ function App() {
             </div>
           ) : (
             <MagicBento 
-              cards={visibleEvents}
+              // @ts-expect-error inferred never[] from jsx component default prop
+              cards={visibleEvents as any[]}
               gridClassName="event-grid"
               cardClassName="event-bento-card group"
               enableTilt={false}
@@ -633,7 +634,7 @@ function App() {
               enableSpotlight
               spotlightRadius={460}
               glowColor="59, 130, 246"
-              renderItem={(event) => (
+              renderItem={(event: any) => (
                 <EventCardView card={event} />
               )}
             />
@@ -831,6 +832,7 @@ function App() {
         {/* Massive Background Text */}
         <div className="w-full h-[20vw] min-h-[240px] flex justify-center items-end mt-auto select-none relative z-0 translate-y-[22%] overflow-hidden">
           <ParticleText
+            style={{}}
             text="SELAH"
             particleSize={2.2}
             density={5}
