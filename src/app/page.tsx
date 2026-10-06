@@ -376,8 +376,6 @@ function App() {
                 glowColor="210 40 96" // Silver-ish
                 backgroundColor="#0a1024"
                 colors={["#94a3b8", "#e2e8f0", "#94a3b8"]}
-                animated={true}
-                loop={true}
                 className="w-full shadow-2xl h-full lg:h-[320px]"
               >
                 <div className="relative rounded-[30px] p-8 flex flex-col items-center justify-center text-center overflow-hidden h-full">
@@ -400,7 +398,6 @@ function App() {
                 backgroundColor="#060d23"
                 colors={["#fbbf24", "#f59e0b", "#fef08a"]}
                 animated={true}
-                loop={true}
                 glowIntensity={2}
                 className="w-full shadow-[0_0_50px_rgba(245,158,11,0.4)] h-full lg:h-[380px]"
               >
@@ -423,8 +420,6 @@ function App() {
                 glowColor="28 61 49" // Bronze
                 backgroundColor="#0a1024"
                 colors={["#cd7f32", "#b45309", "#d97706"]}
-                animated={true}
-                loop={true}
                 className="w-full shadow-2xl h-full lg:h-[320px]"
               >
                 <div className="relative rounded-[30px] p-8 flex flex-col items-center justify-center text-center overflow-hidden h-full">
