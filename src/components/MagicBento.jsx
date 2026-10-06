@@ -471,6 +471,7 @@ const MagicBento = ({
           const baseClassName = `magic-bento-card ${cardClassName} ${textAutoHide ? 'magic-bento-card--text-autohide' : ''} ${enableBorderGlow ? 'magic-bento-card--border-glow' : ''}`;
           const cardProps = {
             className: baseClassName,
+            tabIndex: 0,
             style: {
               backgroundColor: card.color,
               '--glow-color': glowColor

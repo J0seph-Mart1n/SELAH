@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import React from "react";
+import { motion } from "framer-motion";
 import { SparklesText } from "@/components/ui/sparkles-text"
 import {
   Navbar,
@@ -548,35 +549,43 @@ function App() {
               </h2>
             </div>
             
-            <div className="max-w-5xl mx-auto p-8 sm:p-12 rounded-[32px] bg-gradient-to-b from-[#f69b22] to-[#fa6347] border border-[#f69b22]/50 shadow-[0_0_40px_rgba(246,155,34,0.3)] relative overflow-hidden">
-              <div className="relative grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-                
-                {/* Avatar Placeholder */}
-                <div className="lg:col-span-4 flex flex-col items-center text-center">
-                  <div className="relative">
-                    <div className="w-44 h-44 sm:w-52 sm:h-52 rounded-2xl bg-[#060d23] p-1 shadow-2xl">
-                      <div className="w-full h-full rounded-2xl bg-[#0a1024] flex flex-col items-center justify-center p-4 text-center overflow-hidden relative">
-                        <Church className="text-[#00b8e8] mb-3" size={64} strokeWidth={1.5} />
-                        <span className="text-[10px] sm:text-xs font-bold text-white uppercase tracking-widest">Father Vicar</span>
-                      </div>
-                    </div>
-                  </div>
+            <div className="max-w-5xl mx-auto bg-gradient-to-b from-[#f69b22] to-[#fa6347] rounded-[32px] shadow-[0_20px_50px_rgba(246,155,34,0.3)] relative overflow-hidden flex flex-col md:flex-row border border-[#f69b22]/50">
+              {/* Left Side - Full Height Image */}
+              <div className="w-full md:w-5/12 min-h-[350px] relative flex-shrink-0">
+                {/* 
+                  NOTE: Currently using a placeholder image from Unsplash to demonstrate the layout.
+                  Replace this src with the actual photo of Father Vicar.
+                */}
+                <img 
+                  alt="Father Vicar" 
+                  className="absolute inset-0 w-full h-full object-cover"
+                />
+              </div>
+
+              {/* Right Side - Quote Content */}
+              <div className="w-full md:w-7/12 p-8 md:p-14 lg:p-16 flex flex-col justify-center relative">
+                <div className="h-10 md:h-12 flex items-start mb-6">
+                  <span className="text-[100px] md:text-[120px] font-serif text-[#2563eb] leading-[0.6] tracking-tighter" style={{ fontFamily: 'Georgia, serif' }}>
+                    “
+                  </span>
                 </div>
                 
-                {/* Message Content */}
-                <div className="lg:col-span-8 flex flex-col">
-                  <h3 className="text-3xl sm:text-4xl lg:text-4xl font-black text-[#060d23] mb-2 leading-tight text-center lg:text-left">
-                    Fr. Joy Philip Kakkanattu 
-                  </h3>
-                  <div className="flex flex-wrap items-center justify-center lg:justify-start gap-3 mb-6">
-                    <span className="px-3 py-1 rounded-md bg-[#060d23]/10 border border-[#060d23]/20 text-[#060d23] text-[10px] sm:text-xs font-bold uppercase tracking-widest">Vicar</span>
-                  </div>
-                  
-                  <p className="text-[#0a1024] text-sm md:text-base font-medium leading-relaxed mb-8 text-center lg:text-left">
-                    "I am delighted to welcome you to SELAH 2026. This festival is a celebration of our youth's talent, energy, and dedication. Let us come together to witness the incredible performances, foster fellowship, and glorify His name through arts and sports. May this event inspire and uplift everyone involved."
-                  </p>
-                </div>
+                <h3 className="text-2xl md:text-[28px] font-extrabold text-[#060d23] mb-5 leading-[1.3] tracking-tight">
+                  I am delighted to welcome you to SELAH 2026. This festival is a celebration of our youth's talent, energy, and dedication.
+                </h3>
                 
+                <p className="text-[#0a1024] text-base md:text-lg leading-relaxed mb-8 font-medium">
+                  Let us come together to witness the incredible performances, foster fellowship, and glorify His name through arts and sports. May this event inspire and uplift everyone involved.
+                </p>
+                
+                <div>
+                  <span className="text-[#060d23] font-bold text-base">
+                    — Fr. Joy Philip Kakkanattu,
+                  </span>
+                  <span className="text-[#060d23] font-bold text-base ml-1">
+                    Vicar
+                  </span>
+                </div>
               </div>
             </div>
           </div>
@@ -589,22 +598,34 @@ function App() {
               Explore the different Cultural and Sport events in SELAH 2026. Click on the event card for further information and rules about the event.
             </p>
           </div>
-          <div className="tabs">
-            {(
-              [
-                ["sports", "Sports Tournaments (12)", <Medal size={16} />],
-                ["culture", "Cultural & Arts (8)", <Music2 size={16} />],
-              ] as [Track, string, React.ReactNode][]
-            ).map(([value, label, icon]) => (
-              <button
-                className={track === value ? "tab active" : "tab"}
-                key={value}
-                onClick={() => setTrack(value)}
-              >
-                {icon}
-                {label}
-              </button>
-            ))}
+          <div className="flex justify-center mt-12 mb-14 px-4">
+            <div className="relative flex items-center p-1.5 bg-[#0a1024]/80 backdrop-blur-xl border border-white/10 rounded-full shadow-2xl max-w-full overflow-x-auto hide-scrollbar">
+              {(
+                [
+                  ["sports", "Sports", <Medal size={18} key="med" />],
+                  ["culture", "Cultural", <Music2 size={18} key="mus" />],
+                ] as [Track, string, React.ReactNode][]
+              ).map(([value, label, icon]) => (
+                <button
+                  key={value}
+                  onClick={() => setTrack(value)}
+                  className={`
+                    relative z-10 flex items-center gap-2.5 px-6 py-3 md:px-8 md:py-3.5 rounded-full text-sm md:text-base font-semibold transition-colors duration-300 ease-out whitespace-nowrap
+                    ${track === value ? "text-white" : "text-[#8492b1] hover:text-white/80"}
+                  `}
+                >
+                  {track === value && (
+                    <motion.div
+                      layoutId="activeTabIndicator"
+                      className="absolute inset-0 bg-gradient-to-r from-blue-600 to-blue-400 rounded-full shadow-[0_0_20px_rgba(37,99,235,0.4)] z-[-1]"
+                      transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
+                    />
+                  )}
+                  {icon}
+                  {label}
+                </button>
+              ))}
+            </div>
           </div>
           {track === "worship" ? (
             <div className="worship-grid">
