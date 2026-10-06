@@ -217,3 +217,16 @@
   position: relative;
   user-select: none;
 }
+
+@media (max-width: 767px) {
+  /* Force border glow on mobile since mousemove doesn't exist to set intensity */
+  .magic-bento-card--border-glow::after {
+    background: radial-gradient(
+      var(--glow-radius) circle at 50% 50%,
+      rgba(var(--glow-color), 0.6) 0%,
+      rgba(var(--glow-color), 0.3) 30%,
+      transparent 60%
+    ) !important;
+    opacity: 1 !important;
+  }
+}

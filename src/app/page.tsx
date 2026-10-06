@@ -21,6 +21,7 @@ import {
   Check,
   ChevronDown,
   Church,
+  Crown,
   Download,
   Flame,
   Headphones,
@@ -368,62 +369,76 @@ function App() {
            
           </div>
 
-          <div className="grid grid-cols-1 gap-8 max-w-3xl mx-auto px-4 lg:px-8">
-            {/* First Prize */}
-            <BorderGlow 
-              glowColor="24 93 54" // #f69b22 HSL approximation
-              backgroundColor="#060d23"
-              colors={["#f69b22", "#fa6347", "#00b8e8"]}
-              animated={true}
-              glowIntensity={1.5}
-              className="h-full w-full shadow-2xl"
-            >
-              <div className="relative h-full rounded-[30px] p-6 lg:p-10 flex flex-col sm:flex-row items-center justify-between text-center sm:text-left gap-6">
-                <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6">
-                  <div className="flex items-center justify-center shrink-0 group-hover:scale-110 group-hover:rotate-3 transition-all duration-500">
-                    <Trophy className="text-[#f69b22]" size={48} strokeWidth={1.5} />
+          <div className="flex flex-col lg:flex-row items-center lg:items-end justify-center gap-6 lg:gap-4 max-w-5xl mx-auto px-4 lg:px-8 mt-16 relative z-10 pb-8">
+            {/* 2nd Prize */}
+            <div className="w-full lg:w-1/3 order-2 lg:order-1 relative lg:-mt-10 lg:hover:-translate-y-4 transition-transform duration-500 z-10">
+              <BorderGlow 
+                glowColor="210 40 96" // Silver-ish
+                backgroundColor="#0a1024"
+                colors={["#94a3b8", "#e2e8f0", "#94a3b8"]}
+                animated={true}
+                loop={true}
+                className="w-full shadow-2xl h-full lg:h-[320px]"
+              >
+                <div className="relative rounded-[30px] p-8 flex flex-col items-center justify-center text-center overflow-hidden h-full">
+                  <div className="absolute -right-4 -top-8 opacity-5 pointer-events-none select-none">
+                    <span className="text-[250px] font-black italic">2</span>
                   </div>
-                  <h3 className="text-transparent bg-clip-text bg-gradient-to-r from-[#f69b22] to-[#fa6347] text-2xl sm:text-3xl font-bold tracking-[0.2em] uppercase">1st Prize</h3>
+                  <div className="mb-6 flex justify-center drop-shadow-[0_0_15px_rgba(148,163,184,0.4)]">
+                     <Medal className="text-slate-300" size={56} strokeWidth={1.5} />
+                  </div>
+                  <h3 className="text-slate-300 text-xl font-bold tracking-[0.2em] uppercase mb-2 drop-shadow-md">2nd Prize</h3>
+                  <div className="text-3xl lg:text-4xl font-black text-white tracking-tight">₹10,000</div>
                 </div>
-                <div className="text-5xl lg:text-6xl font-black text-white tracking-tight">₹15,000</div>
-              </div>
-            </BorderGlow>
+              </BorderGlow>
+            </div>
 
-            {/* Second Prize */}
-            <BorderGlow 
-              glowColor="221 34 57" // #8b9abb HSL approx
-              backgroundColor="#060d23"
-              colors={["#8b9abb", "#ffffff", "#8b9abb"]}
-              className="h-full w-full shadow-2xl"
-            >
-              <div className="relative h-full rounded-[30px] p-6 lg:p-10 flex flex-col sm:flex-row items-center justify-between text-center sm:text-left gap-6">
-                <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6">
-                  <div className="flex items-center justify-center shrink-0 group-hover:scale-110 group-hover:rotate-3 transition-all duration-500">
-                    <Trophy className="text-[#8b9abb]" size={40} strokeWidth={1.5} />
+            {/* 1st Prize */}
+            <div className="w-full lg:w-1/3 order-1 lg:order-2 relative z-20 lg:-translate-y-6 lg:scale-110 lg:hover:-translate-y-10 transition-transform duration-500">
+              <BorderGlow 
+                glowColor="45 93 54" // Gold
+                backgroundColor="#060d23"
+                colors={["#fbbf24", "#f59e0b", "#fef08a"]}
+                animated={true}
+                loop={true}
+                glowIntensity={2}
+                className="w-full shadow-[0_0_50px_rgba(245,158,11,0.4)] h-full lg:h-[380px]"
+              >
+                <div className="relative rounded-[30px] p-10 flex flex-col items-center justify-center text-center overflow-hidden h-full border border-yellow-500/20 bg-gradient-to-b from-[#060d23] to-yellow-900/20">
+                  <div className="absolute -right-2 -top-10 opacity-[0.07] pointer-events-none select-none">
+                    <span className="text-[300px] font-black italic text-yellow-500">1</span>
                   </div>
-                  <h3 className="text-[#8b9abb] text-xl sm:text-2xl font-bold tracking-[0.2em] uppercase">2nd Prize</h3>
+                  <div className="mb-8 flex justify-center drop-shadow-[0_0_25px_rgba(250,204,21,0.5)]">
+                     <Crown className="text-yellow-400" size={80} strokeWidth={1.5} />
+                  </div>
+                  <h3 className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-yellow-600 text-2xl font-black tracking-[0.25em] uppercase mb-2 drop-shadow-lg">1st Prize</h3>
+                  <div className="text-3xl lg:text-4xl font-black text-white tracking-tight drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]">₹15,000</div>
                 </div>
-                <div className="text-4xl lg:text-5xl font-black text-white tracking-tight">₹10,000</div>
-              </div>
-            </BorderGlow>
+              </BorderGlow>
+            </div>
 
-            {/* Third Prize */}
-            <BorderGlow 
-              glowColor="28 61 49" // #cd7f32 HSL approx
-              backgroundColor="#060d23"
-              colors={["#cd7f32", "#e69c55", "#cd7f32"]}
-              className="h-full w-full shadow-2xl"
-            >
-              <div className="relative h-full rounded-[30px] p-6 lg:p-10 flex flex-col sm:flex-row items-center justify-between text-center sm:text-left gap-6">
-                <div className="flex flex-col sm:flex-row items-center gap-4 sm:gap-6">
-                  <div className="flex items-center justify-center shrink-0 group-hover:scale-110 group-hover:rotate-3 transition-all duration-500">
-                    <Trophy className="text-[#cd7f32]" size={40} strokeWidth={1.5} />
+            {/* 3rd Prize */}
+            <div className="w-full lg:w-1/3 order-3 lg:order-3 relative lg:-mt-10 lg:hover:-translate-y-4 transition-transform duration-500 z-10">
+              <BorderGlow 
+                glowColor="28 61 49" // Bronze
+                backgroundColor="#0a1024"
+                colors={["#cd7f32", "#b45309", "#d97706"]}
+                animated={true}
+                loop={true}
+                className="w-full shadow-2xl h-full lg:h-[320px]"
+              >
+                <div className="relative rounded-[30px] p-8 flex flex-col items-center justify-center text-center overflow-hidden h-full">
+                  <div className="absolute -right-4 -top-8 opacity-5 pointer-events-none select-none">
+                    <span className="text-[250px] font-black italic text-[#cd7f32]">3</span>
                   </div>
-                  <h3 className="text-[#cd7f32] text-xl sm:text-2xl font-bold tracking-[0.2em] uppercase">3rd Prize</h3>
+                  <div className="mb-6 flex justify-center drop-shadow-[0_0_15px_rgba(205,127,50,0.4)]">
+                     <Medal className="text-[#cd7f32]" size={56} strokeWidth={1.5} />
+                  </div>
+                  <h3 className="text-[#cd7f32] text-xl font-bold tracking-[0.2em] uppercase mb-2 drop-shadow-md">3rd Prize</h3>
+                  <div className="text-3xl lg:text-4xl font-black text-white tracking-tight">₹5,000</div>
                 </div>
-                <div className="text-4xl lg:text-5xl font-black text-white tracking-tight">₹5,000</div>
-              </div>
-            </BorderGlow>
+              </BorderGlow>
+            </div>
           </div>
         </section>
 
@@ -884,7 +899,7 @@ function EventCardView({ card }: { card: EventCard }) {
     <>
       {/* Background Image integrated beneath MagicBento's content */}
       <div
-        className="absolute inset-0 bg-cover bg-center transition-all duration-700 ease-out group-hover:scale-110 group-hover:opacity-30 opacity-80 mix-blend-screen pointer-events-none z-0"
+        className="absolute inset-0 bg-cover bg-center transition-all duration-700 ease-out md:opacity-80 opacity-40 md:group-hover:scale-110 md:group-hover:opacity-30 mix-blend-screen pointer-events-none z-0"
         style={{ backgroundImage: `url(${card.image})` }}
       />
       
@@ -899,8 +914,8 @@ function EventCardView({ card }: { card: EventCard }) {
         </div>
       </div>
       
-      <div className="absolute bottom-6 right-6 z-20 w-10 h-10 rounded-full flex items-center justify-center shrink-0 transition-all duration-300 opacity-0 -translate-x-4 group-hover:opacity-100 group-hover:translate-x-0 group-hover:bg-blue-500/20 group-hover:border-blue-500/50 group-hover:shadow-[0_0_15px_rgba(59,130,246,0.3)]">
-        <ArrowRight className="text-white w-5 h-5 transition-transform duration-300 group-hover:translate-x-0.5" />
+      <div className="absolute bottom-6 right-6 z-20 w-10 h-10 rounded-full flex items-center justify-center shrink-0 transition-all duration-300 opacity-100 translate-x-0 bg-blue-500/20 border border-blue-500/50 shadow-[0_0_15px_rgba(59,130,246,0.3)] md:opacity-0 md:-translate-x-4 md:bg-transparent md:border-transparent md:shadow-none md:group-hover:opacity-100 md:group-hover:translate-x-0 md:group-hover:bg-blue-500/20 md:group-hover:border-blue-500/50 md:group-hover:shadow-[0_0_15px_rgba(59,130,246,0.3)]">
+        <ArrowRight className="text-white w-5 h-5 transition-transform duration-300 md:group-hover:translate-x-0.5" />
       </div>
 
     </>
