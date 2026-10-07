@@ -1,0 +1,588 @@
+/*
+ * ABOUT CYA — team intro (quiet editorial, double-bezel cards).
+ * All styles scoped to .cya-page (root globals stay untouched except
+ * the declared main{padding-top} override).
+ * Tokens → base → reveal → nav → hero → team signature → responsive → reduced motion.
+ */
+
+/* ── TOKENS ─────────────────────────────────────── */
+.cya-page {
+  /* colour */
+  --bg: #faf7f2;
+  --sand: #e8e1d3;
+  --sage: #c9d3c2;
+  --ink: #1f1d1b;
+  --text: #6b655e;
+  --accent: #2f4a3a;
+  --accent-deep: #1f3328;
+  --paper: #fffdf9;
+  --line: rgba(31, 29, 27, 0.1);
+
+  /* shape — radius scale (shape lock): 8 inputs, 16 containers,
+     24 media, 32 double-bezel shells, 999 pills/badges.
+     One rule, followed everywhere. */
+  --r-sm: 8px;
+  --r: 16px;
+  --r-lg: 24px;
+  --r-xl: 32px;
+  --r-pill: 999px;
+
+  /* off-white for text/icons on dark-green surfaces (no pure #fff) */
+  --on-deep: #f7f5f0;
+
+  /* inner bezel highlight (top hairline on inset surfaces) */
+  --inset-hi: rgba(255, 255, 255, 0.6);
+
+  /* elevation — tinted, diffused; never harsh black */
+  --shadow-soft: 0 10px 30px rgba(31, 29, 27, 0.06);
+  --shadow-lift: 0 18px 44px rgba(31, 29, 27, 0.1);
+
+  /* motion */
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  --dur: 0.4s;
+
+  /* type — --font-serif/--font-sans come from next/font variable classes
+     on .cya-page (page.tsx); never redefine here (self-reference cycle
+     would invalidate them). Fallbacks: next/font's metric-matched "Families Fallback". */
+}
+
+/* dark mode: one token swap, whole page follows */
+@media (prefers-color-scheme: dark) {
+  .cya-page {
+    --bg: #1c1a15;
+    --sand: #3b372e;
+    --sage: #3d4a3a;
+    --ink: #ece7dc;
+    --text: #a9a294;
+    --accent: #a3c4a9;
+    --accent-deep: #101a12;
+    --paper: #23211b;
+    --line: rgba(236, 231, 220, 0.14);
+    --shadow-soft: 0 12px 34px color-mix(in srgb, var(--accent-deep) 65%, transparent);
+    --shadow-lift: 0 20px 52px color-mix(in srgb, var(--accent-deep) 75%, transparent);
+    --inset-hi: rgba(255, 255, 255, 0.07);
+    --on-deep: #f2eee4;
+  }
+
+  .cya-page ::selection {
+    color: var(--bg);
+  }
+}
+
+/* ── BASE ───────────────────────────────────────── */
+.cya-page {
+  font-family: var(--font-sans);
+  color: var(--text);
+  background: var(--bg);
+  font-size: 17px;
+  line-height: 1.6;
+  min-height: 100dvh;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* film grain — systemic overlay layer: grain 50 < nav 60 < modal 100 (reserved) */
+.cya-page::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  pointer-events: none;
+  opacity: 0.03;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='g'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23g)'/%3E%3C/svg%3E");
+}
+
+.cya-page ::selection {
+  background: var(--accent);
+  color: #fff;
+}
+
+.cya-page :focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+.cya-page a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.cya-page h1,
+.cya-page h2,
+.cya-page h3 {
+  font-family: var(--font-serif);
+  font-weight: 500;
+  color: var(--ink);
+  letter-spacing: -0.015em;
+  line-height: 1.14;
+  margin: 0;
+}
+
+.cya-page h1 {
+  font-size: clamp(46px, 8.6vw, 92px);
+  letter-spacing: -0.025em;
+  line-height: 1.02;
+}
+
+.cya-page h2 {
+  font-size: clamp(30px, 4.4vw, 46px);
+}
+
+.cya-page h3 {
+  font-size: clamp(19px, 2vw, 23px);
+}
+
+.cya-page p {
+  margin: 0;
+}
+
+/* root leak guard: main gets 76px padding globally — not here */
+.cya-page main {
+  padding-top: 0;
+}
+
+.cya-page section[id],
+.cya-page #top {
+  scroll-margin-top: 76px;
+}
+
+.cya-container {
+  width: min(1160px, calc(100% - 48px));
+  margin-inline: auto;
+}
+
+/* scroll reveal — blur-up entry, 800ms, custom bezier (no default easings) */
+.cya-reveal {
+  opacity: 0;
+  transform: translateY(24px);
+  filter: blur(6px);
+  transition:
+    opacity 0.8s var(--ease),
+    transform 0.8s var(--ease),
+    filter 0.8s var(--ease);
+}
+
+.cya-reveal.is-visible {
+  opacity: 1;
+  transform: none;
+  filter: none;
+}
+
+/* ── NAVBAR (slim) ──────────────────────────────── */
+.cya-nav {
+  position: sticky;
+  top: 0;
+  z-index: 60;
+  background: color-mix(in srgb, var(--bg) 84%, transparent);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-bottom: 1px solid transparent;
+  transition:
+    border-color 0.3s var(--ease),
+    box-shadow 0.3s var(--ease);
+}
+
+.cya-nav.is-scrolled {
+  border-bottom-color: var(--line);
+  box-shadow: var(--shadow-soft);
+}
+
+@media (prefers-reduced-transparency: reduce) {
+  .cya-nav {
+    background: var(--bg);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+  }
+}
+
+/* scroll sentinel: absolute at document top, observed by useScrolled */
+.cya-nav__sentinel {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 1px;
+  height: 1px;
+  pointer-events: none;
+}
+
+.cya-nav__inner {
+  width: min(1160px, calc(100% - 48px));
+  margin-inline: auto;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.cya-nav__brand {
+  font-family: var(--font-serif);
+  font-weight: 600;
+  font-size: 25px;
+  color: var(--ink);
+  letter-spacing: -0.01em;
+}
+
+.cya-nav__brand span {
+  color: var(--accent);
+}
+
+/* ── HERO — "Meet the team" ─────────────────────── */
+.cya-hero {
+  position: relative;
+  text-align: center;
+  /* hero top-padding cap: 96px (pt-24); bottom band → 96px (macro whitespace) */
+  padding: clamp(56px, 9vh, 96px) 0 clamp(56px, 8vh, 96px);
+  background: radial-gradient(
+    70% 78% at 50% 0%,
+    color-mix(in srgb, var(--sage) 28%, var(--bg)) 0%,
+    transparent 72%
+  );
+}
+
+/* thin closing rule — echoes the sprig, grounds the section */
+.cya-hero::after {
+  content: "";
+  display: block;
+  width: 76px;
+  height: 1px;
+  margin: clamp(36px, 6vh, 56px) auto 0;
+  background: color-mix(in srgb, var(--accent) 42%, transparent);
+}
+
+.cya-hero__inner {
+  position: relative;
+  display: grid;
+  justify-items: center;
+  gap: 24px;
+}
+
+/* pill eyebrow badge */
+.cya-hero__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 14px;
+  font: 600 10px/1 var(--font-sans);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  background: color-mix(in srgb, var(--sage) 40%, var(--bg));
+  border: 1px solid color-mix(in srgb, var(--accent) 16%, transparent);
+  border-radius: var(--r-pill);
+}
+
+.cya-hero__sprig {
+  flex: none;
+}
+
+.cya-hero__title em {
+  font-style: italic;
+  font-weight: 400;
+  color: var(--accent);
+  letter-spacing: -0.005em;
+  padding-inline: 0.03em;
+}
+
+.cya-hero__intro {
+  max-width: 46ch;
+  font-size: clamp(16.5px, 1.7vw, 19px);
+  line-height: 1.65;
+  color: var(--text);
+}
+
+/* ── TEAM (signature) ───────────────────────────── */
+.cya-team {
+  /* top padding == group-label margin-top: first label has equal air above/below */
+  padding: clamp(48px, 6vw, 80px) 0 clamp(96px, 14vh, 160px);
+}
+
+.cteam__grid {
+  display: flex;
+  flex-direction: column;
+  /* spacing lives on the label (margin-top = margin-bottom) so every
+     group header sits in equal air; reveal drop (24px) stays inside it */
+  gap: 0;
+}
+
+.cteam__group {
+  text-align: center;
+}
+
+.cteam__grid .cteam__group-label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  font: 600 12px/1 var(--font-sans);
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--accent);
+  /* specificity 0-2-0: beats the .cya-page p {margin:0} reset.
+     Air above (48–80) keeps group rhythm; below sits tighter to its cards. */
+  margin-top: clamp(48px, 6vw, 80px);
+  margin-bottom: clamp(32px, 4vw, 56px);
+}
+
+/* first label: section padding supplies the air above (no double stack) */
+.cteam__grid .cteam__group:first-child .cteam__group-label {
+  margin-top: 0;
+}
+
+.cteam__group-label span {
+  width: clamp(40px, 8vw, 120px);
+  height: 1px;
+  background: color-mix(in srgb, var(--accent) 32%, transparent);
+}
+
+.cteam__row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: clamp(20px, 3vw, 36px);
+}
+
+/* card — square cell, double-bezel: outer shell + inner core, fixed footprint */
+.tcard {
+  position: relative;
+  width: min(200px, calc((100% - 24px) / 2));
+  aspect-ratio: 1;
+  padding: 6px;
+  background: color-mix(in srgb, var(--paper) 70%, var(--bg));
+  border: 1px solid var(--line);
+  border-radius: var(--r-xl);
+  text-align: left;
+  transition:
+    background-color var(--dur) var(--ease),
+    border-color var(--dur) var(--ease),
+    box-shadow var(--dur) var(--ease),
+    transform var(--dur) var(--ease);
+}
+
+/* inner core — concentric radius, machined top highlight.
+   Flow grid (1fr portrait / auto meta): meta can never overlap the image —
+   portrait shrinks to whatever space the name block leaves. */
+.tcard__core {
+  position: relative;
+  display: grid;
+  grid-template-rows: 1fr auto;
+  gap: clamp(8px, 5%, 12px);
+  width: 100%;
+  height: 100%;
+  padding: 7% 6%;
+  background: color-mix(in srgb, var(--sand) 24%, var(--paper));
+  border-radius: calc(var(--r-xl) - 6px);
+  box-shadow: inset 0 1px 0 var(--inset-hi);
+  transition:
+    background-color var(--dur) var(--ease),
+    box-shadow var(--dur) var(--ease);
+}
+
+.tcard__figure {
+  position: relative;
+  min-height: 0;
+  height: 100%;
+  aspect-ratio: 1;
+  justify-self: start;
+}
+
+.tcard__portrait {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  overflow: hidden;
+  background: var(--sand);
+}
+
+.tcard__portrait img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  filter: grayscale(1) contrast(1.06);
+  transition: transform var(--dur) var(--ease);
+}
+
+.tcard__initials {
+  display: grid;
+  place-items: center;
+  width: 100%;
+  height: 100%;
+  font-family: var(--font-serif);
+  font-size: clamp(26px, 12cqw, 40px);
+  font-weight: 500;
+  color: var(--accent);
+  background: var(--sand);
+  letter-spacing: 0.04em;
+}
+
+/* green duotone overlay */
+.tcard__tint {
+  position: absolute;
+  inset: 0;
+  background: var(--accent);
+  mix-blend-mode: color;
+  opacity: 0;
+  transition: opacity var(--dur) var(--ease);
+}
+
+/* drawn ring */
+.tcard__ring {
+  position: absolute;
+  inset: -6%;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.45s var(--ease);
+}
+
+.tcard__ring circle {
+  fill: none;
+  stroke: var(--on-deep);
+  stroke-width: 1.6;
+  stroke-dasharray: 471;
+  stroke-dashoffset: 471;
+  transform: rotate(-90deg);
+  transform-origin: 50% 50%;
+  transition: stroke-dashoffset 0.5s var(--ease);
+}
+
+/* name + role */
+.tcard__meta {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: auto 1fr;
+  column-gap: 8px;
+  row-gap: 2px;
+  transition:
+    transform var(--dur) var(--ease),
+    color var(--dur) var(--ease);
+}
+
+.tcard__bullet {
+  grid-row: 1;
+  width: 9px;
+  height: 9px;
+  margin-top: 6px;
+  border: 1.5px solid color-mix(in srgb, var(--ink) 55%, transparent);
+  border-radius: 50%;
+  transition: border-color var(--dur) var(--ease);
+}
+
+.tcard__name {
+  grid-row: 1;
+  font: 600 16px/1.25 var(--font-sans);
+  color: var(--ink);
+  transition: color var(--dur) var(--ease);
+}
+
+.tcard__role {
+  grid-column: 2;
+  font: 400 14px/1.35 var(--font-sans);
+  color: var(--text);
+  transition: color var(--dur) var(--ease);
+}
+
+/* hover — the only interaction: lift, straighten, tint, draw */
+@media (hover: hover) {
+  .tcard:hover {
+    background: color-mix(in srgb, var(--paper) 92%, var(--bg));
+    border-color: color-mix(in srgb, var(--accent) 30%, var(--line));
+    box-shadow: 0 18px 40px color-mix(in srgb, var(--accent-deep) 45%, transparent);
+    transform: translateY(-4px);
+  }
+
+  .tcard:hover .tcard__core {
+    background: var(--accent-deep);
+    box-shadow: inset 0 1px 0 color-mix(in srgb, var(--on-deep) 22%, transparent);
+  }
+
+  .tcard:hover .tcard__portrait img {
+    transform: scale(1.04);
+  }
+
+  .tcard:hover .tcard__tint {
+    opacity: 1;
+  }
+
+  .tcard:hover .tcard__ring {
+    opacity: 1;
+  }
+
+  .tcard:hover .tcard__ring circle {
+    stroke-dashoffset: 0;
+  }
+
+  .tcard:hover .tcard__meta {
+    transform: translateY(4px);
+  }
+
+  .tcard:hover .tcard__name {
+    color: var(--on-deep);
+  }
+
+  .tcard:hover .tcard__role {
+    color: color-mix(in srgb, var(--on-deep) 78%, transparent);
+  }
+
+  .tcard:hover .tcard__bullet {
+    border-color: color-mix(in srgb, var(--on-deep) 75%, transparent);
+  }
+}
+
+/* z-axis cascade — subtle card tilt, desktop pointers only, flat on mobile */
+@media (hover: hover) and (min-width: 768px) {
+  .cteam__row .tcard:nth-child(odd) {
+    --tilt: -1.5deg;
+  }
+
+  .cteam__row .tcard:nth-child(even) {
+    --tilt: 1.2deg;
+  }
+
+  .tcard {
+    transform: rotate(var(--tilt, 0deg));
+  }
+
+  .tcard:hover {
+    transform: rotate(0deg) translateY(-4px);
+  }
+}
+
+@media (max-width: 640px) {
+  .tcard__name {
+    font-size: 16px;
+  }
+
+  .tcard__role {
+    font-size: 14px;
+  }
+}
+
+/* ── RESPONSIVE: small screens ──────────────────── */
+@media (max-width: 640px) {
+  .cya-container {
+    width: min(1160px, calc(100% - 40px));
+  }
+
+  .cya-hero {
+    padding-top: clamp(64px, 12vh, 96px);
+  }
+}
+
+/* ── REDUCED MOTION ─────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  .cya-page *,
+  .cya-page *::before,
+  .cya-page *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    transition-delay: 0ms !important;
+  }
+
+  .cya-reveal {
+    opacity: 1;
+    transform: none;
+    filter: none;
+  }
+}
