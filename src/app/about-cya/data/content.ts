@@ -50,7 +50,7 @@ export const team: TeamMember[] = [
     role: "Animator",
     group: "Guides",
     // EDIT: swap for "/team/br-jeeson.jpg" once the real photo is uploaded
-    photo: "/cya/avatar-12.jpg",
+    photo: "/cya/Br._Jeeson.png",
   },
   {
     id: "br-amalek",
@@ -66,7 +66,7 @@ export const team: TeamMember[] = [
     role: "President",
     group: "Office Bearers",
     // EDIT: swap for "/team/celesia-francis.jpg" once the real photo is uploaded
-    photo: "/cya/avatar-44.jpg",
+    photo: "/cya/Celsia.png",
   },
   {
     id: "ajin-shaji",
@@ -74,7 +74,7 @@ export const team: TeamMember[] = [
     role: "Vice President",
     group: "Office Bearers",
     // EDIT: swap for "/team/ajin-shaji.jpg" once the real photo is uploaded
-    photo: "/cya/avatar-33.jpg",
+    photo: "/cya/Ajin.png",
   },
   {
     id: "joseph-martin",
@@ -82,7 +82,7 @@ export const team: TeamMember[] = [
     role: "Treasurer",
     group: "Office Bearers",
     // EDIT: swap for "/team/joseph-martin.jpg" once the real photo is uploaded
-    photo: "/cya/avatar-11.jpg",
+    photo: "/cya/Joseph.png",
   },
   {
     id: "megha-varghese",
@@ -90,7 +90,7 @@ export const team: TeamMember[] = [
     role: "Secretary",
     group: "Office Bearers",
     // EDIT: swap for "/team/megha-varghese.jpg" once the real photo is uploaded
-    photo: "/cya/avatar-47.jpg",
+    photo: "/cya/Megha.png",
   },
   {
     id: "albis-ipe",
@@ -114,7 +114,7 @@ export const team: TeamMember[] = [
     role: "Forane Executive 2",
     group: "Executives & Key Army",
     // EDIT: swap for "/team/ashwin.jpg" once the real photo is uploaded
-    photo: "/cya/avatar-68.jpg",
+    photo: "/cya/Ashwin.png",
   },
   {
     id: "kirthi",
@@ -122,7 +122,7 @@ export const team: TeamMember[] = [
     role: "Key Army 1",
     group: "Executives & Key Army",
     // EDIT: swap for "/team/kirthi.jpg" once the real photo is uploaded
-    photo: "/cya/avatar-26.jpg",
+    photo: "/cya/Kirthi.png",
   },
   {
     id: "aneetta",
@@ -130,6 +130,6 @@ export const team: TeamMember[] = [
     role: "Key Army 2",
     group: "Executives & Key Army",
     // EDIT: swap for "/team/aneetta.jpg" once the real photo is uploaded
-    photo: "/cya/avatar-9.jpg",
+    photo: "/cya/Aneetta.png",
   },
 ];
