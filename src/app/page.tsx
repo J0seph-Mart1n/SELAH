@@ -194,27 +194,27 @@ const timelineEvents: {
   color: string;
   description: string;
 }[] = [
-  // Sports Events
-  { title: "Opening March & Oath", start: 8, duration: 1, column: "sports", color: "#00b8e8", description: "Flag march & sportsmanship oath" },
-  { title: "Basketball Qualifiers", start: 9, duration: 2, column: "sports", color: "#00b8e8", description: "Group stage matches across courts" },
-  { title: "Volleyball Pool Rounds", start: 11, duration: 1.5, column: "sports", color: "#3b82f6", description: "Pool matches across 8 parish squads" },
-  { title: "Lunch Break", start: 12.5, duration: 0.5, column: "sports", color: "#8b9abb", description: "Refreshments & rest" },
-  { title: "Futsal Semi-Finals", start: 13, duration: 2, column: "sports", color: "#00b8e8", description: "Rapid 20-min halves on pro turf" },
-  { title: "Table Tennis Finals", start: 15, duration: 1.5, column: "sports", color: "#3b82f6", description: "Singles & doubles championship" },
-  { title: "Basketball Finals", start: 17, duration: 2, column: "sports", color: "#00b8e8", description: "Championship match under lights" },
-  { title: "Trophy Ceremony", start: 19, duration: 1, column: "sports", color: "#f69b22", description: "Awards & closing for sports" },
+    // Sports Events
+    { title: "Opening March & Oath", start: 8, duration: 1, column: "sports", color: "#00b8e8", description: "Flag march & sportsmanship oath" },
+    { title: "Basketball Qualifiers", start: 9, duration: 2, column: "sports", color: "#00b8e8", description: "Group stage matches across courts" },
+    { title: "Volleyball Pool Rounds", start: 11, duration: 1.5, column: "sports", color: "#3b82f6", description: "Pool matches across 8 parish squads" },
+    { title: "Lunch Break", start: 12.5, duration: 0.5, column: "sports", color: "#8b9abb", description: "Refreshments & rest" },
+    { title: "Futsal Semi-Finals", start: 13, duration: 2, column: "sports", color: "#00b8e8", description: "Rapid 20-min halves on pro turf" },
+    { title: "Table Tennis Finals", start: 15, duration: 1.5, column: "sports", color: "#3b82f6", description: "Singles & doubles championship" },
+    { title: "Basketball Finals", start: 17, duration: 2, column: "sports", color: "#00b8e8", description: "Championship match under lights" },
+    { title: "Trophy Ceremony", start: 19, duration: 1, column: "sports", color: "#f69b22", description: "Awards & closing for sports" },
 
-  // Cultural Events
-  { title: "Registration & Briefing", start: 8, duration: 1, column: "cultural", color: "#f69b22", description: "Participant check-in & stage briefing" },
-  { title: "Choral Choir", start: 9, duration: 1.5, column: "cultural", color: "#fa6347", description: "Sacred hymnody & four-part harmony" },
-  { title: "Solo Singing", start: 10.5, duration: 1.5, column: "cultural", color: "#f69b22", description: "Individual vocal performances" },
-  { title: "Group Dance", start: 12, duration: 1.5, column: "cultural", color: "#fa6347", description: "Choreographed cultural dance" },
-  { title: "Spoken Word & Poetry", start: 13.5, duration: 1, column: "cultural", color: "#f69b22", description: "Original rhythmic narratives" },
-  { title: "Skit / Drama", start: 14.5, duration: 2, column: "cultural", color: "#fa6347", description: "Sacred drama & theatrical showcase" },
-  { title: "Worship Band Showcase", start: 16.5, duration: 1.5, column: "cultural", color: "#f69b22", description: "Original compositions & hymn covers" },
-  { title: "Cultural Awards", start: 18, duration: 1, column: "cultural", color: "#fa6347", description: "Best performances & Spirit awards" },
-  { title: "Grand Worship Night", start: 19, duration: 1, column: "cultural", color: "#f69b22", description: "Multi-church worship concert finale" },
-];
+    // Cultural Events
+    { title: "Registration & Briefing", start: 8, duration: 1, column: "cultural", color: "#f69b22", description: "Participant check-in & stage briefing" },
+    { title: "Choral Choir", start: 9, duration: 1.5, column: "cultural", color: "#fa6347", description: "Sacred hymnody & four-part harmony" },
+    { title: "Solo Singing", start: 10.5, duration: 1.5, column: "cultural", color: "#f69b22", description: "Individual vocal performances" },
+    { title: "Group Dance", start: 12, duration: 1.5, column: "cultural", color: "#fa6347", description: "Choreographed cultural dance" },
+    { title: "Spoken Word & Poetry", start: 13.5, duration: 1, column: "cultural", color: "#f69b22", description: "Original rhythmic narratives" },
+    { title: "Skit / Drama", start: 14.5, duration: 2, column: "cultural", color: "#fa6347", description: "Sacred drama & theatrical showcase" },
+    { title: "Worship Band Showcase", start: 16.5, duration: 1.5, column: "cultural", color: "#f69b22", description: "Original compositions & hymn covers" },
+    { title: "Cultural Awards", start: 18, duration: 1, column: "cultural", color: "#fa6347", description: "Best performances & Spirit awards" },
+    { title: "Grand Worship Night", start: 19, duration: 1, column: "cultural", color: "#f69b22", description: "Multi-church worship concert finale" },
+  ];
 
 function App() {
   const isChiefGuestFinalized = false;
@@ -298,13 +298,13 @@ function App() {
               </strong>
             </div>
           </a>
-          <NavItems 
+          <NavItems
             items={[
               { name: "Registration", link: "#events" },
               { name: "Rules", link: "#delegations" },
-              { name: "About CYA", link: "#faq" },
+              { name: "About CYA", link: "/about-cya" },
               { name: "Gallery", link: "#faq" },
-            ]} 
+            ]}
           />
         </NavBody>
       </Navbar>
@@ -324,7 +324,7 @@ function App() {
           items={[
             { label: "Registration", link: "#events" },
             { label: "Rules", link: "#delegations" },
-            { label: "About CYA", link: "#faq" },
+            { label: "About CYA", link: "/about-cya" },
             { label: "Gallery", link: "#faq" },
           ] as any}
           colors={['#060d23', '#00b8e8', '#f69b22', '#fa6347']}
@@ -339,71 +339,71 @@ function App() {
           <div className="absolute inset-0 z-0 pointer-events-none">
           </div>
           <section className="hero relative z-10" id="about">
-          <div className="glow glow-coral" />
-          <div className="glow glow-gold" />
-          <div className="glow glow-cyan" />
-          <div className="hero-inner">
-            <h1>
-              <MorphingText texts={["SELAH", "सेलाह", "സേലാ", "סֶלָה", "SELAH"]} />
-              <br />
-              <span>2026</span>
-            </h1>
-            <p className="hero-subtitle">
-              Pause. Reflect and Lift Up
-              <br className="desktop-only" />{" "}
-            </p>
-            <div className="text-[#f69b22] font-semibold tracking-widest text-sm mt-8 uppercase text-center w-full">
-              Starting In
+            <div className="glow glow-coral" />
+            <div className="glow glow-gold" />
+            <div className="glow glow-cyan" />
+            <div className="hero-inner">
+              <h1>
+                <MorphingText texts={["SELAH", "सेलाह", "സേലാ", "סֶלָה", "SELAH"]} />
+                <br />
+                <span>2026</span>
+              </h1>
+              <p className="hero-subtitle">
+                Pause. Reflect and Lift Up
+                <br className="desktop-only" />{" "}
+              </p>
+              <div className="text-[#f69b22] font-semibold tracking-widest text-sm mt-8 uppercase text-center w-full">
+                Starting In
+              </div>
+              <div className="countdown" aria-label="Countdown to SELAH festival">
+                {[
+                  ["days", countdown.days],
+                  ["hours", countdown.hours],
+                  ["minutes", countdown.minutes],
+                  ["seconds", countdown.seconds],
+                ].map(([label, value], index) => (
+                  <div
+                    className={
+                      index === 0 || index === 3
+                        ? "count-cell highlight"
+                        : "count-cell"
+                    }
+                    key={label}
+                  >
+                    <strong>{String(value).padStart(2, "0")}</strong>
+                    <span>{label}</span>
+                  </div>
+                ))}
+              </div>
+              <div className="hero-actions flex !flex-row !flex-nowrap w-full sm:w-auto justify-center gap-3">
+                <a className="button button-primary button-large flex-1 sm:flex-none flex items-center justify-center gap-2 whitespace-nowrap px-2" href="#pricing">
+                  <Users size={17} /> Register
+                </a>
+                <a className="button button-outline button-large flex-1 sm:flex-none flex items-center justify-center gap-2 whitespace-nowrap px-2" href="#events">
+                  <Trophy size={17} /> Explore Events
+                </a>
+              </div>
             </div>
-            <div className="countdown" aria-label="Countdown to SELAH festival">
-              {[
-                ["days", countdown.days],
-                ["hours", countdown.hours],
-                ["minutes", countdown.minutes],
-                ["seconds", countdown.seconds],
-              ].map(([label, value], index) => (
-                <div
-                  className={
-                    index === 0 || index === 3
-                      ? "count-cell highlight"
-                      : "count-cell"
-                  }
-                  key={label}
-                >
-                  <strong>{String(value).padStart(2, "0")}</strong>
-                  <span>{label}</span>
-                </div>
-              ))}
-            </div>
-            <div className="hero-actions flex !flex-row !flex-nowrap w-full sm:w-auto justify-center gap-3">
-              <a className="button button-primary button-large flex-1 sm:flex-none flex items-center justify-center gap-2 whitespace-nowrap px-2" href="#pricing">
-                <Users size={17} /> Register
-              </a>
-              <a className="button button-outline button-large flex-1 sm:flex-none flex items-center justify-center gap-2 whitespace-nowrap px-2" href="#events">
-                <Trophy size={17} /> Explore Events
-              </a>
-            </div>
-          </div>
-        </section>
+          </section>
         </div>
 
         <section className="section prize-pool relative py-24" id="prizepool">
           <div className="absolute inset-0 bg-[#060d23] z-[-1]" />
           <div className="glow glow-gold opacity-30" />
           <div className="glow glow-cyan opacity-20" />
-          
+
           <div className="section-heading flex flex-col items-center text-center max-w-2xl mx-auto mb-20 px-4">
             <h2 className="text-4xl md:text-6xl font-black mb-6 text-white leading-tight">
               Mega <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#f69b22] to-[#fa6347]">Prize Pool</span>
             </h2>
-            <SparklesText 
+            <SparklesText
               className="text-4xl md:text-5xl font-black mb-1 leading-tight"
               colors={{ first: "#f69b22", second: "#fa6347" }}
               sparklesCount={12}
             >
               <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#f69b22] to-[#fa6347]">₹30,000</span>
             </SparklesText>
-           
+
           </div>
 
           <div className="flex flex-col lg:flex-row items-center lg:items-end justify-center gap-6 lg:gap-4 max-w-5xl mx-auto px-4 lg:px-8 mt-16 relative z-10 pb-8">
@@ -478,19 +478,19 @@ function App() {
           <div className="absolute inset-0 bg-[#060d23] z-[-1]" />
           <div className="glow glow-gold opacity-20" />
           <div className="glow glow-coral opacity-10" />
-          
+
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="section-heading flex flex-col items-center text-center max-w-2xl mx-auto mb-16 px-4">
               <h2 className="text-4xl md:text-5xl lg:text-6xl font-black mb-6 text-white leading-tight">
                 Special Chief <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#f69b22] to-[#fa6347]">Guest</span>
               </h2>
             </div>
-            
+
             {/* Chief Guest Feature Card */}
             <div className="max-w-5xl mx-auto p-8 sm:p-12 rounded-[32px] bg-gradient-to-b from-[#8b9abb]/10 to-[#0a1024] border border-[#8b9abb]/20 shadow-2xl relative overflow-hidden backdrop-blur-sm">
-              
+
               <div className="relative grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-                
+
                 {isChiefGuestFinalized ? (
                   <>
                     {/* Avatar / Dignitary Portrait Placeholder */}
@@ -505,10 +505,10 @@ function App() {
                         </div>
                       </div>
                     </div>
-                    
+
                     {/* Dignitary Bio & Keynote Details */}
                     <div className="lg:col-span-8 flex flex-col">
-                      
+
                       <h3 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white mb-2 leading-tight text-center lg:text-left">
                         Most Rev. Dr. Alexander Mor Baselios
                       </h3>
@@ -516,11 +516,11 @@ function App() {
                         <span className="px-3 py-1 rounded-md bg-[#00b8e8]/10 border border-[#00b8e8]/20 text-[#00b8e8] text-[10px] sm:text-xs font-bold uppercase tracking-widest">Chief Guest of Honor</span>
                         <span className="px-3 py-1 rounded-md bg-[#f69b22]/10 border border-[#f69b22]/20 text-[#f69b22] text-[10px] sm:text-xs font-bold uppercase tracking-widest">Olympic Ambassador</span>
                       </div>
-                      
+
                       <p className="text-[#8b9abb] text-sm md:text-base leading-relaxed mb-8 text-center lg:text-left">
                         Dr. Alexander Mor Baselios has spearheaded ecumenical youth movements across four continents, championing character-driven athletics and liturgical renewal. Joining him on the dais is former Olympic sprinter and Christian Youth Ambassador <span className="text-white font-bold">Marcus Vance</span>, leading the Opening Ceremony Dedication and Oath of Sportsmanship.
                       </p>
-                      
+
                     </div>
                   </>
                 ) : (
@@ -535,7 +535,7 @@ function App() {
                         </div>
                       </div>
                     </div>
-                    
+
                     <div className="lg:col-span-8 flex flex-col items-center lg:items-start text-center lg:text-left py-6">
                       <h3 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white mb-4 leading-tight">
                         <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#8b9abb] to-[#4a5568]">Revealing Soon</span>
@@ -551,14 +551,14 @@ function App() {
         {/* SPONSORSHIP SECTION */}
         <section className="section relative py-24" id="sponsors">
           <div className="absolute inset-0 bg-[#0a1024] z-[-1]" />
-          
+
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="section-heading flex flex-col items-center text-center max-w-2xl mx-auto mb-16 px-4">
               <h2 className="text-4xl md:text-5xl font-black mb-6 text-white leading-tight">
                 Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00b8e8] to-[#8b9abb]">Sponsors</span>
               </h2>
             </div>
-            
+
             <div className="w-[100vw] relative left-1/2 -translate-x-1/2 overflow-hidden py-4">
               <ScrollVelocity
                 scrollContainerRef={undefined}
@@ -575,7 +575,7 @@ function App() {
                 className="text-4xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#8b9abb] via-[#f69b22] to-[#8b9abb] tracking-[0.2em] uppercase inline-block py-2 mb-4 drop-shadow-[0_0_15px_rgba(246,155,34,0.3)]"
               />
             </div>
-            
+
             <div className="mt-16 text-center">
               <button className="relative inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50">
                 <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
@@ -690,7 +690,7 @@ function App() {
               />
             </div>
           ) : (
-            <MagicBento 
+            <MagicBento
               // @ts-expect-error inferred never[] from jsx component default prop
               cards={visibleEvents as any[]}
               gridClassName="event-grid"
@@ -930,10 +930,10 @@ function EventCardView({ card }: { card: EventCard }) {
         className="absolute inset-0 bg-cover bg-center transition-all duration-700 ease-out md:opacity-80 opacity-40 md:group-hover:scale-110 md:group-hover:opacity-30 mix-blend-screen pointer-events-none z-0"
         style={{ backgroundImage: `url(${card.image})` }}
       />
-      
+
       {/* Gradient overlay to ensure text remains highly readable */}
       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none z-0" />
-      
+
       {/* MagicBento native layout structure */}
       <div className="relative z-10 flex flex-col h-full justify-end">
         <div className="magic-bento-card__content">
