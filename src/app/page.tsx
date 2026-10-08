@@ -35,6 +35,7 @@ import {
   UserRound,
   Users,
 } from "lucide-react";
+import { SiInstagram } from "react-icons/si";
 
 type Track = "sports" | "culture" | "worship";
 
@@ -84,21 +85,63 @@ const eventCards: Record<Track, EventCard[]> = {
   ],
   culture: [
     {
-      title: "A Cappella & Choral Symphony",
+      title: "Group Dance",
       description:
         "Sacred hymnody reimagined through four-part harmony and original congregational ballads.",
       image:
         "https://lh3.googleusercontent.com/aida-public/AB6AXuCxGZxptsdpFYn8UC0NxBBJg2jsmri_oPNZM-ev2bsLnPxLCM0uaXVrtIgYCI4toDiSlc7aAT7AyiwUdfbi_Fk__A_R-Lhg8pk8aZTFlTgSsvlIDwFkT2oInxssjN_4DvTngPYFZFsxOXWWyRoad5Dp2DFTEVgdTSJn8PDKMaWBBew95xve4lu1JDzV-0QNnOzuxBbZVCQSAdZpNp8z7h77W09Tv1MNoYrB_1GhLmcOUmGN3WeXv9Hfbw",
     },
     {
-      title: "Contemporary Worship Battle",
+      title: "Short Film",
       description:
         "Original composition plus a classic hymn arrangement, scored for musicality and resonance.",
       image:
         "https://lh3.googleusercontent.com/aida-public/AB6AXuBroCxqgPOErw5rNoGbrtLdsfPVz8jOa9N7Z9hCZwQAOnSAr7M2Labw3MGEw_XNzQAleLoAnE4q6m5aeQQ7_y-W1--EQHK_wSxx_HFuV7HL3PIkJg5gKw8S1mpMv0DsKZAaxKi3NZyIDVbtNOHNph89vMfNfEuGPMUMvInYbvvah1AzbxxVBNtegs0x-_LN99HMV6f3CIoLwYEbKU4E9hJNjdPExCLABbXsrBwMH2pSki9R_H1E2ugmyA",
     },
     {
-      title: "Gospel Poetry & Sacred Drama",
+      title: "Live Painting",
+      description:
+        "Original rhythmic narratives addressing redemption, mental health, and contemporary faith.",
+      image:
+        "https://lh3.googleusercontent.com/aida-public/AB6AXuBYZLrutwH34A0Twoz6lajNO8lX6qCwANKRY_ApV6eMW-PNZdb8QdipYDrdZEboe5fyvZXDWfAhvyoDjz27cIUd93X8W_GxWp-mdkBcAlgLSuX9iKhwHXKtXsAe6qLvSReVTbkelvKXqgYf-CGAdxenP8m20N0ATZn4aW6p3aVwamlm6oyQuZrKU_jM5fMWGsklj7CwZXxFAYPVNE8aOk9_w9LexCRZb_KHLrpWqObMY8bAci4Z9XeR6w",
+    },
+    {
+      title: "Solo Singing",
+      description:
+        "Original rhythmic narratives addressing redemption, mental health, and contemporary faith.",
+      image:
+        "https://lh3.googleusercontent.com/aida-public/AB6AXuBYZLrutwH34A0Twoz6lajNO8lX6qCwANKRY_ApV6eMW-PNZdb8QdipYDrdZEboe5fyvZXDWfAhvyoDjz27cIUd93X8W_GxWp-mdkBcAlgLSuX9iKhwHXKtXsAe6qLvSReVTbkelvKXqgYf-CGAdxenP8m20N0ATZn4aW6p3aVwamlm6oyQuZrKU_jM5fMWGsklj7CwZXxFAYPVNE8aOk9_w9LexCRZb_KHLrpWqObMY8bAci4Z9XeR6w",
+    },
+    {
+      title: "Solo Dance",
+      description:
+        "Original rhythmic narratives addressing redemption, mental health, and contemporary faith.",
+      image:
+        "https://lh3.googleusercontent.com/aida-public/AB6AXuBYZLrutwH34A0Twoz6lajNO8lX6qCwANKRY_ApV6eMW-PNZdb8QdipYDrdZEboe5fyvZXDWfAhvyoDjz27cIUd93X8W_GxWp-mdkBcAlgLSuX9iKhwHXKtXsAe6qLvSReVTbkelvKXqgYf-CGAdxenP8m20N0ATZn4aW6p3aVwamlm6oyQuZrKU_jM5fMWGsklj7CwZXxFAYPVNE8aOk9_w9LexCRZb_KHLrpWqObMY8bAci4Z9XeR6w",
+    },
+    {
+      title: "Street Play / Nukkad Natak",
+      description:
+        "Original rhythmic narratives addressing redemption, mental health, and contemporary faith.",
+      image:
+        "https://lh3.googleusercontent.com/aida-public/AB6AXuBYZLrutwH34A0Twoz6lajNO8lX6qCwANKRY_ApV6eMW-PNZdb8QdipYDrdZEboe5fyvZXDWfAhvyoDjz27cIUd93X8W_GxWp-mdkBcAlgLSuX9iKhwHXKtXsAe6qLvSReVTbkelvKXqgYf-CGAdxenP8m20N0ATZn4aW6p3aVwamlm6oyQuZrKU_jM5fMWGsklj7CwZXxFAYPVNE8aOk9_w9LexCRZb_KHLrpWqObMY8bAci4Z9XeR6w",
+    },
+    {
+      title: "Mono Act",
+      description:
+        "Original rhythmic narratives addressing redemption, mental health, and contemporary faith.",
+      image:
+        "https://lh3.googleusercontent.com/aida-public/AB6AXuBYZLrutwH34A0Twoz6lajNO8lX6qCwANKRY_ApV6eMW-PNZdb8QdipYDrdZEboe5fyvZXDWfAhvyoDjz27cIUd93X8W_GxWp-mdkBcAlgLSuX9iKhwHXKtXsAe6qLvSReVTbkelvKXqgYf-CGAdxenP8m20N0ATZn4aW6p3aVwamlm6oyQuZrKU_jM5fMWGsklj7CwZXxFAYPVNE8aOk9_w9LexCRZb_KHLrpWqObMY8bAci4Z9XeR6w",
+    },
+    {
+      title: "Photography",
+      description:
+        "Original rhythmic narratives addressing redemption, mental health, and contemporary faith.",
+      image:
+        "https://lh3.googleusercontent.com/aida-public/AB6AXuBYZLrutwH34A0Twoz6lajNO8lX6qCwANKRY_ApV6eMW-PNZdb8QdipYDrdZEboe5fyvZXDWfAhvyoDjz27cIUd93X8W_GxWp-mdkBcAlgLSuX9iKhwHXKtXsAe6qLvSReVTbkelvKXqgYf-CGAdxenP8m20N0ATZn4aW6p3aVwamlm6oyQuZrKU_jM5fMWGsklj7CwZXxFAYPVNE8aOk9_w9LexCRZb_KHLrpWqObMY8bAci4Z9XeR6w",
+    },
+    {
+      title: "Music Band",
       description:
         "Original rhythmic narratives addressing redemption, mental health, and contemporary faith.",
       image:
@@ -294,12 +337,6 @@ function App() {
       <main id="top">
         <div className="relative w-full overflow-hidden">
           <div className="absolute inset-0 z-0 pointer-events-none">
-            <PrismaticBurst 
-              colors={["#00b8e8", "#f69b22", "#fa6347"]}
-              intensity={4}
-              speed={0.6}
-              rayCount={5}
-            />
           </div>
           <section className="hero relative z-10" id="about">
           <div className="glow glow-coral" />
@@ -832,32 +869,28 @@ function App() {
             </p>
           </div>
           <FooterColumn
-            title="Venues"
+            title="Quick Links"
             items={[
-              "Coliseum Complex",
-              "Grace Amphitheater",
-              "Festival Grounds",
-              "Lodging Campuses",
+              "Registration Form",
+              "Events",
+              "Rules",
+              "About CYA",
+              "Gallery"
             ]}
           />
-          <FooterColumn
-            title="Support"
-            items={[
-              "Team Portal",
-              "Spectator Passes",
-              "Rules & Conduct",
-              "Contact Us",
-            ]}
-          />
-          <FooterColumn
-            title="Legal"
-            items={[
-              "Sanctioning Info",
-              "Festival Charter",
-              "Safety Guidelines",
-              "Privacy Policy",
-            ]}
-          />
+          <div className="flex flex-col">
+            <h3 className="text-white font-semibold mb-4 text-sm tracking-widest">Follow Us</h3>
+            <div className="flex gap-4">
+              <a 
+                href="https://www.instagram.com/cyapune/" 
+                target="_blank" 
+                rel="noopener noreferrer" 
+                className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/70 hover:text-[#ffbd61] hover:bg-white/10 hover:border-white/20 hover:scale-110 transition-all duration-300 shadow-sm"
+              >
+               <SiInstagram />
+              </a>
+            </div>
+          </div>
         </div>
 
         {/* Massive Background Text */}
