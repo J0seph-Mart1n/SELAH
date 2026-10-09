@@ -21,22 +21,22 @@ const ProfileCardComponent = ({
   avatarUrl = '',
   iconUrl = '',
   grainUrl = '',
-  innerGradient,
+  innerGradient = '',
   behindGlowEnabled = true,
-  behindGlowColor,
-  behindGlowSize,
+  behindGlowColor = '',
+  behindGlowSize = '',
   className = '',
   enableTilt = true,
   enableMobileTilt = false,
   mobileTiltSensitivity = 5,
-  miniAvatarUrl,
+  miniAvatarUrl = '',
   name = 'Javi A. Torres',
   title = 'Software Engineer',
   handle = 'javicodes',
   status = 'Online',
   contactText = 'Contact',
   showUserInfo = true,
-  onContactClick
+  onContactClick = () => {}
 }) => {
   const wrapRef = useRef(null);
   const shellRef = useRef(null);
