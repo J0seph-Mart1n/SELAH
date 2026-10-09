@@ -27,7 +27,8 @@ export default function TeamCard({ member }: { member: TeamMember }) {
       grainUrl="/profilecard/grain.webp"
       behindGlowEnabled={true}
       behindGlowColor="#ffbd61"
-      innerGradient="linear-gradient(145deg, #2a2a2a 0%, #111111 100%)"
+      enableMobileTilt={false}
+      enableTilt={true}
     />
   );
 }

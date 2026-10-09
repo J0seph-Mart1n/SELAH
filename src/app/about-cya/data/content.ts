@@ -57,7 +57,7 @@ export const team: TeamMember[] = [
     role: "Co-Animator",
     group: "Animators",
     // EDIT: swap for "/team/br-amalek.jpg" once the real photo is uploaded
-    photo: "/cya/avatar-53.jpg",
+    photo: "/cya/Br._Amalek.png",
   },
   {
     id: "celesia-francis",
@@ -97,12 +97,12 @@ export const team: TeamMember[] = [
     role: "Joint Secretary",
     group: "Youth Members",
     // EDIT: swap for "/team/albis-ipe.jpg" once the real photo is uploaded
-    photo: "/cya/avatar-15.jpg",
+    photo: "/cya/Albis.png",
   },
   {
     id: "merlyn",
     name: "Merlyn Rosario",
-    role: "Forane Executive 1",
+    role: "Forane Rep",
     group: "Youth Members",
     // EDIT: swap for "/team/merlyn.jpg" once the real photo is uploaded
     photo: "/cya/avatar-45.jpg",
@@ -110,7 +110,7 @@ export const team: TeamMember[] = [
   {
     id: "ashwin",
     name: "Ashwin Sasi",
-    role: "Forane Executive 2",
+    role: "Forane Rep",
     group: "Youth Members",
     // EDIT: swap for "/team/ashwin.jpg" once the real photo is uploaded
     photo: "/cya/Ashwin.png",
@@ -118,7 +118,7 @@ export const team: TeamMember[] = [
   {
     id: "kirthi",
     name: "Kirthi Dominic",
-    role: "Key Army 1",
+    role: "Key Army Rep",
     group: "Youth Members",
     // EDIT: swap for "/team/kirthi.jpg" once the real photo is uploaded
     photo: "/cya/Kirthi.png",
@@ -126,7 +126,7 @@ export const team: TeamMember[] = [
   {
     id: "aneetta",
     name: "Aneetta Sabu",
-    role: "Key Army 2",
+    role: "Key Army Rep",
     group: "Youth Members",
     // EDIT: swap for "/team/aneetta.jpg" once the real photo is uploaded
     photo: "/cya/Aneetta.png",
