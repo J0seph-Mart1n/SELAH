@@ -263,13 +263,11 @@
   align-items: center;
   gap: 8px;
   padding: 7px 14px;
-  font: 600 10px/1 var(--font-sans);
+  font: 600 18px/1.2 var(--font-sans);
   letter-spacing: 0.2em;
   text-transform: uppercase;
   color: var(--accent);
-  background: color-mix(in srgb, var(--sage) 40%, var(--bg));
-  border: 1px solid color-mix(in srgb, var(--accent) 16%, transparent);
-  border-radius: var(--r-pill);
+
 }
 
 .cya-hero__sprig {
@@ -336,10 +334,39 @@
 }
 
 .cteam__row {
+  --cteam-gap: clamp(20px, 3vw, 40px);
+  --cteam-cols: 3;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: clamp(20px, 3vw, 36px);
+  align-items: flex-start;
+  gap: var(--cteam-gap);
+  max-width: 1000px;
+  margin-inline: auto;
+}
+
+/* each slot = exact column share of the row (gaps subtracted) */
+.cteam__row .pc-card-wrapper {
+  flex: 0 0 calc((100% - (var(--cteam-cols) - 1) * var(--cteam-gap)) / var(--cteam-cols));
+  max-width: calc((100% - (var(--cteam-cols) - 1) * var(--cteam-gap)) / var(--cteam-cols));
+  min-width: 0;
+}
+
+/* card is width-driven inside the team grid (base CSS is height-driven,
+   which made cards overflow their slot and collapse the gap) */
+.cteam__row .pc-card-wrapper .pc-card {
+  width: 100%;
+  height: auto;
+  max-height: none;
+  aspect-ratio: 0.718;
+}
+
+@media (max-width: 768px) {
+  .cteam__row {
+    --cteam-cols: 2;
+    --cteam-gap: 16px;
+    padding-inline: 4px;
+  }
 }
 
 /* card — square cell, double-bezel: outer shell + inner core, fixed footprint */

@@ -8,7 +8,6 @@ export default function Hero() {
       <div className="cya-container cya-hero__inner">
         <Reveal>
           <p className="cya-hero__eyebrow">
-            <Leaf className="cya-hero__sprig" size={16} strokeWidth={1.25} aria-hidden="true" />
             {hero.eyebrow}
           </p>
         </Reveal>

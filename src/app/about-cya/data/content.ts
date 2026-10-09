@@ -18,7 +18,7 @@ export const hero: HeroContent = {
   intro: "Twelve hearts, one mission. Faces you will recognise.",
 };
 
-export type TeamGroup = "Director" | "Guides" | "Office Bearers" | "Executives & Key Army";
+export type TeamGroup = "Director" | "Animators" | "Youth Members";
 
 export interface TeamMember {
   id: string;
@@ -30,9 +30,8 @@ export interface TeamMember {
 
 export const teamGroups: TeamGroup[] = [
   "Director",
-  "Guides",
-  "Office Bearers",
-  "Executives & Key Army",
+  "Animators",
+  "Youth Members",
 ];
 
 export const team: TeamMember[] = [
@@ -48,7 +47,7 @@ export const team: TeamMember[] = [
     id: "br-jeeson",
     name: "Br. Jeeson",
     role: "Animator",
-    group: "Guides",
+    group: "Animators",
     // EDIT: swap for "/team/br-jeeson.jpg" once the real photo is uploaded
     photo: "/cya/Br._Jeeson.png",
   },
@@ -56,15 +55,15 @@ export const team: TeamMember[] = [
     id: "br-amalek",
     name: "Br. Amalek",
     role: "Co-Animator",
-    group: "Guides",
+    group: "Animators",
     // EDIT: swap for "/team/br-amalek.jpg" once the real photo is uploaded
     photo: "/cya/avatar-53.jpg",
   },
   {
     id: "celesia-francis",
-    name: "Celesia Francis",
+    name: "Celsia Francis",
     role: "President",
-    group: "Office Bearers",
+    group: "Youth Members",
     // EDIT: swap for "/team/celesia-francis.jpg" once the real photo is uploaded
     photo: "/cya/Celsia.png",
   },
@@ -72,7 +71,7 @@ export const team: TeamMember[] = [
     id: "ajin-shaji",
     name: "Ajin Shaji",
     role: "Vice President",
-    group: "Office Bearers",
+    group: "Youth Members",
     // EDIT: swap for "/team/ajin-shaji.jpg" once the real photo is uploaded
     photo: "/cya/Ajin.png",
   },
@@ -80,7 +79,7 @@ export const team: TeamMember[] = [
     id: "joseph-martin",
     name: "Joseph Martin",
     role: "Treasurer",
-    group: "Office Bearers",
+    group: "Youth Members",
     // EDIT: swap for "/team/joseph-martin.jpg" once the real photo is uploaded
     photo: "/cya/Joseph.png",
   },
@@ -88,7 +87,7 @@ export const team: TeamMember[] = [
     id: "megha-varghese",
     name: "Megha Varghese",
     role: "Secretary",
-    group: "Office Bearers",
+    group: "Youth Members",
     // EDIT: swap for "/team/megha-varghese.jpg" once the real photo is uploaded
     photo: "/cya/Megha.png",
   },
@@ -96,39 +95,39 @@ export const team: TeamMember[] = [
     id: "albis-ipe",
     name: "Albis Ipe",
     role: "Joint Secretary",
-    group: "Office Bearers",
+    group: "Youth Members",
     // EDIT: swap for "/team/albis-ipe.jpg" once the real photo is uploaded
     photo: "/cya/avatar-15.jpg",
   },
   {
     id: "merlyn",
-    name: "Merlyn",
+    name: "Merlyn Rosario",
     role: "Forane Executive 1",
-    group: "Executives & Key Army",
+    group: "Youth Members",
     // EDIT: swap for "/team/merlyn.jpg" once the real photo is uploaded
     photo: "/cya/avatar-45.jpg",
   },
   {
     id: "ashwin",
-    name: "Ashwin",
+    name: "Ashwin Sasi",
     role: "Forane Executive 2",
-    group: "Executives & Key Army",
+    group: "Youth Members",
     // EDIT: swap for "/team/ashwin.jpg" once the real photo is uploaded
     photo: "/cya/Ashwin.png",
   },
   {
     id: "kirthi",
-    name: "Kirthi",
+    name: "Kirthi Dominic",
     role: "Key Army 1",
-    group: "Executives & Key Army",
+    group: "Youth Members",
     // EDIT: swap for "/team/kirthi.jpg" once the real photo is uploaded
     photo: "/cya/Kirthi.png",
   },
   {
     id: "aneetta",
-    name: "Aneetta",
+    name: "Aneetta Sabu",
     role: "Key Army 2",
-    group: "Executives & Key Army",
+    group: "Youth Members",
     // EDIT: swap for "/team/aneetta.jpg" once the real photo is uploaded
     photo: "/cya/Aneetta.png",
   },
