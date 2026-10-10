@@ -336,7 +336,12 @@ function App() {
 
       <main id="top">
         <div className="relative w-full overflow-hidden">
-          <div className="absolute inset-0 z-0 pointer-events-none">
+          <div className="absolute inset-0 z-0 pointer-events-none overflow-hidden flex items-center justify-center opacity-60 md:opacity-60">
+            <img 
+              src="/top_page/background_image.png" 
+              alt="SELAH 2026 Background" 
+              className="w-full h-full object-cover object-top md:object-[50%_20%]" 
+            />
           </div>
           <section className="hero relative z-10" id="about">
             <div className="glow glow-coral" />
@@ -352,30 +357,7 @@ function App() {
                 Pause. Reflect and Lift Up
                 <br className="desktop-only" />{" "}
               </p>
-              <div className="text-[#f69b22] font-semibold tracking-widest text-sm mt-8 uppercase text-center w-full">
-                Starting In
-              </div>
-              <div className="countdown" aria-label="Countdown to SELAH festival">
-                {[
-                  ["days", countdown.days],
-                  ["hours", countdown.hours],
-                  ["minutes", countdown.minutes],
-                  ["seconds", countdown.seconds],
-                ].map(([label, value], index) => (
-                  <div
-                    className={
-                      index === 0 || index === 3
-                        ? "count-cell highlight"
-                        : "count-cell"
-                    }
-                    key={label}
-                  >
-                    <strong>{String(value).padStart(2, "0")}</strong>
-                    <span>{label}</span>
-                  </div>
-                ))}
-              </div>
-              <div className="hero-actions flex !flex-row !flex-nowrap w-full sm:w-auto justify-center gap-3">
+              <div className="hero-actions flex !flex-row !flex-nowrap w-full sm:w-auto justify-center gap-3 mt-8">
                 <a className="button button-primary button-large flex-1 sm:flex-none flex items-center justify-center gap-2 whitespace-nowrap px-2" href="#pricing">
                   <Users size={17} /> Register
                 </a>

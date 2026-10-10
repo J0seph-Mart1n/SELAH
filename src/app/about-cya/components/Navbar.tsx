@@ -41,7 +41,7 @@ function Brand({ collapsible = false }: { collapsible?: boolean }) {
         }
       >
         <span className="cya-nav__brand">
-          CYA<span aria-hidden="true">.</span>
+          CYA<span aria-hidden="true"></span>
         </span>
       </div>
     </Link>
