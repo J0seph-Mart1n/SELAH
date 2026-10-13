@@ -12,7 +12,7 @@ import StaggeredMenu from "@/components/StaggeredMenu";
 // Same links as the SELAH home navbar; hash links point back to the home page.
 const NAV_LINKS = [
   { name: "Registration", link: "/#events" },
-  { name: "Rules", link: "/#delegations" },
+  { name: "Rules", link: "/rules" },
   { name: "About CYA", link: "/about-cya" },
   { name: "Gallery", link: "/#faq" },
 ];

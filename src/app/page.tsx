@@ -261,7 +261,7 @@ function App() {
           <NavItems
             items={[
               { name: "Registration", link: "#events" },
-              { name: "Rules", link: "#delegations" },
+              { name: "Rules", link: "/rules" },
               { name: "About CYA", link: "/about-cya" },
               { name: "Gallery", link: "#faq" },
             ]}
@@ -283,7 +283,7 @@ function App() {
           }
           items={[
             { label: "Registration", link: "#events" },
-            { label: "Rules", link: "#delegations" },
+            { label: "Rules", link: "/rules" },
             { label: "About CYA", link: "/about-cya" },
             { label: "Gallery", link: "#faq" },
           ] as any}
@@ -890,8 +890,34 @@ function App() {
 
 
 function EventCardView({ card }: { card: EventCard }) {
+  const slugMap: Record<string, string> = {
+    "Chess": "chess",
+    "Throwball": "throwball",
+    "Football": "football",
+    "Tug of War": "tug-of-war",
+    "Mixed Relay": "mixed-relay",
+    "Group Dance": "group-dance",
+    "Short Film": "short-film",
+    "Live Painting": "live-painting",
+    "Solo Singing": "solo-singing",
+    "Solo Dance": "solo-dance",
+    "Street Play / Nukkad Natak": "street-play",
+    "Mono Act": "mono-act",
+    "Photography": "photography",
+    "Music Band": "music-band",
+  };
+  const slug = slugMap[card.title] || "";
+  const ruleUrl = slug ? `/rules#${slug}` : "/rules";
+
   return (
     <>
+      {/* Clickable Overlay Link to Rules */}
+      <a 
+        href={ruleUrl} 
+        className="absolute inset-0 z-30 cursor-pointer" 
+        aria-label={`View rules for ${card.title}`} 
+      />
+
       {/* Background Image integrated beneath MagicBento's content */}
       <div
         className="absolute inset-0 bg-cover bg-center transition-all duration-700 ease-out md:opacity-80 opacity-40 md:group-hover:scale-110 md:group-hover:opacity-30 mix-blend-screen pointer-events-none z-0"
@@ -902,14 +928,14 @@ function EventCardView({ card }: { card: EventCard }) {
       <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none z-0" />
 
       {/* MagicBento native layout structure */}
-      <div className="relative z-10 flex flex-col h-full justify-end">
+      <div className="relative z-10 flex flex-col h-full justify-end pointer-events-none">
         <div className="magic-bento-card__content">
           <h2 className="magic-bento-card__title !font-bold !text-white !text-xl !mb-2 drop-shadow-md pr-12">{card.title}</h2>
           <p className="magic-bento-card__description !text-white/80 !opacity-100 line-clamp-3 pr-12">{card.description}</p>
         </div>
       </div>
       
-      <div className="absolute bottom-6 right-6 z-20 w-10 h-10 rounded-full flex items-center justify-center shrink-0 transition-all duration-300 opacity-100 translate-x-0 bg-blue-500/20 border border-blue-500/50 shadow-[0_0_15px_rgba(59,130,246,0.3)] md:opacity-0 md:-translate-x-4 md:bg-transparent md:border-transparent md:shadow-none md:group-hover:opacity-100 md:group-hover:translate-x-0 md:group-hover:bg-blue-500/20 md:group-hover:border-blue-500/50 md:group-hover:shadow-[0_0_15px_rgba(59,130,246,0.3)]">
+      <div className="absolute bottom-6 right-6 z-20 w-10 h-10 rounded-full flex items-center justify-center shrink-0 transition-all duration-300 opacity-100 translate-x-0 bg-blue-500/20 border border-blue-500/50 shadow-[0_0_15px_rgba(59,130,246,0.3)] md:opacity-0 md:-translate-x-4 md:bg-transparent md:border-transparent md:shadow-none md:group-hover:opacity-100 md:group-hover:translate-x-0 md:group-hover:bg-blue-500/20 md:group-hover:border-blue-500/50 md:group-hover:shadow-[0_0_15px_rgba(59,130,246,0.3)] pointer-events-none">
         <ArrowRight className="text-white w-5 h-5 transition-transform duration-300 md:group-hover:translate-x-0.5" />
       </div>
 
@@ -1023,12 +1049,29 @@ function Faq({
   );
 }
 function FooterColumn({ title, items }: { title: string; items: string[] }) {
+  const getHref = (item: string) => {
+    switch (item) {
+      case "Rules":
+        return "/rules";
+      case "About CYA":
+        return "/about-cya";
+      case "Events":
+        return "/#events";
+      case "Registration Form":
+        return "/#pricing";
+      case "Gallery":
+        return "/#faq";
+      default:
+        return "#top";
+    }
+  };
+
   return (
     <div>
       <h3>{title}</h3>
       <div className="footer-links">
         {items.map((item) => (
-          <a href="#top" key={item}>
+          <a href={getHref(item)} key={item}>
             {item}
           </a>
         ))}
