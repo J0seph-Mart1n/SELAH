@@ -52,35 +52,35 @@ const eventCards: Record<Track, EventCard[]> = {
       description:
         "Full-court FIBA rules, shot clock enforced, with regional officials and sudden-death overtime.",
       image:
-        "https://lh3.googleusercontent.com/aida-public/AB6AXuD_MgBQqlCaE0D9s9ikq9urx3TVRvWK4d_CXayjhBvlE4cma1QhTLrnABflk_QhfrS53J-VwSQNvpFUjgVir3mS37ZZKPb8jJXpagiQQw4Nj-f5GAHat9f2l9773nFtBAVvq9cMNX626l3FJe2-x1xE6yxrYIK_I_cDTvHA4q0U5HraS3NpXF4hnKfX-zspP268oCVxVMLbFfPrR5V2-uOGEYkPi-_cL1qXBEjwj5sM6gekATqtcYq9mQ",
+        "/events/chess.jpg",
     },
     {
       title: "Throwball",
       description:
         "Best of three sets with group double elimination leading to the stadium finals.",
       image:
-        "https://lh3.googleusercontent.com/aida-public/AB6AXuC1mLa9BPurNBgrm_siweKjUq5MdGfVpMihs3s7po7Zjm36ZuM45dSl0PMqVhBXPP8dpOLFgO1-dP7o3B6oZEzGRg6Dp5EgBzNuN4wa_mBrlZO8t9PlgDceSp8oJMG-zQN7WcsvZXD_P_zAQ26zc-a6vvqWzRFaoopdqp_tamBB_m_HBTf1TUCiBivmhJWLxzymom_HcvGPNhH3I8HG9-kPjS0l3sBoPjHLmc3W8Y2b-hGPyK_4BsSb8w",
+        "events/Throwball.jpg",
     },
     {
       title: "Football",
       description:
         "Rapid 20-minute halves on pro turf surfaces. Precision touch, discipline, and teamwork.",
       image:
-        "https://lh3.googleusercontent.com/aida-public/AB6AXuBSxQNHKGeYPkw7aYNJFG69KqXRdf0_Gv3tMkvC_nw5eQAV4_ua-4DP1SXo496cum1ys80Z4OKE39Ggxx0YS-OKvprWtjX34bwrjdkIlkZKsRoryo_VVfmCYZavPwv_r-QBxOqDUXdpdfbfALFiqCiGLCVbGrKmxG2LMVZ2JeYbw730AANbEeXhgvVcrQEcF60S9bbv-T9aqxel8bYxQQZ2fNdnMpS2Ae9reeTSQ2PID2PgtcwPvmdmWw",
+        "/events/Football.jpg",
     },
     {
       title: "Tug of War",
       description:
         "Rapid 20-minute halves on pro turf surfaces. Precision touch, discipline, and teamwork.",
       image:
-        "https://lh3.googleusercontent.com/aida-public/AB6AXuBSxQNHKGeYPkw7aYNJFG69KqXRdf0_Gv3tMkvC_nw5eQAV4_ua-4DP1SXo496cum1ys80Z4OKE39Ggxx0YS-OKvprWtjX34bwrjdkIlkZKsRoryo_VVfmCYZavPwv_r-QBxOqDUXdpdfbfALFiqCiGLCVbGrKmxG2LMVZ2JeYbw730AANbEeXhgvVcrQEcF60S9bbv-T9aqxel8bYxQQZ2fNdnMpS2Ae9reeTSQ2PID2PgtcwPvmdmWw",
+        "/events/TugOfWar.jpg",
     },
     {
       title: "Mixed Relay",
       description:
         "Rapid 20-minute halves on pro turf surfaces. Precision touch, discipline, and teamwork.",
       image:
-        "https://lh3.googleusercontent.com/aida-public/AB6AXuBSxQNHKGeYPkw7aYNJFG69KqXRdf0_Gv3tMkvC_nw5eQAV4_ua-4DP1SXo496cum1ys80Z4OKE39Ggxx0YS-OKvprWtjX34bwrjdkIlkZKsRoryo_VVfmCYZavPwv_r-QBxOqDUXdpdfbfALFiqCiGLCVbGrKmxG2LMVZ2JeYbw730AANbEeXhgvVcrQEcF60S9bbv-T9aqxel8bYxQQZ2fNdnMpS2Ae9reeTSQ2PID2PgtcwPvmdmWw",
+        "/events/MixedRelay.jpg",
     },
   ],
   culture: [
@@ -89,102 +89,67 @@ const eventCards: Record<Track, EventCard[]> = {
       description:
         "Sacred hymnody reimagined through four-part harmony and original congregational ballads.",
       image:
-        "https://lh3.googleusercontent.com/aida-public/AB6AXuCxGZxptsdpFYn8UC0NxBBJg2jsmri_oPNZM-ev2bsLnPxLCM0uaXVrtIgYCI4toDiSlc7aAT7AyiwUdfbi_Fk__A_R-Lhg8pk8aZTFlTgSsvlIDwFkT2oInxssjN_4DvTngPYFZFsxOXWWyRoad5Dp2DFTEVgdTSJn8PDKMaWBBew95xve4lu1JDzV-0QNnOzuxBbZVCQSAdZpNp8z7h77W09Tv1MNoYrB_1GhLmcOUmGN3WeXv9Hfbw",
+        "/events/GroupDance.jpg",
     },
     {
       title: "Short Film",
       description:
         "Original composition plus a classic hymn arrangement, scored for musicality and resonance.",
       image:
-        "https://lh3.googleusercontent.com/aida-public/AB6AXuBroCxqgPOErw5rNoGbrtLdsfPVz8jOa9N7Z9hCZwQAOnSAr7M2Labw3MGEw_XNzQAleLoAnE4q6m5aeQQ7_y-W1--EQHK_wSxx_HFuV7HL3PIkJg5gKw8S1mpMv0DsKZAaxKi3NZyIDVbtNOHNph89vMfNfEuGPMUMvInYbvvah1AzbxxVBNtegs0x-_LN99HMV6f3CIoLwYEbKU4E9hJNjdPExCLABbXsrBwMH2pSki9R_H1E2ugmyA",
+        "/events/ShortFilm.jpg",
     },
     {
       title: "Live Painting",
       description:
         "Original rhythmic narratives addressing redemption, mental health, and contemporary faith.",
       image:
-        "https://lh3.googleusercontent.com/aida-public/AB6AXuBYZLrutwH34A0Twoz6lajNO8lX6qCwANKRY_ApV6eMW-PNZdb8QdipYDrdZEboe5fyvZXDWfAhvyoDjz27cIUd93X8W_GxWp-mdkBcAlgLSuX9iKhwHXKtXsAe6qLvSReVTbkelvKXqgYf-CGAdxenP8m20N0ATZn4aW6p3aVwamlm6oyQuZrKU_jM5fMWGsklj7CwZXxFAYPVNE8aOk9_w9LexCRZb_KHLrpWqObMY8bAci4Z9XeR6w",
+        "/events/Painting.jpg",
     },
     {
       title: "Solo Singing",
       description:
         "Original rhythmic narratives addressing redemption, mental health, and contemporary faith.",
       image:
-        "https://lh3.googleusercontent.com/aida-public/AB6AXuBYZLrutwH34A0Twoz6lajNO8lX6qCwANKRY_ApV6eMW-PNZdb8QdipYDrdZEboe5fyvZXDWfAhvyoDjz27cIUd93X8W_GxWp-mdkBcAlgLSuX9iKhwHXKtXsAe6qLvSReVTbkelvKXqgYf-CGAdxenP8m20N0ATZn4aW6p3aVwamlm6oyQuZrKU_jM5fMWGsklj7CwZXxFAYPVNE8aOk9_w9LexCRZb_KHLrpWqObMY8bAci4Z9XeR6w",
+        "/events/SoloSinging.jpeg",
     },
     {
       title: "Solo Dance",
       description:
         "Original rhythmic narratives addressing redemption, mental health, and contemporary faith.",
       image:
-        "https://lh3.googleusercontent.com/aida-public/AB6AXuBYZLrutwH34A0Twoz6lajNO8lX6qCwANKRY_ApV6eMW-PNZdb8QdipYDrdZEboe5fyvZXDWfAhvyoDjz27cIUd93X8W_GxWp-mdkBcAlgLSuX9iKhwHXKtXsAe6qLvSReVTbkelvKXqgYf-CGAdxenP8m20N0ATZn4aW6p3aVwamlm6oyQuZrKU_jM5fMWGsklj7CwZXxFAYPVNE8aOk9_w9LexCRZb_KHLrpWqObMY8bAci4Z9XeR6w",
+        "/events/SoloDancing.avif",
     },
     {
       title: "Street Play / Nukkad Natak",
       description:
         "Original rhythmic narratives addressing redemption, mental health, and contemporary faith.",
       image:
-        "https://lh3.googleusercontent.com/aida-public/AB6AXuBYZLrutwH34A0Twoz6lajNO8lX6qCwANKRY_ApV6eMW-PNZdb8QdipYDrdZEboe5fyvZXDWfAhvyoDjz27cIUd93X8W_GxWp-mdkBcAlgLSuX9iKhwHXKtXsAe6qLvSReVTbkelvKXqgYf-CGAdxenP8m20N0ATZn4aW6p3aVwamlm6oyQuZrKU_jM5fMWGsklj7CwZXxFAYPVNE8aOk9_w9LexCRZb_KHLrpWqObMY8bAci4Z9XeR6w",
+        "events/StreetPlay.jpg",
     },
     {
       title: "Mono Act",
       description:
         "Original rhythmic narratives addressing redemption, mental health, and contemporary faith.",
       image:
-        "https://lh3.googleusercontent.com/aida-public/AB6AXuBYZLrutwH34A0Twoz6lajNO8lX6qCwANKRY_ApV6eMW-PNZdb8QdipYDrdZEboe5fyvZXDWfAhvyoDjz27cIUd93X8W_GxWp-mdkBcAlgLSuX9iKhwHXKtXsAe6qLvSReVTbkelvKXqgYf-CGAdxenP8m20N0ATZn4aW6p3aVwamlm6oyQuZrKU_jM5fMWGsklj7CwZXxFAYPVNE8aOk9_w9LexCRZb_KHLrpWqObMY8bAci4Z9XeR6w",
+        "/events/MonoAct.avif",
     },
     {
       title: "Photography",
       description:
         "Original rhythmic narratives addressing redemption, mental health, and contemporary faith.",
       image:
-        "https://lh3.googleusercontent.com/aida-public/AB6AXuBYZLrutwH34A0Twoz6lajNO8lX6qCwANKRY_ApV6eMW-PNZdb8QdipYDrdZEboe5fyvZXDWfAhvyoDjz27cIUd93X8W_GxWp-mdkBcAlgLSuX9iKhwHXKtXsAe6qLvSReVTbkelvKXqgYf-CGAdxenP8m20N0ATZn4aW6p3aVwamlm6oyQuZrKU_jM5fMWGsklj7CwZXxFAYPVNE8aOk9_w9LexCRZb_KHLrpWqObMY8bAci4Z9XeR6w",
+        "/events/Photography.jpg",
     },
     {
       title: "Music Band",
       description:
         "Original rhythmic narratives addressing redemption, mental health, and contemporary faith.",
       image:
-        "https://lh3.googleusercontent.com/aida-public/AB6AXuBYZLrutwH34A0Twoz6lajNO8lX6qCwANKRY_ApV6eMW-PNZdb8QdipYDrdZEboe5fyvZXDWfAhvyoDjz27cIUd93X8W_GxWp-mdkBcAlgLSuX9iKhwHXKtXsAe6qLvSReVTbkelvKXqgYf-CGAdxenP8m20N0ATZn4aW6p3aVwamlm6oyQuZrKU_jM5fMWGsklj7CwZXxFAYPVNE8aOk9_w9LexCRZb_KHLrpWqObMY8bAci4Z9XeR6w",
+        "/events/MusicBand.jpg",
     },
   ],
   worship: [],
 };
-
-const delegations = [
-  {
-    initials: "GC",
-    name: "Grace City Chapel",
-    location: "Metro Central · 64 Athletes",
-    badge: "2024 Champion",
-    tags: ["Basketball", "Volleyball", "Gospel Choir"],
-    accent: "gold",
-  },
-  {
-    initials: "RU",
-    name: "Redeemer United",
-    location: "North Bay Diocese · 52 Athletes",
-    badge: "Runner Up",
-    tags: ["Futsal", "Track Sprint", "Worship Band"],
-    accent: "coral",
-  },
-  {
-    initials: "ZY",
-    name: "Zion Youth Cathedral",
-    location: "South Ridge · 40 Athletes",
-    badge: "New Entry",
-    tags: ["Basketball", "Spoken Word", "Sacred Arts"],
-    accent: "cyan",
-  },
-  {
-    initials: "TF",
-    name: "Trinity Metro Fellowship",
-    location: "West Valley · 48 Athletes",
-    badge: "Arts Cup Winner",
-    tags: ["Choral Choir", "Badminton", "Drama"],
-    accent: "gold",
-  },
-];
 
 const timelineEvents: {
   title: string;
@@ -280,11 +245,6 @@ function App() {
     return () => window.clearTimeout(timer);
   }, [anthemPlaying]);
 
-  const filteredDelegations = delegations.filter(
-    (delegation) =>
-      delegation.name.toLowerCase().includes(query.toLowerCase()) ||
-      delegation.location.toLowerCase().includes(query.toLowerCase()),
-  );
   const visibleEvents = eventCards[track];
 
   return (
@@ -407,14 +367,14 @@ function App() {
               colors={{ first: "#f69b22", second: "#fa6347" }}
               sparklesCount={12}
             >
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#f69b22] to-[#fa6347]">₹30,000</span>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#f69b22] to-[#fa6347]">₹45,000</span>
             </SparklesText>
 
           </div>
 
-          <div className="flex flex-col lg:flex-row items-center lg:items-end justify-center gap-6 lg:gap-4 max-w-5xl mx-auto px-4 lg:px-8 mt-16 relative z-10 pb-8">
+          <div className="flex flex-col lg:flex-row items-center lg:items-end justify-center gap-8 lg:gap-8 xl:gap-10 max-w-6xl mx-auto px-4 lg:px-8 mt-16 relative z-10 pb-8">
             {/* 2nd Prize */}
-            <div className="w-full lg:w-1/3 order-2 lg:order-1 relative lg:-mt-10 lg:hover:-translate-y-4 transition-transform duration-500 z-10">
+            <div className="w-full lg:flex-1 max-w-md lg:max-w-none order-2 lg:order-1 relative lg:-mt-10 lg:hover:-translate-y-4 transition-transform duration-500 z-10">
               <BorderGlow 
                 glowColor="210 40 96" // Silver-ish
                 backgroundColor="#0a1024"
@@ -429,13 +389,13 @@ function App() {
                      <Medal className="text-slate-300" size={56} strokeWidth={1.5} />
                   </div>
                   <h3 className="text-slate-300 text-xl font-bold tracking-[0.2em] uppercase mb-2 drop-shadow-md">2nd Prize</h3>
-                  <div className="text-3xl lg:text-4xl font-black text-white tracking-tight">₹10,000</div>
+                  <div className="text-3xl lg:text-4xl font-black text-white tracking-tight">₹15,000</div>
                 </div>
               </BorderGlow>
             </div>
 
             {/* 1st Prize */}
-            <div className="w-full lg:w-1/3 order-1 lg:order-2 relative z-20 lg:-translate-y-6 lg:scale-110 lg:hover:-translate-y-10 transition-transform duration-500">
+            <div className="w-full lg:flex-1 max-w-md lg:max-w-none order-1 lg:order-2 relative z-20 lg:-translate-y-6 lg:scale-105 lg:hover:-translate-y-10 transition-transform duration-500">
               <BorderGlow 
                 glowColor="45 93 54" // Gold
                 backgroundColor="#060d23"
@@ -452,13 +412,13 @@ function App() {
                      <Crown className="text-yellow-400" size={80} strokeWidth={1.5} />
                   </div>
                   <h3 className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-yellow-600 text-2xl font-black tracking-[0.25em] uppercase mb-2 drop-shadow-lg">1st Prize</h3>
-                  <div className="text-3xl lg:text-4xl font-black text-white tracking-tight drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]">₹15,000</div>
+                  <div className="text-3xl lg:text-4xl font-black text-white tracking-tight drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]">₹20,000</div>
                 </div>
               </BorderGlow>
             </div>
 
             {/* 3rd Prize */}
-            <div className="w-full lg:w-1/3 order-3 lg:order-3 relative lg:-mt-10 lg:hover:-translate-y-4 transition-transform duration-500 z-10">
+            <div className="w-full lg:flex-1 max-w-md lg:max-w-none order-3 lg:order-3 relative lg:-mt-10 lg:hover:-translate-y-4 transition-transform duration-500 z-10">
               <BorderGlow 
                 glowColor="28 61 49" // Bronze
                 backgroundColor="#0a1024"
@@ -473,7 +433,7 @@ function App() {
                      <Medal className="text-[#cd7f32]" size={56} strokeWidth={1.5} />
                   </div>
                   <h3 className="text-[#cd7f32] text-xl font-bold tracking-[0.2em] uppercase mb-2 drop-shadow-md">3rd Prize</h3>
-                  <div className="text-3xl lg:text-4xl font-black text-white tracking-tight">₹5,000</div>
+                  <div className="text-3xl lg:text-4xl font-black text-white tracking-tight">₹10,000</div>
                 </div>
               </BorderGlow>
             </div>
@@ -602,7 +562,7 @@ function App() {
               </h2>
             </div>
             
-            <div className="max-w-5xl mx-auto bg-gradient-to-b from-[#f69b22] to-[#fa6347] rounded-[32px] shadow-[0_20px_50px_rgba(246,155,34,0.3)] relative overflow-hidden flex flex-col md:flex-row border border-[#f69b22]/50">
+            <div className="max-w-5xl mx-auto bg-gradient-to-b from-[#f69b22] to-[#fa6347] rounded-[32px] shadow-[0_20px_50px_rgba(246,155,34,0.3)] relative overflow-hidden flex flex-col md:flex-row">
               {/* Left Side - Full Height Image */}
               <div className="w-full md:w-5/12 min-h-[350px] relative flex-shrink-0">
                 {/* 
@@ -610,6 +570,7 @@ function App() {
                   Replace this src with the actual photo of Father Vicar.
                 */}
                 <img 
+                  src="/cya/Fr._Joy.jpeg"
                   alt="Father Vicar" 
                   className="absolute inset-0 w-full h-full object-cover"
                 />

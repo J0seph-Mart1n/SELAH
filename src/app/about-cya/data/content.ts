@@ -41,7 +41,7 @@ export const team: TeamMember[] = [
     role: "Director",
     group: "Director",
     // EDIT: swap for "/team/fr-joy-kakkanatu.jpg" once the real photo is uploaded
-    photo: "",
+    photo: "/cya/Fr._Joy_2.png",
   },
   {
     id: "br-jeeson",
@@ -57,7 +57,7 @@ export const team: TeamMember[] = [
     role: "Co-Animator",
     group: "Animators",
     // EDIT: swap for "/team/br-amalek.jpg" once the real photo is uploaded
-    photo: "/cya/Br._Amalek.png",
+    photo: "/cya/Br._Amalek_2.png",
   },
   {
     id: "celesia-francis",
@@ -105,7 +105,7 @@ export const team: TeamMember[] = [
     role: "Forane Rep",
     group: "Youth Members",
     // EDIT: swap for "/team/merlyn.jpg" once the real photo is uploaded
-    photo: "/cya/avatar-45.jpg",
+    photo: "/cya/Merlyn.png",
   },
   {
     id: "ashwin",
