@@ -15,15 +15,13 @@ import { MorphingText } from "@/components/ui/morphing-text";
 import BorderGlow from "@/components/BorderGlow";
 import ScrollVelocity from "@/components/ScrollVelocity";
 import MagicBento from "@/components/MagicBento";
-import ParticleText from '@/components/ParticleText';
+import Footer from "@/components/Footer";
 import {
   ArrowRight,
   Check,
   ChevronDown,
-  Church,
   Crown,
   Download,
-  Flame,
   Headphones,
   HeartHandshake,
   Medal,
@@ -35,9 +33,8 @@ import {
   UserRound,
   Users,
 } from "lucide-react";
-import { SiInstagram } from "react-icons/si";
 
-type Track = "sports" | "culture" | "worship";
+type Track = "sports" | "culture";
 
 type EventCard = {
   title: string;
@@ -148,7 +145,6 @@ const eventCards: Record<Track, EventCard[]> = {
         "/events/MusicBand.jpg",
     },
   ],
-  worship: [],
 };
 
 const timelineEvents: {
@@ -641,39 +637,22 @@ function App() {
               ))}
             </div>
           </div>
-          {track === "worship" ? (
-            <div className="worship-grid">
-              <WorshipCard
-                title="The Parade of Delegations & Night of Dedication"
-                icon={<Church />}
-                text="Every church delegation marches with parish flags into the primary stadium arena. Concluded with united communion, a 400-voice youth band, and pastoral prayer blessing."
-                time="Thursday, July 17 · 6:30 PM"
-              />
-              <WorshipCard
-                title="SELAH Grand Elevation Night & Concert"
-                icon={<Flame />}
-                text="Championship trophies, Spirit & Character Awards, and Kingdom Grants are awarded before an explosive multi-church worship concert."
-                time="Sunday, July 20 · 7:00 PM"
-              />
-            </div>
-          ) : (
-            <MagicBento
-              // @ts-expect-error inferred never[] from jsx component default prop
-              cards={visibleEvents as any[]}
-              gridClassName="event-grid"
-              cardClassName="event-bento-card group"
-              enableTilt={false}
-              enableBorderGlow={true}
-              enableMagnetism
-              enableStars={false}
-              enableSpotlight
-              spotlightRadius={460}
-              glowColor="59, 130, 246"
-              renderItem={(event: any) => (
-                <EventCardView card={event} />
-              )}
-            />
-          )}
+          <MagicBento
+            // @ts-expect-error inferred never[] from jsx component default prop
+            cards={visibleEvents as any[]}
+            gridClassName="event-grid"
+            cardClassName="event-bento-card group"
+            enableTilt={false}
+            enableBorderGlow={true}
+            enableMagnetism
+            enableStars={false}
+            enableSpotlight
+            spotlightRadius={460}
+            glowColor="59, 130, 246"
+            renderItem={(event: any) => (
+              <EventCardView card={event} />
+            )}
+          />
         </section>
 
         {/* Teams-style Calendar Timeline */}
@@ -818,72 +797,7 @@ function App() {
         </section>
       </main>
 
-      <footer className="site-footer relative overflow-hidden flex flex-col justify-between min-h-[500px] bg-[#050b20]">
-        <div className="footer-grid relative z-10 w-full max-w-7xl mx-auto px-6 md:px-12 pt-16">
-          <div className="flex flex-col h-full">
-            <a className="brand flex items-center gap-3 text-white mb-6" href="#top">
-              <div className="brand-mark bg-[#ffbd61] text-[#281506] p-1.5 rounded flex items-center justify-center">
-                <Sparkles size={18} />
-              </div>
-              <div className="text-xl font-bold tracking-wide">
-                SELAH
-              </div>
-            </a>
-            <p className="text-[#8492b1] text-sm leading-relaxed max-w-sm">
-              The official biennial inter-church youth cultural & sports
-              festival uniting congregations in athletics, creative expression,
-              and holy reverence.
-            </p>
-          </div>
-          <FooterColumn
-            title="Quick Links"
-            items={[
-              "Registration Form",
-              "Events",
-              "Rules",
-              "About CYA",
-              "Gallery"
-            ]}
-          />
-          <div className="flex flex-col">
-            <h3 className="text-white font-semibold mb-4 text-sm tracking-widest">Follow Us</h3>
-            <div className="flex gap-4">
-              <a 
-                href="https://www.instagram.com/cyapune/" 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/70 hover:text-[#ffbd61] hover:bg-white/10 hover:border-white/20 hover:scale-110 transition-all duration-300 shadow-sm"
-              >
-               <SiInstagram />
-              </a>
-            </div>
-          </div>
-        </div>
-
-        {/* Massive Background Text */}
-        <div className="w-full h-[20vw] min-h-[240px] flex justify-center items-end mt-auto select-none relative z-0 translate-y-[22%] overflow-hidden">
-          <ParticleText
-            style={{}}
-            text="SELAH"
-            particleSize={2.2}
-            density={5}
-            color="#ffffff"
-            highlightColor="#ffffff"
-            scatter={190}
-            gatherDuration={1600}
-            stagger={420}
-            pointerRepel={42}
-            repelRadius={120}
-            idleDrift={0.8}
-            trigger="click"
-            fontSize="24vw"
-            fontWeight={900}
-            fontFamily="inherit"
-            className="leading-none tracking-tighter opacity-40"
-            glow={false}
-          />
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 }
@@ -940,143 +854,6 @@ function EventCardView({ card }: { card: EventCard }) {
       </div>
 
     </>
-  );
-}
-function WorshipCard({
-  title,
-  icon,
-  text,
-  time,
-}: {
-  title: string;
-  icon: React.ReactNode;
-  text: string;
-  time: string;
-}) {
-  return (
-    <article className="worship-card">
-      <span className="worship-icon">{icon}</span>
-      <span className="eyebrow gold-text">OPEN TO ALL ATTENDEES</span>
-      <h3>{title}</h3>
-      <p>{text}</p>
-      <small>{time}</small>
-    </article>
-  );
-}
-function PriceCard({
-  title,
-  eyebrow,
-  price,
-  suffix,
-  text,
-  features,
-  button,
-  featured = false,
-}: {
-  title: string;
-  eyebrow: string;
-  price: string;
-  suffix: string;
-  text: string;
-  features: string[];
-  button: string;
-  featured?: boolean;
-}) {
-  return (
-    <article className={featured ? "price-card featured" : "price-card"}>
-      {featured && (
-        <span className="popular">MOST POPULAR · FULL DELEGATION</span>
-      )}
-      <span className="eyebrow">{eyebrow}</span>
-      <h3>{title}</h3>
-      <div className="price">
-        <strong>{price}</strong>
-        <span>{suffix}</span>
-      </div>
-      <p>{text}</p>
-      <ul>
-        {features.map((feature) => (
-          <li key={feature}>
-            <Check size={15} /> {feature}
-          </li>
-        ))}
-      </ul>
-      <button
-        className={featured ? "button button-primary" : "button button-quiet"}
-      >
-        {button}
-      </button>
-    </article>
-  );
-}
-function Faq({
-  openFaq,
-  setOpenFaq,
-}: {
-  openFaq: number | null;
-  setOpenFaq: (value: number | null) => void;
-}) {
-  const items = [
-    [
-      "Can two smaller churches combine to form one unified team?",
-      "Yes. Under the Unity Accord policy, smaller parishes can submit a joint delegation application under a combined fellowship name.",
-    ],
-    [
-      "What are the age brackets for the sports tournaments?",
-      "Competitions run in Junior Division for ages 13 to 17 and Senior Young Adults Division for ages 18 to 35.",
-    ],
-    [
-      "How are the $15,000 Kingdom Impact Grants decided?",
-      "Grants consider tournament results and the Spirit of SELAH character score, voted by refs, opposing teams, and volunteer coordinators.",
-    ],
-  ];
-  return (
-    <div className="faq" id="faq">
-      <h3>Frequently Asked Questions</h3>
-      {items.map(([question, answer], index) => (
-        <div className="faq-item" key={question}>
-          <button onClick={() => setOpenFaq(openFaq === index ? null : index)}>
-            <span>{question}</span>
-            <ChevronDown
-              className={openFaq === index ? "rotate" : ""}
-              size={16}
-            />
-          </button>
-          {openFaq === index && <p>{answer}</p>}
-        </div>
-      ))}
-    </div>
-  );
-}
-function FooterColumn({ title, items }: { title: string; items: string[] }) {
-  const getHref = (item: string) => {
-    switch (item) {
-      case "Rules":
-        return "/rules";
-      case "About CYA":
-        return "/about-cya";
-      case "Events":
-        return "/#events";
-      case "Registration Form":
-        return "/#pricing";
-      case "Gallery":
-        return "/#faq";
-      default:
-        return "#top";
-    }
-  };
-
-  return (
-    <div>
-      <h3>{title}</h3>
-      <div className="footer-links">
-        {items.map((item) => (
-          <a href={getHref(item)} key={item}>
-            {item}
-          </a>
-        ))}
-      </div>
-    </div>
   );
 }
 

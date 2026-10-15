@@ -21,7 +21,6 @@ export interface EventRule {
   keyHighlights: string[];
   rules: string[];
   judgingCriteria?: JudgingCriterion[];
-  importantNotes: string[];
 }
 
 export interface GeneralGuideline {
@@ -29,6 +28,65 @@ export interface GeneralGuideline {
   title: string;
   description: string;
 }
+
+export interface RulePointer {
+  title: string;
+  description: string;
+}
+
+export const CULTURAL_RULES: RulePointer[] = [
+  {
+    title: "Reporting & Sound Check",
+    description: "All solo performers and team captains must report to the stage coordinator 45 minutes prior to their scheduled slot. USB pen drives with high-quality tracks (MP3/WAV) must be submitted at the audio console upon reporting.",
+  },
+  {
+    title: "Time Limit & Warning Bells",
+    description: "Strict adherence to allotted time limits is mandatory. A warning bell will chime 1 minute prior to the limit, followed by a final bell. Exceeding the time limit incurs a penalty deduction from the total score.",
+  },
+  {
+    title: "Christian Theme & Decorum",
+    description: "All songs, scripts, dialogues, costumes, and dance themes must honor Christian values, modesty, and mutual respect. Any vulgar, suggestive, politically sensitive, or profane content leads to immediate disqualification.",
+  },
+  {
+    title: "Stage Setup & Props Policy",
+    description: "Teams are granted 2 minutes for stage setup and 1 minute for swift clearance. The use of fire, pyrotechnics, liquids, powder, colors, or materials that soil the stage floor is strictly prohibited.",
+  },
+  {
+    title: "Track & Live Music Guidelines",
+    description: "Backing tracks for singing competitions must be strictly instrumental with zero pre-recorded lead or backing vocals. Bands and live accompanists must adhere to sound check allocations.",
+  },
+  {
+    title: "Finality of Judges' Decision",
+    description: "Adjudication is conducted by an esteemed external panel based on announced rubrics. Their scoring and rankings are final and binding; no appeals or arguments at the stage or sound console will be entertained.",
+  },
+];
+
+export const SPORT_RULES: RulePointer[] = [
+  {
+    title: "Reporting Time & Walkovers",
+    description: "Teams must present their verified squad sheet to the pitch marshal 30 minutes before match kickoff. A 10-minute grace period applies, after which an automatic walkover is awarded to the opposing team.",
+  },
+  {
+    title: "Official Kit & Footwear",
+    description: "All players must wear matching parish jerseys with visible numbers. Flat turf trainers or rubber-molded shoes only; bare feet, street shoes, and metal-studded boots are strictly prohibited on all courts and turf arenas.",
+  },
+  {
+    title: "Mandatory Protective Gear",
+    description: "Essential safety gear (e.g. shin guards for football) must be worn by all active players. Watches, rings, chains, metal accessories, and loose eyewear must be removed prior to taking the field.",
+  },
+  {
+    title: "Substitutions & Rostering",
+    description: "Rolling substitutions must take place exclusively at the halfway line with the referee's permission. Only officially registered and verified parish delegates are eligible; spot additions lead to team disqualification.",
+  },
+  {
+    title: "Fair Play & Disciplinary Cards",
+    description: "SELAH upholds Christian sportsmanship. Dissent, aggressive conduct, vulgar language, or intentional fouls will incur yellow/red cards. Two yellow cards across the tournament or a red card warrants a match ban.",
+  },
+  {
+    title: "Referee Decisions & Knockout Ties",
+    description: "The appointed referees hold absolute authority over all match events. Knockout games ending in a draw proceed directly to tie-breakers / penalty shootouts as designated in event-specific formats.",
+  },
+];
 
 export const GENERAL_GUIDELINES: GeneralGuideline[] = [
   {
@@ -95,16 +153,6 @@ export const EVENT_RULES: EventRule[] = [
       "Disciplinary cards: Yellow card serves as a warning; two yellow cards or a straight red card results in ejection for the remainder of the match, and the team plays one man down for 2 minutes or until a goal is conceded.",
       "Mandatory gear: Matching squad jerseys with numbers, turf shoes or rubber molded studs (metal studs are strictly forbidden), and shin pads.",
     ],
-    judgingCriteria: [
-      { criterion: "Goals Scored", weight: 60, description: "Direct match scoreline determining winners." },
-      { criterion: "Fair Play Rating", weight: 20, description: "Penalty card count factored into group tiebreakers." },
-      { criterion: "Goal Difference", weight: 20, description: "Primary tiebreaker for tied group positions." },
-    ],
-    importantNotes: [
-      "Teams must report in full match gear 30 minutes before kickoff.",
-      "Metal spikes or hard cleat boots are strictly barred from the turf.",
-      "Captain is the sole player permitted to address the match referee.",
-    ],
   },
   {
     id: "chess",
@@ -132,16 +180,6 @@ export const EVENT_RULES: EventRule[] = [
       "Smartphones, smartwatches, and all electronic devices are strictly prohibited. Possession of a transmitting device during play leads to immediate expulsion.",
       "Tie-break criteria in Swiss standings: 1. Direct Encounter, 2. Buchholz Cut-1, 3. Sonneborn-Berger, 4. Greater number of wins.",
       "Arbiters hold ultimate authority on disputes, illegal claims, and threefold repetition verification.",
-    ],
-    judgingCriteria: [
-      { criterion: "Match Points", weight: 70, description: "1 pt for Win, 0.5 pt for Draw, 0 pt for Loss." },
-      { criterion: "Buchholz Score", weight: 20, description: "Strength of schedule calculation across all rounds." },
-      { criterion: "Sonneborn-Berger", weight: 10, description: "Secondary metric evaluating performance against defeated opponents." },
-    ],
-    importantNotes: [
-      "Silence must be maintained in the hall at all times.",
-      "Players must remain seated until an arbiter records and signs the scoresheet.",
-      "Spectators and eliminated participants are not permitted in the playing area.",
     ],
   },
   {
@@ -172,15 +210,6 @@ export const EVENT_RULES: EventRule[] = [
       "A throw cannot be blocked at the net like volleyball; the ball must cross into the opponent's court before being fielded.",
       "Substitutions: Up to 3 substitutions per set are allowed during referee stoppages.",
     ],
-    judgingCriteria: [
-      { criterion: "Sets Won", weight: 70, description: "Match victory determined by 2 out of 3 sets." },
-      { criterion: "Point Differential", weight: 20, description: "Net positive points across group sets." },
-      { criterion: "Sportsmanship Conduct", weight: 10, description: "Discipline on court regarding referee decisions." },
-    ],
-    importantNotes: [
-      "Non-marking rubber shoes are recommended for the outdoor hardcourt.",
-      "Teams must wear numbered shirts; identical team colors mandatory.",
-    ],
   },
   {
     id: "tug-of-war",
@@ -209,14 +238,6 @@ export const EVENT_RULES: EventRule[] = [
       "The Anchor must grip the rope and allow it to pass around one hip and across the back. No knots or rope loops around the body are permitted for safety.",
       "Footwear: Standard flat-sole athletic sneakers only. Boots with metal spikes, cleats, or deep outdoor studs are strictly prohibited and will be checked prior to entry.",
     ],
-    judgingCriteria: [
-      { criterion: "Pulls Won", weight: 80, description: "2 out of 3 victorious pulls." },
-      { criterion: "Technical Compliance", weight: 20, description: "Zero warnings for sitting or illegal anchoring." },
-    ],
-    importantNotes: [
-      "Gloves without grip-enhancing chemicals are recommended to avoid rope burn.",
-      "Rope diameter is standard 32mm regulation Manila hemp.",
-    ],
   },
   {
     id: "mixed-relay",
@@ -243,13 +264,6 @@ export const EVENT_RULES: EventRule[] = [
       "Lane Discipline: Runners on legs 1, 2, and 3 must strictly remain within their assigned lane markers throughout the turn.",
       "False Start Rule: World Athletics single false-start rule applies. Any runner causing a false start on the heat leads to disqualification.",
       "Footwear: Running flats or track spikes (maximum 6mm ceramic/pyramid pins) are authorized.",
-    ],
-    judgingCriteria: [
-      { criterion: "Official Gun-to-Tape Time", weight: 100, description: "Electronic / laser timing determines rankings." },
-    ],
-    importantNotes: [
-      "Athletes must warm up in the designated warm-up track 20 minutes before heats.",
-      "Teams must wear matching parish bibs or color-coded running tops.",
     ],
   },
 
@@ -288,10 +302,6 @@ export const EVENT_RULES: EventRule[] = [
       { criterion: "Rhythm & Musicality", weight: 25, description: "Transitions, beat matching, and dynamic energy flow." },
       { criterion: "Costume & Prop Creativity", weight: 20, description: "Visual elegance, thematic relevance, and effective stage design." },
     ],
-    importantNotes: [
-      "Stage dimensions: 40ft wide x 30ft deep with wooden dance flooring.",
-      "Light cues must be basic (Static Wash / Follow Spot / Warm Gospel lighting).",
-    ],
   },
   {
     id: "short-film",
@@ -326,10 +336,6 @@ export const EVENT_RULES: EventRule[] = [
       { criterion: "Technical Cinematography & Audio", weight: 25, description: "Framing, lighting, camera movement, dialogue clarity, and sound design." },
       { criterion: "Theme Resonance & Inspiration", weight: 20, description: "Alignment with SELAH core vision and moral upliftment." },
     ],
-    importantNotes: [
-      "Top 5 selected films will be screened on the massive LED auditorium screen.",
-      "Winning films will be featured on official CYA YouTube & social media channels.",
-    ],
   },
   {
     id: "live-painting",
@@ -363,10 +369,6 @@ export const EVENT_RULES: EventRule[] = [
       { criterion: "Artistic Technique & Composition", weight: 35, description: "Brushwork, balance, perspective, and mastery of medium." },
       { criterion: "Color Harmony & Aesthetics", weight: 20, description: "Tonal values, contrast, palette cohesion, and visual impact." },
       { criterion: "Neatness & Completion", weight: 10, description: "Finished presentation within the allotted 90 minutes." },
-    ],
-    importantNotes: [
-      "Paintings will be exhibited at the SELAH Art Walk throughout the festival.",
-      "Water points and cleaning stations will be available nearby.",
     ],
   },
   {
@@ -403,10 +405,6 @@ export const EVENT_RULES: EventRule[] = [
       { criterion: "Rhythm & Timing (Taal)", weight: 25, description: "Sync with tempo, groove, meter consistency, and phrasing." },
       { criterion: "Stage Presence & Spiritual Feeling", weight: 20, description: "Authenticity, lyrical connection, poise, and audience engagement." },
     ],
-    importantNotes: [
-      "Two condenser/dynamic mics will be available on stage.",
-      "Judges will stop any performance exceeding 4 minutes 30 seconds.",
-    ],
   },
   {
     id: "solo-dance",
@@ -438,10 +436,6 @@ export const EVENT_RULES: EventRule[] = [
       { criterion: "Rhythm & Body Coordination", weight: 25, description: "Musicality, beat hitting, tempo control, and footwork clarity." },
       { criterion: "Facial Expressions (Bhavas)", weight: 25, description: "Emotional projection, character immersion, and narrative communication." },
       { criterion: "Stage Utilization & Costume", weight: 20, description: "Use of floor space, costume elegance, and overall visual aesthetics." },
-    ],
-    importantNotes: [
-      "Dancers must report in full costume 30 minutes prior to call time.",
-      "Barefoot or soft dance shoes permitted on stage.",
     ],
   },
   {
@@ -477,10 +471,6 @@ export const EVENT_RULES: EventRule[] = [
       { criterion: "Team Coordination & Formations", weight: 25, description: "Circle utilization, sharp physical freezes, transitions, and rhythm." },
       { criterion: "Crowd Engagement & Authenticity", weight: 20, description: "Ability to command the open-air circle and stir the audience." },
     ],
-    importantNotes: [
-      "Performances will take place outdoors on smooth paved grounds.",
-      "Teams are assigned performance order via a random lot draw.",
-    ],
   },
   {
     id: "mono-act",
@@ -513,10 +503,6 @@ export const EVENT_RULES: EventRule[] = [
       { criterion: "Dialogue Delivery & Diction", weight: 25, description: "Clarity, pacing, inflection, emotional range, and pause control." },
       { criterion: "Script Originality & Substance", weight: 20, description: "Story arcs, intellectual engagement, and compelling climax." },
       { criterion: "Stage Impact & Poise", weight: 20, description: "Confidence, memory retention, and audience grip." },
-    ],
-    importantNotes: [
-      "A wireless collar or headset microphone will be provided.",
-      "Prompting from offstage will incur a 10-point penalty.",
     ],
   },
   {
@@ -552,10 +538,6 @@ export const EVENT_RULES: EventRule[] = [
       { criterion: "Lighting & Technical Quality", weight: 25, description: "Exposure accuracy, color fidelity, focus sharpness, and tonal depth." },
       { criterion: "Visual Creativity & Uniqueness", weight: 20, description: "Fresh perspective, timing of the decisive candid moment." },
     ],
-    importantNotes: [
-      "Bring your own memory card and card reader / data cable for submission.",
-      "Selected winning entries will be featured in the official SELAH 2026 Commemorative Photo Album.",
-    ],
   },
   {
     id: "music-band",
@@ -589,10 +571,6 @@ export const EVENT_RULES: EventRule[] = [
       { criterion: "Vocal Mastery & Pitch Stability", weight: 25, description: "Lead and backing vocal accuracy, range, clarity, and tone." },
       { criterion: "Originality & Musical Execution", weight: 25, description: "Unique song arrangements, instrument mastery, solos, and style." },
       { criterion: "Stage Presence & Worship Atmosphere", weight: 20, description: "Energy, team joy, connection with crowd, and spiritual uplift." },
-    ],
-    importantNotes: [
-      "Stage plot and input channel list must be submitted during morning sound briefing.",
-      "Drummers must use the provided kit; changing hardware sets is restricted to save changeover time.",
     ],
   },
 ];

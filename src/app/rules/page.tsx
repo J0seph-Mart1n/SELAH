@@ -10,23 +10,23 @@ import {
   NavItems,
 } from "@/components/ui/resizable-navbar";
 import StaggeredMenu from "@/components/StaggeredMenu";
+import Footer from "@/components/Footer";
 import {
   EVENT_RULES,
-  GENERAL_GUIDELINES,
+  CULTURAL_RULES,
+  SPORT_RULES,
   EventCategory,
   EventRule,
 } from "./data/rulesData";
 import {
   ArrowLeft,
   ArrowRight,
-  BadgeCheck,
   Check,
   ChevronDown,
+  ChevronRight,
   Clock,
   Copy,
   ExternalLink,
-  Flame,
-  HeartHandshake,
   Info,
   MapPin,
   Medal,
@@ -36,16 +36,14 @@ import {
   Search,
   Share2,
   ShieldAlert,
-  ShieldCheck,
   Sparkles,
   Trophy,
-  UserCheck,
   Users,
   X,
 } from "lucide-react";
 
 export default function RulesPage() {
-  const [selectedCategory, setSelectedCategory] = useState<"all" | EventCategory | "guidelines">("all");
+  const [selectedCategory, setSelectedCategory] = useState<"all" | EventCategory | "guidelines">("guidelines");
   const [searchQuery, setSearchQuery] = useState("");
   const [expandedEvents, setExpandedEvents] = useState<Record<string, boolean>>({});
   const [activeEventHash, setActiveEventHash] = useState<string>("");
@@ -67,6 +65,10 @@ export default function RulesPage() {
       if (hash) {
         setActiveEventHash(hash);
         setExpandedEvents((prev) => ({ ...prev, [hash]: true }));
+        const targetEvent = EVENT_RULES.find((e) => e.id === hash);
+        if (targetEvent) {
+          setSelectedCategory(targetEvent.category);
+        }
         const element = document.getElementById(hash);
         if (element) {
           setTimeout(() => {
@@ -216,7 +218,7 @@ export default function RulesPage() {
                 onClick={() => window.print()}
                 className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs sm:text-sm font-semibold bg-[#101935] hover:bg-[#1a2852] border border-[#8b9abb]/20 text-[#d1dcff] hover:text-white transition-all shadow-sm"
               >
-                <Printer size={15} /> Print / Download Rulebook
+                <Printer size={15} />  Download Brochure
               </button>
               <Link
                 href="/#pricing"
@@ -233,10 +235,9 @@ export default function RulesPage() {
             {/* Category Filter Pills */}
             <div className="flex items-center p-1.5 bg-[#0a1024]/90 backdrop-blur-xl border border-white/10 rounded-full shadow-xl overflow-x-auto max-w-full">
               {[
-                { key: "all", label: `All Events (${EVENT_RULES.length})`, icon: null },
+                { key: "guidelines", label: "General Guidelines", icon: <ShieldAlert size={15} /> },
                 { key: "sports", label: `Sports (${sportsCount})`, icon: <Medal size={15} /> },
                 { key: "cultural", label: `Cultural (${culturalCount})`, icon: <Music2 size={15} /> },
-                { key: "guidelines", label: "General Guidelines", icon: <ShieldAlert size={15} /> },
               ].map((tab) => {
                 const isActive = selectedCategory === tab.key;
                 return (
@@ -286,41 +287,73 @@ export default function RulesPage() {
           {(selectedCategory === "all" || selectedCategory === "guidelines") && !searchQuery && (
             <div className="max-w-5xl mx-auto mb-16 rounded-[28px] bg-gradient-to-b from-[#101935] to-[#0a1024] border border-[#8b9abb]/25 p-6 sm:p-10 shadow-2xl relative overflow-hidden">
               <div className="absolute top-0 right-0 w-80 h-80 bg-gradient-to-br from-[#f69b22]/10 to-transparent rounded-full blur-3xl pointer-events-none" />
+              <div className="absolute bottom-0 left-0 w-80 h-80 bg-gradient-to-tr from-[#00b8e8]/10 to-transparent rounded-full blur-3xl pointer-events-none" />
 
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8 pb-6 border-b border-white/10">
                 <div>
-                  <div className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-[#f69b22] mb-1.5">
-                    <ShieldCheck size={16} /> Standard Festival Protocol
-                  </div>
-                  <h2 className="text-2xl sm:text-3xl font-black text-white">General Code of Conduct</h2>
+                  <h2 className="text-2xl sm:text-3xl font-black text-white">General Rules</h2>
                 </div>
                 <div className="text-xs sm:text-sm text-[#8b9abb] max-w-sm">
                   Universal guidelines applicable to every participant, official, and supporter throughout the tournament.
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
-                {GENERAL_GUIDELINES.map((item, index) => (
-                  <div
-                    key={index}
-                    className="p-5 rounded-2xl bg-[#060d23]/70 border border-white/5 hover:border-[#f69b22]/30 transition-colors"
-                  >
-                    <div className="flex items-center gap-3 mb-2.5">
-                      <div className="w-8 h-8 rounded-lg bg-[#f69b22]/15 border border-[#f69b22]/30 flex items-center justify-center text-[#f69b22] shrink-0">
-                        {index === 0 && <BadgeCheck size={17} />}
-                        {index === 1 && <Clock size={17} />}
-                        {index === 2 && <HeartHandshake size={17} />}
-                        {index === 3 && <Scale size={17} />}
-                        {index === 4 && <ShieldAlert size={17} />}
-                        {index === 5 && <Trophy size={17} />}
-                      </div>
-                      <h3 className="font-bold text-white text-sm sm:text-base">{item.title}</h3>
+              <div className="space-y-12">
+                {/* Cultural Rules Sub-section */}
+                <div>
+                  <div className="flex items-center gap-3 mb-6 pb-4 border-b border-white/10">
+                    <div className="w-9 h-9 rounded-xl bg-[#f69b22]/15 border border-[#f69b22]/30 flex items-center justify-center text-[#f69b22] shrink-0 shadow-[0_0_12px_rgba(246,155,34,0.2)]">
+                      <Music2 size={18} />
                     </div>
-                    <p className="text-xs sm:text-sm text-[#8b9abb] leading-relaxed">
-                      {item.description}
-                    </p>
+                    <div>
+                      <h3 className="text-lg sm:text-xl font-bold text-white tracking-wide">
+                        Cultural Rules
+                      </h3>
+                    </div>
                   </div>
-                ))}
+
+                  <ul className="space-y-4">
+                    {CULTURAL_RULES.map((rule, idx) => (
+                      <li key={idx} className="flex items-start gap-3.5 text-xs sm:text-sm text-[#9aa9cb] leading-relaxed">
+                        <span className="w-5 h-5 rounded-full bg-[#f69b22]/15 border border-[#f69b22]/30 text-[#f69b22] flex items-center justify-center shrink-0 mt-0.5 shadow-[0_0_8px_rgba(246,155,34,0.15)]">
+                          <ChevronRight size={13} className="stroke-[2.5]" />
+                        </span>
+                        <div>
+                          <strong className="text-white font-semibold">{rule.title}: </strong>
+                          <span>{rule.description}</span>
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+
+                {/* Sport Rules Sub-section */}
+                <div className="border-t border-white/10 pt-10">
+                  <div className="flex items-center gap-3 mb-6 pb-4 border-b border-white/10">
+                    <div className="w-9 h-9 rounded-xl bg-[#00b8e8]/15 border border-[#00b8e8]/30 flex items-center justify-center text-[#00b8e8] shrink-0 shadow-[0_0_12px_rgba(0,184,232,0.2)]">
+                      <Trophy size={18} />
+                    </div>
+                    <div>
+                      <h3 className="text-lg sm:text-xl font-bold text-white tracking-wide">
+                        Sport Rules
+                      </h3>
+                    </div>
+                  </div>
+
+                  <ul className="space-y-4">
+                    {SPORT_RULES.map((rule, idx) => (
+                      <li key={idx} className="flex items-start gap-3.5 text-xs sm:text-sm text-[#9aa9cb] leading-relaxed">
+                        <span className="w-5 h-5 rounded-full bg-[#00b8e8]/15 border border-[#00b8e8]/30 text-[#00b8e8] flex items-center justify-center shrink-0 mt-0.5 shadow-[0_0_8px_rgba(0,184,232,0.15)]">
+                          <ChevronRight size={13} className="stroke-[2.5]" />
+                        </span>
+                        <div>
+                          <strong className="text-white font-semibold">{rule.title}: </strong>
+                          <span>{rule.description}</span>
+                        </div>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
               </div>
             </div>
           )}
@@ -362,15 +395,6 @@ export default function RulesPage() {
                   <p className="text-sm text-[#8b9abb] mb-6">
                     We couldn't find any events or rules matching &quot;{searchQuery}&quot;.
                   </p>
-                  <button
-                    onClick={() => {
-                      setSearchQuery("");
-                      setSelectedCategory("all");
-                    }}
-                    className="px-6 py-2.5 rounded-full text-xs sm:text-sm font-semibold bg-[#00b8e8] text-[#060d23] hover:brightness-110 transition-all font-bold"
-                  >
-                    Reset Filters
-                  </button>
                 </div>
               ) : (
                 filteredEvents.map((event, eventIdx) => {
@@ -401,45 +425,11 @@ export default function RulesPage() {
                         <div className="absolute inset-0 bg-gradient-to-t from-[#0a1024] via-[#0a1024]/60 to-transparent" />
                         <div className="absolute inset-0 bg-gradient-to-r from-[#0a1024]/90 via-[#0a1024]/40 to-transparent" />
 
-                        {/* Top Badges & Actions */}
-                        <div className="absolute top-4 left-4 right-4 flex items-center justify-between z-10">
-                          <span
-                            className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold tracking-wider uppercase border backdrop-blur-md ${
-                              isSports
-                                ? "bg-[#00b8e8]/20 border-[#00b8e8]/50 text-[#00b8e8]"
-                                : "bg-[#fa6347]/20 border-[#fa6347]/50 text-[#ff7959]"
-                            }`}
-                          >
-                            {isSports ? <Medal size={13} /> : <Music2 size={13} />}
-                            {event.categoryLabel}
-                          </span>
-
-                          <div className="flex items-center gap-2">
-                            <button
-                              onClick={() => copyEventLink(event.id)}
-                              title="Copy link to this event"
-                              className="w-8 h-8 rounded-full bg-[#060d23]/80 border border-white/20 backdrop-blur-md flex items-center justify-center text-[#8b9abb] hover:text-white hover:border-white/40 transition-all"
-                            >
-                              {copiedId === event.id ? (
-                                <Check size={14} className="text-emerald-400" />
-                              ) : (
-                                <Share2 size={14} />
-                              )}
-                            </button>
-                            <span className="text-[11px] font-mono text-white/50 bg-[#060d23]/80 border border-white/10 px-2.5 py-1 rounded-full backdrop-blur-md">
-                              #{event.id}
-                            </span>
-                          </div>
-                        </div>
-
                         {/* Title & Tagline in Header */}
                         <div className="absolute bottom-5 left-5 right-5 z-10">
                           <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-white tracking-tight drop-shadow-md">
                             {event.title}
                           </h2>
-                          <p className="text-xs sm:text-sm md:text-base text-[#d1dcff]/90 mt-1 drop-shadow max-w-2xl font-medium">
-                            {event.tagline}
-                          </p>
                         </div>
                       </div>
 
@@ -483,7 +473,7 @@ export default function RulesPage() {
                         {/* Key Highlights Checklist */}
                         <div className="mb-6 p-4 rounded-xl bg-gradient-to-r from-white/[0.03] to-transparent border-l-4 border-[#f69b22]">
                           <div className="text-xs font-bold text-[#ffbd61] uppercase tracking-wider mb-2 flex items-center gap-1.5">
-                            <Sparkles size={14} /> Critical Highlights
+                            Critical Highlights
                           </div>
                           <ul className="space-y-1.5 text-xs sm:text-sm text-white/90">
                             {event.keyHighlights.map((hl, i) => (
@@ -507,15 +497,6 @@ export default function RulesPage() {
                               className={`transition-transform duration-300 ${isExpanded ? "rotate-180" : ""}`}
                             />
                           </button>
-
-                          <div className="flex items-center gap-3">
-                            <Link
-                              href="/#pricing"
-                              className="inline-flex items-center gap-1.5 text-xs font-bold text-[#f69b22] hover:text-white transition-colors"
-                            >
-                              Register Team <ArrowRight size={13} />
-                            </Link>
-                          </div>
                         </div>
 
                         {/* Accordion Expandable Detailed Rules Section */}
@@ -531,8 +512,8 @@ export default function RulesPage() {
                               <div className="pt-6 mt-4 border-t border-white/5 space-y-6">
                                 {/* Complete Rules & Regulations */}
                                 <div>
-                                  <h3 className="text-base sm:text-lg font-bold text-white mb-4 flex items-center gap-2">
-                                    <Scale size={18} className="text-[#00b8e8]" /> Complete Rules & Regulations
+                                  <h3 className="text-base sm:text-lg font-bold text-white mb-4 pb-4 flex items-center gap-2">
+                                     Complete Rules & Regulations
                                   </h3>
                                   <ol className="space-y-3">
                                     {event.rules.map((rule, rIdx) => (
@@ -584,16 +565,7 @@ export default function RulesPage() {
                                   </div>
                                 )}
 
-                                {/* Important Instructions Callout */}
-                                <div className="p-4 rounded-xl bg-[#fa6347]/10 border border-[#fa6347]/25 flex items-start gap-3">
-                                  <Info size={18} className="text-[#fa6347] shrink-0 mt-0.5" />
-                                  <div className="text-xs sm:text-sm">
-                                    <span className="font-bold text-white">Event Coordinator Advisory: </span>
-                                    <span className="text-white/80">
-                                      {event.importantNotes.join(" • ")}
-                                    </span>
-                                  </div>
-                                </div>
+                                
                               </div>
                             </motion.div>
                           )}
@@ -606,52 +578,11 @@ export default function RulesPage() {
             </div>
           )}
 
-          {/* Bottom Help & Contact Card */}
-          <div className="max-w-5xl mx-auto mt-20 p-8 sm:p-10 rounded-[32px] bg-gradient-to-r from-[#0a1024] via-[#101935] to-[#0a1024] border border-white/15 text-center relative overflow-hidden shadow-2xl">
-            <div className="relative z-10">
-              <h2 className="text-2xl sm:text-4xl font-black text-white mb-3">
-                Need Rule Clarifications or Assistance?
-              </h2>
-              <p className="text-sm sm:text-base text-[#8b9abb] max-w-2xl mx-auto mb-6">
-                Our festival committee and event coordinators are available to answer delegation questions,
-                stage plot submissions, and rulebook queries.
-              </p>
-              <div className="flex flex-wrap items-center justify-center gap-4">
-                <Link
-                  href="/#pricing"
-                  className="px-8 py-3.5 rounded-full text-sm font-bold bg-gradient-to-r from-[#00b8e8] to-blue-500 text-white hover:brightness-110 shadow-lg shadow-[#00b8e8]/20 transition-all"
-                >
-                  Register Delegation
-                </Link>
-                <Link
-                  href="/about-cya"
-                  className="px-8 py-3.5 rounded-full text-sm font-semibold bg-white/10 hover:bg-white/15 border border-white/20 text-white transition-all"
-                >
-                  Contact CYA Core Team
-                </Link>
-              </div>
-            </div>
-          </div>
         </div>
       </main>
 
-      {/* Footer */}
-      <footer className="relative z-10 border-t border-white/10 bg-[#040817] py-12 px-4 sm:px-6 lg:px-8 text-center text-xs text-[#8b9abb]">
-        <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-2">
-            <span className="font-bold text-white tracking-widest text-sm">SELAH 2026</span>
-            <span>•</span>
-            <span>Carmel Youth Association (CYA)</span>
-          </div>
-          <div className="flex items-center gap-6">
-            <Link href="/" className="hover:text-white transition-colors">Home</Link>
-            <Link href="/#events" className="hover:text-white transition-colors">Events</Link>
-            <Link href="/rules" className="text-[#f69b22] font-semibold hover:text-white transition-colors">Rules</Link>
-            <Link href="/about-cya" className="hover:text-white transition-colors">About CYA</Link>
-          </div>
-          <p>© 2026 SELAH Festival. All rights reserved.</p>
-        </div>
-      </footer>
+      {/* Common Shared Footer */}
+      <Footer />
     </div>
   );
 }
