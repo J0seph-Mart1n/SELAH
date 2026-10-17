@@ -104,7 +104,7 @@ export const NavBody = ({ children, className, visible }: NavBodyProps) => {
       }}
       className={cn(
         "group relative z-[60] mx-auto hidden w-full max-w-7xl flex-row items-center justify-between self-start rounded-full bg-transparent px-4 py-2 lg:flex",
-        visible && "bg-[#060d23]/80 backdrop-blur-md border border-white/10",
+        visible && "bg-[#611e3c]/85 backdrop-blur-md border border-[#fff1cb]/20 shadow-xl shadow-black/30",
         className,
       )}
       data-shrunk={visible}
@@ -121,7 +121,7 @@ export const NavItems = ({ items, className, onItemClick }: NavItemsProps) => {
     <motion.div
       onMouseLeave={() => setHovered(null)}
       className={cn(
-        "absolute inset-0 hidden flex-1 flex-row items-center justify-center space-x-1 text-sm font-medium text-[#93a2c4] transition duration-200 lg:flex lg:space-x-1",
+        "absolute inset-0 hidden flex-1 flex-row items-center justify-center space-x-1 text-sm font-medium text-[#fff1cb]/80 transition duration-200 lg:flex lg:space-x-1",
         className,
       )}
     >
@@ -136,13 +136,13 @@ export const NavItems = ({ items, className, onItemClick }: NavItemsProps) => {
           {hovered === idx && (
             <motion.div
               layoutId="hovered"
-              className="absolute inset-0 h-full w-full rounded-full bg-[#f69b22]"
+              className="absolute inset-0 h-full w-full rounded-full bg-[#63752e]"
             />
           )}
           <span
             className={cn(
               "relative z-20 transition-colors duration-200",
-              hovered === idx ? "text-[#060d23]" : "text-[#93a2c4]"
+              hovered === idx ? "text-[#fff1cb] font-semibold" : "text-[#fff1cb]/80"
             )}
           >
             {item.name}
@@ -174,7 +174,7 @@ export const MobileNav = ({ children, className, visible }: MobileNavProps) => {
       }}
       className={cn(
         "relative z-50 mx-auto flex w-full max-w-[calc(100vw-2rem)] flex-col items-center justify-between bg-transparent px-0 py-2 lg:hidden",
-        visible && "bg-[#060d23]/80 backdrop-blur-md border border-white/10",
+        visible && "bg-[#611e3c]/85 backdrop-blur-md border border-[#fff1cb]/20",
         className,
       )}
     >
@@ -212,7 +212,7 @@ export const MobileNavMenu = ({
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           className={cn(
-            "absolute inset-x-0 top-16 z-50 flex w-full flex-col items-start justify-start gap-4 rounded-lg bg-[#060d23] border border-white/10 px-6 py-8 shadow-2xl",
+            "absolute inset-x-0 top-16 z-50 flex w-full flex-col items-start justify-start gap-4 rounded-lg bg-[#611e3c] border border-[#fff1cb]/20 px-6 py-8 shadow-2xl text-[#fff1cb]",
             className,
           )}
         >
@@ -231,9 +231,9 @@ export const MobileNavToggle = ({
   onClick: () => void;
 }) => {
   return isOpen ? (
-    <X className="text-[#93a2c4] hover:text-[#00b8e8] transition-colors cursor-pointer" onClick={onClick} />
+    <X className="text-[#fff1cb] hover:text-[#63752e] transition-colors cursor-pointer" onClick={onClick} />
   ) : (
-    <Menu className="text-[#93a2c4] hover:text-[#00b8e8] transition-colors cursor-pointer" onClick={onClick} />
+    <Menu className="text-[#fff1cb] hover:text-[#63752e] transition-colors cursor-pointer" onClick={onClick} />
   );
 };
 

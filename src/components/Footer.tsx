@@ -20,19 +20,19 @@ const QUICK_LINKS: QuickLink[] = [
 
 export default function Footer() {
   return (
-    <footer className="site-footer relative overflow-hidden flex flex-col justify-between min-h-[500px] bg-[#050b20] text-white border-t border-white/10 z-10 font-sans">
+    <footer className="site-footer relative overflow-hidden flex flex-col justify-between min-h-[500px] bg-[#611e3c] text-[#fff1cb] border-t border-[#63752e]/30 z-10 font-sans">
       <div className="footer-grid relative z-10 w-full max-w-7xl mx-auto px-6 md:px-12 pt-16">
         {/* Brand Column */}
         <div className="flex flex-col h-full">
-          <Link className="brand flex items-center gap-3 text-white mb-6 group w-fit" href="/">
-            <div className="brand-mark bg-[#ffbd61] text-[#281506] p-1.5 rounded flex items-center justify-center transition-transform duration-300 group-hover:rotate-12">
+          <Link className="brand flex items-center gap-3 text-[#fff1cb] mb-6 group w-fit" href="/">
+            <div className="brand-mark bg-[#63752e] text-[#fff1cb] p-1.5 rounded flex items-center justify-center transition-transform duration-300 group-hover:rotate-12 shadow-[0_0_15px_rgba(99,117,46,0.4)]">
               <Sparkles size={18} />
             </div>
             <div className="text-xl font-bold tracking-wide">
-              SELAH <span className="text-[#f69b22]">2026</span>
+              SELAH <span className="text-[#fff1cb]">2026</span>
             </div>
           </Link>
-          <p className="text-[#8492b1] text-sm leading-relaxed max-w-sm">
+          <p className="text-[#fff1cb]/80 text-sm leading-relaxed max-w-sm">
             The official inter-church youth cultural & sports festival
             uniting congregations in athletics, creative expressions.
           </p>
@@ -40,13 +40,13 @@ export default function Footer() {
 
         {/* Quick Links Column */}
         <div>
-          <h3 className="!text-white !font-sans !font-semibold !text-sm !tracking-wider !uppercase">Quick Links</h3>
+          <h3 className="!text-[#fff1cb] !font-sans !font-semibold !text-sm !tracking-wider !uppercase">Quick Links</h3>
           <div className="footer-links flex flex-col gap-3 mt-5">
             {QUICK_LINKS.map((link) => (
               <Link
                 key={link.label}
                 href={link.href}
-                className="text-[#8492b1] hover:text-[#ffbd61] text-sm transition-colors duration-200 w-fit"
+                className="text-[#fff1cb]/75 hover:text-[#fff1cb] text-sm transition-colors duration-200 w-fit"
               >
                 {link.label}
               </Link>
@@ -56,19 +56,19 @@ export default function Footer() {
 
         {/* Social / Connect Column */}
         <div className="flex flex-col">
-          <h3 className="!text-white !font-sans !font-semibold mb-5 !text-sm !tracking-widest !uppercase">Follow Us</h3>
+          <h3 className="!text-[#fff1cb] !font-sans !font-semibold mb-5 !text-sm !tracking-widest !uppercase">Follow Us</h3>
           <div className="flex gap-4">
             <a
               href="https://www.instagram.com/cyapune/"
               target="_blank"
               rel="noopener noreferrer"
               aria-label="Follow CYA Pune on Instagram"
-              className="w-10 h-10 rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/70 hover:text-[#ffbd61] hover:bg-white/10 hover:border-white/20 hover:scale-110 transition-all duration-300 shadow-sm"
+              className="w-10 h-10 rounded-full bg-[#fff1cb]/10 border border-[#fff1cb]/20 flex items-center justify-center text-[#fff1cb]/80 hover:text-[#fff1cb] hover:bg-[#63752e]/30 hover:border-[#63752e]/50 hover:scale-110 transition-all duration-300 shadow-sm"
             >
               <SiInstagram size={18} />
             </a>
           </div>
-          <p className="text-[#8492b1] text-xs mt-4 max-w-xs leading-relaxed">
+          <p className="text-[#fff1cb]/70 text-xs mt-4 max-w-xs leading-relaxed">
             Stay tuned to official announcements, fixtures, and media drops.
           </p>
         </div>
@@ -81,8 +81,8 @@ export default function Footer() {
           text="SELAH"
           particleSize={2.2}
           density={5}
-          color="#ffffff"
-          highlightColor="#ffbd61"
+          color="#fff1cb"
+          highlightColor="#63752e"
           scatter={190}
           gatherDuration={1600}
           stagger={420}
@@ -93,7 +93,7 @@ export default function Footer() {
           fontSize="24vw"
           fontWeight={900}
           fontFamily="inherit"
-          className="leading-none tracking-tighter opacity-40 pointer-events-auto"
+          className="leading-none tracking-tighter opacity-35 pointer-events-auto"
           glow={false}
         />
       </div>

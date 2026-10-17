@@ -156,25 +156,25 @@ const timelineEvents: {
   description: string;
 }[] = [
     // Sports Events
-    { title: "Opening March & Oath", start: 8, duration: 1, column: "sports", color: "#00b8e8", description: "Flag march & sportsmanship oath" },
-    { title: "Basketball Qualifiers", start: 9, duration: 2, column: "sports", color: "#00b8e8", description: "Group stage matches across courts" },
-    { title: "Volleyball Pool Rounds", start: 11, duration: 1.5, column: "sports", color: "#3b82f6", description: "Pool matches across 8 parish squads" },
-    { title: "Lunch Break", start: 12.5, duration: 0.5, column: "sports", color: "#8b9abb", description: "Refreshments & rest" },
-    { title: "Futsal Semi-Finals", start: 13, duration: 2, column: "sports", color: "#00b8e8", description: "Rapid 20-min halves on pro turf" },
-    { title: "Table Tennis Finals", start: 15, duration: 1.5, column: "sports", color: "#3b82f6", description: "Singles & doubles championship" },
-    { title: "Basketball Finals", start: 17, duration: 2, column: "sports", color: "#00b8e8", description: "Championship match under lights" },
-    { title: "Trophy Ceremony", start: 19, duration: 1, column: "sports", color: "#f69b22", description: "Awards & closing for sports" },
+    { title: "Opening March & Oath", start: 8, duration: 1, column: "sports", color: "#63752e", description: "Flag march & sportsmanship oath" },
+    { title: "Basketball Qualifiers", start: 9, duration: 2, column: "sports", color: "#63752e", description: "Group stage matches across courts" },
+    { title: "Volleyball Pool Rounds", start: 11, duration: 1.5, column: "sports", color: "#63752e", description: "Pool matches across 8 parish squads" },
+    { title: "Lunch Break", start: 12.5, duration: 0.5, column: "sports", color: "#fff1cb", description: "Refreshments & rest" },
+    { title: "Futsal Semi-Finals", start: 13, duration: 2, column: "sports", color: "#63752e", description: "Rapid 20-min halves on pro turf" },
+    { title: "Table Tennis Finals", start: 15, duration: 1.5, column: "sports", color: "#63752e", description: "Singles & doubles championship" },
+    { title: "Basketball Finals", start: 17, duration: 2, column: "sports", color: "#63752e", description: "Championship match under lights" },
+    { title: "Trophy Ceremony", start: 19, duration: 1, column: "sports", color: "#fff1cb", description: "Awards & closing for sports" },
 
     // Cultural Events
-    { title: "Registration & Briefing", start: 8, duration: 1, column: "cultural", color: "#f69b22", description: "Participant check-in & stage briefing" },
-    { title: "Choral Choir", start: 9, duration: 1.5, column: "cultural", color: "#fa6347", description: "Sacred hymnody & four-part harmony" },
-    { title: "Solo Singing", start: 10.5, duration: 1.5, column: "cultural", color: "#f69b22", description: "Individual vocal performances" },
-    { title: "Group Dance", start: 12, duration: 1.5, column: "cultural", color: "#fa6347", description: "Choreographed cultural dance" },
-    { title: "Spoken Word & Poetry", start: 13.5, duration: 1, column: "cultural", color: "#f69b22", description: "Original rhythmic narratives" },
-    { title: "Skit / Drama", start: 14.5, duration: 2, column: "cultural", color: "#fa6347", description: "Sacred drama & theatrical showcase" },
-    { title: "Worship Band Showcase", start: 16.5, duration: 1.5, column: "cultural", color: "#f69b22", description: "Original compositions & hymn covers" },
-    { title: "Cultural Awards", start: 18, duration: 1, column: "cultural", color: "#fa6347", description: "Best performances & Spirit awards" },
-    { title: "Grand Worship Night", start: 19, duration: 1, column: "cultural", color: "#f69b22", description: "Multi-church worship concert finale" },
+    { title: "Registration & Briefing", start: 8, duration: 1, column: "cultural", color: "#fff1cb", description: "Participant check-in & stage briefing" },
+    { title: "Choral Choir", start: 9, duration: 1.5, column: "cultural", color: "#63752e", description: "Sacred hymnody & four-part harmony" },
+    { title: "Solo Singing", start: 10.5, duration: 1.5, column: "cultural", color: "#fff1cb", description: "Individual vocal performances" },
+    { title: "Group Dance", start: 12, duration: 1.5, column: "cultural", color: "#63752e", description: "Choreographed cultural dance" },
+    { title: "Spoken Word & Poetry", start: 13.5, duration: 1, column: "cultural", color: "#fff1cb", description: "Original rhythmic narratives" },
+    { title: "Skit / Drama", start: 14.5, duration: 2, column: "cultural", color: "#63752e", description: "Sacred drama & theatrical showcase" },
+    { title: "Worship Band Showcase", start: 16.5, duration: 1.5, column: "cultural", color: "#fff1cb", description: "Original compositions & hymn covers" },
+    { title: "Cultural Awards", start: 18, duration: 1, column: "cultural", color: "#63752e", description: "Best performances & Spirit awards" },
+    { title: "Grand Worship Night", start: 19, duration: 1, column: "cultural", color: "#fff1cb", description: "Multi-church worship concert finale" },
   ];
 
 function App() {
@@ -249,8 +249,8 @@ function App() {
         <NavBody>
           <a className="brand relative z-20" href="#top" aria-label="SELAH 2026 home">
             <div className="transition-all duration-300 group-data-[shrunk=true]:w-0 group-data-[shrunk=true]:opacity-0 overflow-hidden whitespace-nowrap">
-              <strong className="text-2xl">
-                SELAH <span className="text-[#f69b22]">2026</span>
+              <strong className="text-2xl text-[#fff1cb]">
+                SELAH <span className="text-[#63752e]">2026</span>
               </strong>
             </div>
           </a>
@@ -271,8 +271,8 @@ function App() {
           logo={
             <div className="brand relative z-20 flex items-center">
               <a href="#top" aria-label="SELAH 2026 home" style={{ textDecoration: 'none' }}>
-                <strong className="text-2xl text-white">
-                  SELAH <span className="text-[#f69b22]">2026</span>
+                <strong className="text-2xl text-[#fff1cb]">
+                  SELAH <span className="text-[#63752e]">2026</span>
                 </strong>
               </a>
             </div>
@@ -283,10 +283,10 @@ function App() {
             { label: "About CYA", link: "/about-cya" },
             { label: "Gallery", link: "#faq" },
           ] as any}
-          colors={['#060d23', '#00b8e8', '#f69b22', '#fa6347']}
-          accentColor="#00b8e8"
-          menuButtonColor="#93a2c4"
-          openMenuButtonColor="#fff"
+          colors={['#611e3c', '#63752e', '#fff1cb', '#611e3c']}
+          accentColor="#63752e"
+          menuButtonColor="#fff1cb"
+          openMenuButtonColor="#fff1cb"
         />
       </div>
 
@@ -294,7 +294,7 @@ function App() {
         <div className="relative w-full overflow-hidden">
           <div className="absolute inset-0 z-0 pointer-events-none">
             <PrismaticBurst 
-              colors={["#00b8e8", "#f69b22", "#fa6347"]}
+              colors={["#d92567", "#ffc425", "#8be322", "#fff0a6"]}
               intensity={4}
               speed={0.6}
               rayCount={4}
@@ -314,7 +314,7 @@ function App() {
                 Pause. Reflect and Lift Up
                 <br className="desktop-only" />{" "}
               </p>
-              <div className="text-[#f69b22] font-semibold tracking-widest text-sm mt-8 uppercase text-center w-full">
+              <div className="text-[#fff1cb] font-semibold tracking-widest text-sm mt-8 uppercase text-center w-full">
                 Starting In
               </div>
               <div className="countdown" aria-label="Countdown to SELAH festival">
@@ -350,20 +350,20 @@ function App() {
         </div>
 
         <section className="section prize-pool relative py-24" id="prizepool">
-          <div className="absolute inset-0 bg-[#060d23] z-[-1]" />
+          <div className="absolute inset-0 bg-[#611e3c] z-[-1]" />
           <div className="glow glow-gold opacity-30" />
           <div className="glow glow-cyan opacity-20" />
 
           <div className="section-heading flex flex-col items-center text-center max-w-2xl mx-auto mb-20 px-4">
-            <h2 className="text-4xl md:text-6xl font-black mb-6 text-white leading-tight">
-              Mega <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#f69b22] to-[#fa6347]">Prize Pool</span>
+            <h2 className="text-4xl md:text-6xl font-black mb-6 text-[#fff1cb] leading-tight">
+              Mega <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#fff1cb] to-[#63752e]">Prize Pool</span>
             </h2>
             <SparklesText
               className="text-4xl md:text-5xl font-black mb-1 leading-tight"
-              colors={{ first: "#f69b22", second: "#fa6347" }}
+              colors={{ first: "#fff1cb", second: "#63752e" }}
               sparklesCount={12}
             >
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#f69b22] to-[#fa6347]">₹45,000</span>
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#fff1cb] to-[#63752e]">₹45,000</span>
             </SparklesText>
 
           </div>
@@ -372,20 +372,20 @@ function App() {
             {/* 2nd Prize */}
             <div className="w-full lg:flex-1 max-w-md lg:max-w-none order-2 lg:order-1 relative lg:-mt-10 lg:hover:-translate-y-4 transition-transform duration-500 z-10">
               <BorderGlow 
-                glowColor="210 40 96" // Silver-ish
-                backgroundColor="#0a1024"
-                colors={["#94a3b8", "#e2e8f0", "#94a3b8"]}
+                glowColor="99 117 46" // Olive
+                backgroundColor="#fff1cb"
+                colors={["#63752e", "#fff1cb", "#63752e"]}
                 className="w-full shadow-2xl h-full lg:h-[320px]"
               >
-                <div className="relative rounded-[30px] p-8 flex flex-col items-center justify-center text-center overflow-hidden h-full">
-                  <div className="absolute -right-4 -top-8 opacity-5 pointer-events-none select-none">
-                    <span className="text-[250px] font-black italic">2</span>
+                <div className="relative rounded-[30px] p-8 flex flex-col items-center justify-center text-center overflow-hidden h-full bg-[#fff1cb] border border-[#63752e]/30">
+                  <div className="absolute -right-4 -top-8 opacity-10 pointer-events-none select-none">
+                    <span className="text-[250px] font-black italic text-[#611e3c]">2</span>
                   </div>
-                  <div className="mb-6 flex justify-center drop-shadow-[0_0_15px_rgba(148,163,184,0.4)]">
-                     <Medal className="text-slate-300" size={56} strokeWidth={1.5} />
+                  <div className="mb-6 flex justify-center drop-shadow-[0_0_15px_rgba(99,117,46,0.3)]">
+                     <Medal className="text-[#63752e]" size={56} strokeWidth={1.5} />
                   </div>
-                  <h3 className="text-slate-300 text-xl font-bold tracking-[0.2em] uppercase mb-2 drop-shadow-md">2nd Prize</h3>
-                  <div className="text-3xl lg:text-4xl font-black text-white tracking-tight">₹15,000</div>
+                  <h3 className="text-[#611e3c]/90 text-xl font-bold tracking-[0.2em] uppercase mb-2">2nd Prize</h3>
+                  <div className="text-3xl lg:text-4xl font-black text-[#611e3c] tracking-tight">₹15,000</div>
                 </div>
               </BorderGlow>
             </div>
@@ -393,22 +393,22 @@ function App() {
             {/* 1st Prize */}
             <div className="w-full lg:flex-1 max-w-md lg:max-w-none order-1 lg:order-2 relative z-20 lg:-translate-y-6 lg:scale-105 lg:hover:-translate-y-10 transition-transform duration-500">
               <BorderGlow 
-                glowColor="45 93 54" // Gold
-                backgroundColor="#060d23"
-                colors={["#fbbf24", "#f59e0b", "#fef08a"]}
+                glowColor="99 117 46" // Olive
+                backgroundColor="#fff1cb"
+                colors={["#63752e", "#611e3c", "#63752e"]}
                 animated={true}
                 glowIntensity={2}
-                className="w-full shadow-[0_0_50px_rgba(245,158,11,0.4)] h-full lg:h-[380px]"
+                className="w-full shadow-[0_0_50px_rgba(99,117,46,0.4)] h-full lg:h-[380px]"
               >
-                <div className="relative rounded-[30px] p-10 flex flex-col items-center justify-center text-center overflow-hidden h-full border border-yellow-500/20 bg-gradient-to-b from-[#060d23] to-yellow-900/20">
-                  <div className="absolute -right-2 -top-10 opacity-[0.07] pointer-events-none select-none">
-                    <span className="text-[300px] font-black italic text-yellow-500">1</span>
+                <div className="relative rounded-[30px] p-10 flex flex-col items-center justify-center text-center overflow-hidden h-full border-2 border-[#63752e] bg-[#fff1cb]">
+                  <div className="absolute -right-2 -top-10 opacity-10 pointer-events-none select-none">
+                    <span className="text-[300px] font-black italic text-[#63752e]">1</span>
                   </div>
-                  <div className="mb-8 flex justify-center drop-shadow-[0_0_25px_rgba(250,204,21,0.5)]">
-                     <Crown className="text-yellow-400" size={80} strokeWidth={1.5} />
+                  <div className="mb-8 flex justify-center drop-shadow-[0_0_20px_rgba(99,117,46,0.4)]">
+                     <Crown className="text-[#63752e]" size={80} strokeWidth={1.5} />
                   </div>
-                  <h3 className="text-transparent bg-clip-text bg-gradient-to-r from-yellow-300 to-yellow-600 text-2xl font-black tracking-[0.25em] uppercase mb-2 drop-shadow-lg">1st Prize</h3>
-                  <div className="text-3xl lg:text-4xl font-black text-white tracking-tight drop-shadow-[0_0_15px_rgba(255,255,255,0.3)]">₹20,000</div>
+                  <h3 className="text-[#611e3c] text-2xl font-black tracking-[0.25em] uppercase mb-2">1st Prize</h3>
+                  <div className="text-3xl lg:text-4xl font-black text-[#611e3c] tracking-tight">₹20,000</div>
                 </div>
               </BorderGlow>
             </div>
@@ -416,20 +416,20 @@ function App() {
             {/* 3rd Prize */}
             <div className="w-full lg:flex-1 max-w-md lg:max-w-none order-3 lg:order-3 relative lg:-mt-10 lg:hover:-translate-y-4 transition-transform duration-500 z-10">
               <BorderGlow 
-                glowColor="28 61 49" // Bronze
-                backgroundColor="#0a1024"
-                colors={["#cd7f32", "#b45309", "#d97706"]}
+                glowColor="99 117 46" // Olive
+                backgroundColor="#fff1cb"
+                colors={["#63752e", "#fff1cb", "#63752e"]}
                 className="w-full shadow-2xl h-full lg:h-[320px]"
               >
-                <div className="relative rounded-[30px] p-8 flex flex-col items-center justify-center text-center overflow-hidden h-full">
-                  <div className="absolute -right-4 -top-8 opacity-5 pointer-events-none select-none">
-                    <span className="text-[250px] font-black italic text-[#cd7f32]">3</span>
+                <div className="relative rounded-[30px] p-8 flex flex-col items-center justify-center text-center overflow-hidden h-full bg-[#fff1cb] border border-[#63752e]/30">
+                  <div className="absolute -right-4 -top-8 opacity-10 pointer-events-none select-none">
+                    <span className="text-[250px] font-black italic text-[#611e3c]">3</span>
                   </div>
-                  <div className="mb-6 flex justify-center drop-shadow-[0_0_15px_rgba(205,127,50,0.4)]">
-                     <Medal className="text-[#cd7f32]" size={56} strokeWidth={1.5} />
+                  <div className="mb-6 flex justify-center drop-shadow-[0_0_15px_rgba(99,117,46,0.3)]">
+                     <Medal className="text-[#63752e]" size={56} strokeWidth={1.5} />
                   </div>
-                  <h3 className="text-[#cd7f32] text-xl font-bold tracking-[0.2em] uppercase mb-2 drop-shadow-md">3rd Prize</h3>
-                  <div className="text-3xl lg:text-4xl font-black text-white tracking-tight">₹10,000</div>
+                  <h3 className="text-[#611e3c]/90 text-xl font-bold tracking-[0.2em] uppercase mb-2">3rd Prize</h3>
+                  <div className="text-3xl lg:text-4xl font-black text-[#611e3c] tracking-tight">₹10,000</div>
                 </div>
               </BorderGlow>
             </div>
@@ -437,19 +437,19 @@ function App() {
         </section>
 
         <section className="section relative py-24" id="chief-guest">
-          <div className="absolute inset-0 bg-[#060d23] z-[-1]" />
+          <div className="absolute inset-0 bg-[#611e3c] z-[-1]" />
           <div className="glow glow-gold opacity-20" />
           <div className="glow glow-coral opacity-10" />
 
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="section-heading flex flex-col items-center text-center max-w-2xl mx-auto mb-16 px-4">
-              <h2 className="text-4xl md:text-5xl lg:text-6xl font-black mb-6 text-white leading-tight">
-                Special Chief <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#f69b22] to-[#fa6347]">Guest</span>
+              <h2 className="text-4xl md:text-5xl lg:text-6xl font-black mb-6 text-[#fff1cb] leading-tight">
+                Special Chief <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#fff1cb] to-[#63752e]">Guest</span>
               </h2>
             </div>
 
             {/* Chief Guest Feature Card */}
-            <div className="max-w-5xl mx-auto p-8 sm:p-12 rounded-[32px] bg-gradient-to-b from-[#8b9abb]/10 to-[#0a1024] border border-[#8b9abb]/20 shadow-2xl relative overflow-hidden backdrop-blur-sm">
+            <div className="max-w-5xl mx-auto p-8 sm:p-12 rounded-[32px] bg-[#fff1cb] text-[#611e3c] border border-[#63752e]/30 shadow-2xl relative overflow-hidden backdrop-blur-sm">
 
               <div className="relative grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
 
@@ -458,11 +458,10 @@ function App() {
                     {/* Avatar / Dignitary Portrait Placeholder */}
                     <div className="lg:col-span-4 flex flex-col items-center text-center">
                       <div className="relative">
-                        <div className="w-44 h-44 sm:w-52 sm:h-52 rounded-2xl bg-gradient-to-tr from-[#f69b22] to-[#fa6347] p-1 shadow-[0_0_40px_rgba(246,155,34,0.3)]">
-                          <div className="w-full h-full rounded-2xl bg-[#060d23] flex flex-col items-center justify-center p-4 text-center overflow-hidden relative">
-                            <UserRound className="text-[#f69b22] mb-3" size={64} strokeWidth={1.5} />
-                            <span className="text-[10px] sm:text-xs font-bold text-white uppercase tracking-widest">Metropolitan &amp; Archbishop</span>
-                            <div className="absolute inset-0 bg-[#f69b22]/5 pointer-events-none"></div>
+                        <div className="w-44 h-44 sm:w-52 sm:h-52 rounded-2xl bg-[#611e3c] p-1 shadow-[0_0_40px_rgba(99,117,46,0.25)]">
+                          <div className="w-full h-full rounded-2xl bg-[#611e3c] flex flex-col items-center justify-center p-4 text-center overflow-hidden relative">
+                            <UserRound className="text-[#fff1cb] mb-3" size={64} strokeWidth={1.5} />
+                            <span className="text-[10px] sm:text-xs font-bold text-[#fff1cb] uppercase tracking-widest">Metropolitan &amp; Archbishop</span>
                           </div>
                         </div>
                       </div>
@@ -471,16 +470,16 @@ function App() {
                     {/* Dignitary Bio & Keynote Details */}
                     <div className="lg:col-span-8 flex flex-col">
 
-                      <h3 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white mb-2 leading-tight text-center lg:text-left">
+                      <h3 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#611e3c] mb-2 leading-tight text-center lg:text-left">
                         Most Rev. Dr. Alexander Mor Baselios
                       </h3>
                       <div className="flex flex-wrap items-center justify-center lg:justify-start gap-3 mb-6">
-                        <span className="px-3 py-1 rounded-md bg-[#00b8e8]/10 border border-[#00b8e8]/20 text-[#00b8e8] text-[10px] sm:text-xs font-bold uppercase tracking-widest">Chief Guest of Honor</span>
-                        <span className="px-3 py-1 rounded-md bg-[#f69b22]/10 border border-[#f69b22]/20 text-[#f69b22] text-[10px] sm:text-xs font-bold uppercase tracking-widest">Olympic Ambassador</span>
+                        <span className="px-3 py-1 rounded-md bg-[#63752e] text-[#fff1cb] text-[10px] sm:text-xs font-bold uppercase tracking-widest">Chief Guest of Honor</span>
+                        <span className="px-3 py-1 rounded-md bg-[#611e3c] text-[#fff1cb] text-[10px] sm:text-xs font-bold uppercase tracking-widest">Olympic Ambassador</span>
                       </div>
 
-                      <p className="text-[#8b9abb] text-sm md:text-base leading-relaxed mb-8 text-center lg:text-left">
-                        Dr. Alexander Mor Baselios has spearheaded ecumenical youth movements across four continents, championing character-driven athletics and liturgical renewal. Joining him on the dais is former Olympic sprinter and Christian Youth Ambassador <span className="text-white font-bold">Marcus Vance</span>, leading the Opening Ceremony Dedication and Oath of Sportsmanship.
+                      <p className="text-[#611e3c]/85 text-sm md:text-base leading-relaxed mb-8 text-center lg:text-left font-medium">
+                        Dr. Alexander Mor Baselios has spearheaded ecumenical youth movements across four continents, championing character-driven athletics and liturgical renewal. Joining him on the dais is former Olympic sprinter and Christian Youth Ambassador <span className="text-[#611e3c] font-black">Marcus Vance</span>, leading the Opening Ceremony Dedication and Oath of Sportsmanship.
                       </p>
 
                     </div>
@@ -489,18 +488,18 @@ function App() {
                   <>
                     <div className="lg:col-span-4 flex flex-col items-center text-center">
                       <div className="relative">
-                        <div className="w-44 h-44 sm:w-52 sm:h-52 rounded-2xl bg-[#060d23] border-2 border-dashed border-[#8b9abb]/30 p-1 flex items-center justify-center shadow-lg">
-                          <div className="w-full h-full rounded-2xl bg-gradient-to-br from-[#8b9abb]/5 to-transparent flex flex-col items-center justify-center p-4 text-center">
-                            <ShieldCheck className="text-[#8b9abb]/50 mb-3" size={64} strokeWidth={1} />
-                            <span className="text-[10px] sm:text-xs font-bold text-[#8b9abb]/70 uppercase tracking-widest">To Be Revealed</span>
+                        <div className="w-44 h-44 sm:w-52 sm:h-52 rounded-2xl bg-[#611e3c]/5 border-2 border-dashed border-[#63752e]/40 p-1 flex items-center justify-center shadow-lg">
+                          <div className="w-full h-full rounded-2xl bg-gradient-to-br from-[#63752e]/10 to-transparent flex flex-col items-center justify-center p-4 text-center">
+                            <ShieldCheck className="text-[#63752e] mb-3" size={64} strokeWidth={1.5} />
+                            <span className="text-[10px] sm:text-xs font-bold text-[#611e3c]/70 uppercase tracking-widest">To Be Revealed</span>
                           </div>
                         </div>
                       </div>
                     </div>
 
                     <div className="lg:col-span-8 flex flex-col items-center lg:items-start text-center lg:text-left py-6">
-                      <h3 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white mb-4 leading-tight">
-                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#8b9abb] to-[#4a5568]">Revealing Soon</span>
+                      <h3 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#611e3c] mb-4 leading-tight">
+                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#611e3c] to-[#63752e]">Revealing Soon</span>
                       </h3>
                     </div>
                   </>
@@ -512,12 +511,12 @@ function App() {
 
         {/* SPONSORSHIP SECTION */}
         <section className="section relative py-24" id="sponsors">
-          <div className="absolute inset-0 bg-[#0a1024] z-[-1]" />
+          <div className="absolute inset-0 bg-[#611e3c] z-[-1]" />
 
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="section-heading flex flex-col items-center text-center max-w-2xl mx-auto mb-16 px-4">
-              <h2 className="text-4xl md:text-5xl font-black mb-6 text-white leading-tight">
-                Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#00b8e8] to-[#8b9abb]">Sponsors</span>
+              <h2 className="text-4xl md:text-5xl font-black mb-6 text-[#fff1cb] leading-tight">
+                Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#fff1cb] to-[#63752e]">Sponsors</span>
               </h2>
             </div>
 
@@ -534,14 +533,14 @@ function App() {
                   "Sponser 1 • Sponser 2 •",
                   "Sponsor 3 • Sponsor 4 •"
                 ] as any}
-                className="text-4xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#8b9abb] via-[#f69b22] to-[#8b9abb] tracking-[0.2em] uppercase inline-block py-2 mb-4 drop-shadow-[0_0_15px_rgba(246,155,34,0.3)]"
+                className="text-4xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#fff1cb]/60 via-[#fff1cb] to-[#fff1cb]/60 tracking-[0.2em] uppercase inline-block py-2 mb-4 drop-shadow-[0_0_15px_rgba(255,241,203,0.2)]"
               />
             </div>
 
             <div className="mt-16 text-center">
-              <button className="relative inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-slate-400 focus:ring-offset-2 focus:ring-offset-slate-50">
-                <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#E2CBFF_0%,#393BB2_50%,#E2CBFF_100%)]" />
-                <span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-slate-950 px-3 py-1 text-sm font-bold text-white backdrop-blur-3xl">
+              <button className="relative inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-[#fff1cb]/40">
+                <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#fff1cb_0%,#63752e_50%,#fff1cb_100%)]" />
+                <span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-[#611e3c] px-5 py-1 text-sm font-bold text-[#fff1cb] backdrop-blur-3xl hover:bg-[#63752e] transition-colors">
                   Become a Sponsor
                 </span>
               </button>
@@ -553,46 +552,43 @@ function App() {
         <section className="section relative py-24" id="vicar-message">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div className="section-heading flex flex-col items-center text-center max-w-2xl mx-auto mb-16 px-4">
-              <h2 className="text-4xl md:text-5xl font-black mb-6 text-white leading-tight">
-                Father Vicar's <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#f69b22] to-[#fa6347]">Message</span>
+              <h2 className="text-4xl md:text-5xl font-black mb-6 text-[#fff1cb] leading-tight">
+                Father Vicar's <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#fff1cb] to-[#63752e]">Message</span>
               </h2>
             </div>
             
-            <div className="max-w-5xl mx-auto bg-gradient-to-b from-[#f69b22] to-[#fa6347] rounded-[32px] shadow-[0_20px_50px_rgba(246,155,34,0.3)] relative overflow-hidden flex flex-col md:flex-row">
+            <div className="max-w-5xl mx-auto bg-[#fff1cb] text-[#611e3c] rounded-[32px] shadow-[0_20px_50px_rgba(0,0,0,0.35)] border border-[#63752e]/30 relative overflow-hidden flex flex-col md:flex-row group">
               {/* Left Side - Full Height Image */}
               <div className="w-full md:w-5/12 min-h-[350px] relative flex-shrink-0">
-                {/* 
-                  NOTE: Currently using a placeholder image from Unsplash to demonstrate the layout.
-                  Replace this src with the actual photo of Father Vicar.
-                */}
                 <img 
                   src="/cya/Fr._Joy.jpeg"
                   alt="Father Vicar" 
                   className="absolute inset-0 w-full h-full object-cover"
                 />
+
               </div>
 
               {/* Right Side - Quote Content */}
               <div className="w-full md:w-7/12 p-8 md:p-14 lg:p-16 flex flex-col justify-center relative">
                 <div className="h-10 md:h-12 flex items-start mb-6">
-                  <span className="text-[100px] md:text-[120px] font-serif text-[#2563eb] leading-[0.6] tracking-tighter" style={{ fontFamily: 'Georgia, serif' }}>
+                  <span className="text-[100px] md:text-[120px] font-serif text-[#63752e] leading-[0.6] tracking-tighter" style={{ fontFamily: 'Georgia, serif' }}>
                     “
                   </span>
                 </div>
                 
-                <h3 className="text-2xl md:text-[28px] font-extrabold text-[#060d23] mb-5 leading-[1.3] tracking-tight">
+                <h3 className="text-2xl md:text-[28px] font-extrabold text-[#611e3c] mb-5 leading-[1.3] tracking-tight">
                   I am delighted to welcome you to SELAH 2026. This festival is a celebration of our youth's talent, energy, and dedication.
                 </h3>
                 
-                <p className="text-[#0a1024] text-base md:text-lg leading-relaxed mb-8 font-medium">
+                <p className="text-[#611e3c]/90 text-base md:text-lg leading-relaxed mb-8 font-medium">
                   Let us come together to witness the incredible performances, foster fellowship, and glorify His name through arts and sports. May this event inspire and uplift everyone involved.
                 </p>
                 
                 <div>
-                  <span className="text-[#060d23] font-bold text-base">
+                  <span className="text-[#611e3c] font-bold text-base">
                     — Fr. Joy Philip Kakkanattu,
                   </span>
-                  <span className="text-[#060d23] font-bold text-base ml-1">
+                  <span className="text-[#63752e] font-bold text-base ml-1">
                     Vicar
                   </span>
                 </div>
@@ -609,7 +605,7 @@ function App() {
             </p>
           </div>
           <div className="flex justify-center mt-12 mb-14 px-4">
-            <div className="relative flex items-center p-1.5 bg-[#0a1024]/80 backdrop-blur-xl border border-white/10 rounded-full shadow-2xl max-w-full overflow-x-auto hide-scrollbar">
+            <div className="relative flex items-center p-1.5 bg-[#fff1cb] border border-[#63752e]/30 rounded-full shadow-2xl max-w-full overflow-x-auto hide-scrollbar">
               {(
                 [
                   ["sports", "Sports", <Medal size={18} key="med" />],
@@ -621,13 +617,13 @@ function App() {
                   onClick={() => setTrack(value)}
                   className={`
                     relative z-10 flex items-center gap-2.5 px-6 py-3 md:px-8 md:py-3.5 rounded-full text-sm md:text-base font-semibold transition-colors duration-300 ease-out whitespace-nowrap
-                    ${track === value ? "text-white" : "text-[#8492b1] hover:text-white/80"}
+                    ${track === value ? "text-[#fff1cb]" : "text-[#611e3c]/75 hover:text-[#611e3c]"}
                   `}
                 >
                   {track === value && (
                     <motion.div
                       layoutId="activeTabIndicator"
-                      className="absolute inset-0 bg-gradient-to-r from-blue-600 to-blue-400 rounded-full shadow-[0_0_20px_rgba(37,99,235,0.4)] z-[-1]"
+                      className="absolute inset-0 bg-[#63752e] rounded-full shadow-[0_0_20px_rgba(99,117,46,0.4)] z-[-1]"
                       transition={{ type: "spring", bounce: 0.2, duration: 0.6 }}
                     />
                   )}
@@ -648,7 +644,7 @@ function App() {
             enableStars={false}
             enableSpotlight
             spotlightRadius={460}
-            glowColor="59, 130, 246"
+            glowColor="99, 117, 46"
             renderItem={(event: any) => (
               <EventCardView card={event} />
             )}
@@ -657,12 +653,12 @@ function App() {
 
         {/* Teams-style Calendar Timeline */}
         <section className="section relative py-24" id="schedule">
-          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
             <div className="section-heading flex flex-col items-center text-center max-w-2xl mx-auto mb-16 px-4">
-              <h2 className="text-4xl md:text-5xl font-black mb-4 text-white leading-tight">
-                Event <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#f69b22] to-[#fa6347]">Schedule</span>
+              <h2 className="text-4xl md:text-5xl font-black mb-4 text-[#fff1cb] leading-tight">
+                Event <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#fff1cb] to-[#63752e]">Schedule</span>
               </h2>
-              <p className="text-[#8b9abb] text-sm md:text-base leading-relaxed">
+              <p className="text-[#fff1cb]/70 text-sm md:text-base leading-relaxed">
                 A full day schedule of cultural performances and sports tournaments.
               </p>
             </div>
@@ -671,14 +667,14 @@ function App() {
             <div className="relative max-w-5xl mx-auto" style={{ height: `${12 * 72 + 48}px` }}>
 
               {/* Column Headers - sits above the grid */}
-              <div className="absolute top-0 left-[48px] md:left-[76px] right-0 grid grid-cols-2 h-[48px] z-10">
-                <div className="flex items-center justify-center gap-1 md:gap-2 border-b border-r border-[#8b9abb]/20 bg-[#0a1024]/90 backdrop-blur-sm rounded-tl-xl overflow-hidden px-1">
-                  <Music2 size={14} className="text-[#f69b22] shrink-0" />
-                  <span className="text-xs md:text-sm font-bold text-white tracking-wider truncate">Cultural<span className="hidden sm:inline"> Events</span></span>
+              <div className="absolute top-0 left-[36px] sm:left-[48px] md:left-[72px] right-[36px] sm:right-[48px] md:right-[72px] grid grid-cols-2 h-[44px] z-10 rounded-full overflow-hidden shadow-lg border border-[#63752e]/50 bg-[#63752e]">
+                <div className="flex items-center justify-center gap-1.5 md:gap-2 border-r border-[#fff1cb]/20 px-1">
+                  <Music2 size={15} className="text-[#fff1cb] shrink-0" />
+                  <span className="text-xs md:text-sm font-bold text-[#fff1cb] tracking-wider truncate">Cultural<span className="hidden sm:inline"> Events</span></span>
                 </div>
-                <div className="flex items-center justify-center gap-1 md:gap-2 border-b border-[#8b9abb]/20 bg-[#0a1024]/90 backdrop-blur-sm rounded-tr-xl overflow-hidden px-1">
-                  <Medal size={14} className="text-[#00b8e8] shrink-0" />
-                  <span className="text-xs md:text-sm font-bold text-white tracking-wider truncate">Sport<span className="hidden sm:inline"> Events</span></span>
+                <div className="flex items-center justify-center gap-1.5 md:gap-2 px-1">
+                  <Medal size={15} className="text-[#fff1cb] shrink-0" />
+                  <span className="text-xs md:text-sm font-bold text-[#fff1cb] tracking-wider truncate">Sport<span className="hidden sm:inline"> Events</span></span>
                 </div>
               </div>
 
@@ -686,31 +682,31 @@ function App() {
               {Array.from({ length: 13 }, (_, i) => i + 8).map((hour) => (
                 <div key={hour} className="absolute left-0 right-0" style={{ top: `${48 + (hour - 8) * 72}px` }}>
                   {/* Time label */}
-                  <span className="absolute left-0 w-[44px] md:w-[68px] text-right pr-1 md:pr-2 text-[10px] md:text-xs text-[#8b9abb] font-medium tabular-nums" style={{ transform: 'translateY(-50%)' }}>
+                  <span className="absolute left-0 w-[32px] sm:w-[44px] md:w-[68px] text-right pr-1 md:pr-2 text-[10px] md:text-xs text-[#fff1cb]/70 font-medium tabular-nums" style={{ transform: 'translateY(-50%)' }}>
                     {hour === 12 ? '12 PM' : hour < 12 ? `${hour} AM` : `${hour - 12} PM`}
                   </span>
                   {/* Grid line */}
-                  <div className="absolute left-[48px] md:left-[76px] right-0 border-t border-[#8b9abb]/15" />
+                  <div className="absolute left-[36px] sm:left-[48px] md:left-[72px] right-[36px] sm:right-[48px] md:right-[72px] border-t border-[#fff1cb]/15" />
                 </div>
               ))}
 
               {/* Live Time Tracker Line */}
               {currentHour !== null && (
                 <div
-                  className="absolute left-[48px] md:left-[76px] right-0 z-20 pointer-events-none"
+                  className="absolute left-[36px] sm:left-[48px] md:left-[72px] right-[36px] sm:right-[48px] md:right-[72px] z-20 pointer-events-none"
                   style={{ top: `${48 + (currentHour - 8) * 72}px` }}
                 >
                   {/* Dot */}
-                  <div className="absolute left-0 w-3 h-3 rounded-full bg-[#fa6347] border-2 border-[#fa6347] shadow-[0_0_8px_rgba(250,99,71,0.6)]" style={{ transform: 'translate(-50%, -50%)' }} />
+                  <div className="absolute left-0 w-3 h-3 rounded-full bg-[#63752e] border-2 border-[#fff1cb] shadow-[0_0_8px_rgba(99,117,46,0.8)]" style={{ transform: 'translate(-50%, -50%)' }} />
                   {/* Line */}
-                  <div className="absolute left-0 right-0 border-t-2 border-[#fa6347] shadow-[0_0_6px_rgba(250,99,71,0.4)]" />
+                  <div className="absolute left-0 right-0 border-t-2 border-[#63752e] shadow-[0_0_6px_rgba(99,117,46,0.6)]" />
                 </div>
               )}
 
               {/* Event Columns */}
-              <div className="absolute top-[48px] left-[48px] md:left-[76px] right-0 bottom-0 grid grid-cols-2">
+              <div className="absolute top-[48px] left-[36px] sm:left-[48px] md:left-[72px] right-[36px] sm:right-[48px] md:right-[72px] bottom-0 grid grid-cols-2">
                 {/* Column divider */}
-                <div className="absolute top-0 bottom-0 left-1/2 border-l border-[#8b9abb]/15 z-[1]" />
+                <div className="absolute top-0 bottom-0 left-1/2 border-l border-[#fff1cb]/15 z-[1]" />
 
                 {/* Cultural Events Column */}
                 <div className="relative">
@@ -725,24 +721,24 @@ function App() {
                       return (
                         <div
                           key={event.title}
-                          className={`absolute left-1 right-2 md:left-2 md:right-3 rounded-[4px] overflow-hidden cursor-pointer transition-all duration-300 hover:brightness-110 hover:z-10 ${isActive ? 'z-[5] ring-1 ring-[#fa6347]/40' : ''}`}
+                          className={`absolute left-1 right-1.5 md:left-2 md:right-3 rounded-lg overflow-hidden cursor-pointer transition-all duration-300 hover:brightness-105 hover:z-10 shadow-sm border border-[#63752e]/25 ${isActive ? 'z-[5] ring-2 ring-[#63752e] shadow-md' : ''}`}
                           style={{
                             top: `${(event.start - 8) * 72 + 2}px`,
                             height: `${event.duration * 72 - 3}px`,
-                            backgroundColor: isActive ? `${event.color}55` : `${event.color}30`,
-                            borderLeft: `4px solid ${event.color}`,
-                            boxShadow: isActive ? `0 0 16px ${event.color}40, inset 0 0 12px ${event.color}15` : 'none',
+                            backgroundColor: '#fff1cb',
+                            borderLeft: '4px solid #63752e',
+                            boxShadow: isActive ? '0 0 16px rgba(99,117,46,0.4), inset 0 0 12px rgba(99,117,46,0.1)' : '0 2px 6px rgba(0,0,0,0.15)',
                           }}
                         >
-                          <div className="px-2 py-1.5 h-full flex flex-col">
-                            <div className={`text-[11px] md:text-xs font-bold leading-tight truncate ${isActive ? 'text-white' : 'text-white'}`}>{event.title}</div>
+                          <div className="px-2 py-1.5 h-full flex flex-col justify-start">
+                            <div className={`text-[11px] md:text-xs font-bold leading-tight truncate text-[#611e3c]`}>{event.title}</div>
                             {event.duration >= 1 && (
-                              <div className="text-[10px] md:text-[11px] text-[#8b9abb] leading-tight mt-0.5 truncate">
+                              <div className="text-[10px] md:text-[11px] text-[#63752e] font-semibold leading-tight mt-0.5 truncate">
                                 {formatHour(event.start)} - {formatHour(event.start + event.duration)}
                               </div>
                             )}
                             {event.duration >= 1.5 && (
-                              <div className="text-[10px] md:text-[11px] mt-0.5 leading-tight truncate" style={{ color: `${event.color}cc` }}>
+                              <div className="text-[10px] md:text-[11px] mt-0.5 leading-tight truncate text-[#611e3c]/80">
                                 {event.description}
                               </div>
                             )}
@@ -765,24 +761,24 @@ function App() {
                       return (
                         <div
                           key={event.title}
-                          className={`absolute left-2 right-1 md:left-3 md:right-2 rounded-[4px] overflow-hidden cursor-pointer transition-all duration-300 hover:brightness-110 hover:z-10 ${isActive ? 'z-[5] ring-1 ring-[#fa6347]/40' : ''}`}
+                          className={`absolute left-1.5 right-1 md:left-3 md:right-2 rounded-lg overflow-hidden cursor-pointer transition-all duration-300 hover:brightness-105 hover:z-10 shadow-sm border border-[#63752e]/25 ${isActive ? 'z-[5] ring-2 ring-[#63752e] shadow-md' : ''}`}
                           style={{
                             top: `${(event.start - 8) * 72 + 2}px`,
                             height: `${event.duration * 72 - 3}px`,
-                            backgroundColor: isActive ? `${event.color}55` : `${event.color}30`,
-                            borderLeft: `4px solid ${event.color}`,
-                            boxShadow: isActive ? `0 0 16px ${event.color}40, inset 0 0 12px ${event.color}15` : 'none',
+                            backgroundColor: '#fff1cb',
+                            borderLeft: '4px solid #63752e',
+                            boxShadow: isActive ? '0 0 16px rgba(99,117,46,0.4), inset 0 0 12px rgba(99,117,46,0.1)' : '0 2px 6px rgba(0,0,0,0.15)',
                           }}
                         >
-                          <div className="px-2 py-1.5 h-full flex flex-col">
-                            <div className={`text-[11px] md:text-xs font-bold leading-tight truncate ${isActive ? 'text-white' : 'text-white'}`}>{event.title}</div>
+                          <div className="px-2 py-1.5 h-full flex flex-col justify-start">
+                            <div className={`text-[11px] md:text-xs font-bold leading-tight truncate text-[#611e3c]`}>{event.title}</div>
                             {event.duration >= 1 && (
-                              <div className="text-[10px] md:text-[11px] text-[#8b9abb] leading-tight mt-0.5 truncate">
+                              <div className="text-[10px] md:text-[11px] text-[#63752e] font-semibold leading-tight mt-0.5 truncate">
                                 {formatHour(event.start)} - {formatHour(event.start + event.duration)}
                               </div>
                             )}
                             {event.duration >= 1.5 && (
-                              <div className="text-[10px] md:text-[11px] mt-0.5 leading-tight truncate" style={{ color: `${event.color}cc` }}>
+                              <div className="text-[10px] md:text-[11px] mt-0.5 leading-tight truncate text-[#611e3c]/80">
                                 {event.description}
                               </div>
                             )}
@@ -834,23 +830,23 @@ function EventCardView({ card }: { card: EventCard }) {
 
       {/* Background Image integrated beneath MagicBento's content */}
       <div
-        className="absolute inset-0 bg-cover bg-center transition-all duration-700 ease-out md:opacity-80 opacity-40 md:group-hover:scale-110 md:group-hover:opacity-30 mix-blend-screen pointer-events-none z-0"
+        className="absolute inset-0 bg-cover bg-center transition-all duration-700 ease-out md:opacity-80 opacity-80 md:group-hover:scale-110 md:group-hover:opacity-60 mix-blend-screen pointer-events-none z-0"
         style={{ backgroundImage: `url(${card.image})` }}
       />
 
       {/* Gradient overlay to ensure text remains highly readable */}
-      <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent pointer-events-none z-0" />
+      <div className="absolute inset-0 pointer-events-none z-0" />
 
       {/* MagicBento native layout structure */}
       <div className="relative z-10 flex flex-col h-full justify-end pointer-events-none">
         <div className="magic-bento-card__content">
-          <h2 className="magic-bento-card__title !font-bold !text-white !text-xl !mb-2 drop-shadow-md pr-12">{card.title}</h2>
-          <p className="magic-bento-card__description !text-white/80 !opacity-100 line-clamp-3 pr-12">{card.description}</p>
+          <h2 className="magic-bento-card__title !font-bold !text-[#fff1cb] !text-xl !mb-2 drop-shadow-md pr-12">{card.title}</h2>
+          <p className="magic-bento-card__description !text-[#fff1cb]/85 !opacity-100 line-clamp-3 pr-12">{card.description}</p>
         </div>
       </div>
       
-      <div className="absolute bottom-6 right-6 z-20 w-10 h-10 rounded-full flex items-center justify-center shrink-0 transition-all duration-300 opacity-100 translate-x-0 bg-blue-500/20 border border-blue-500/50 shadow-[0_0_15px_rgba(59,130,246,0.3)] md:opacity-0 md:-translate-x-4 md:bg-transparent md:border-transparent md:shadow-none md:group-hover:opacity-100 md:group-hover:translate-x-0 md:group-hover:bg-blue-500/20 md:group-hover:border-blue-500/50 md:group-hover:shadow-[0_0_15px_rgba(59,130,246,0.3)] pointer-events-none">
-        <ArrowRight className="text-white w-5 h-5 transition-transform duration-300 md:group-hover:translate-x-0.5" />
+      <div className="absolute bottom-6 right-6 z-20 w-10 h-10 rounded-full flex items-center justify-center shrink-0 transition-all duration-300 opacity-100 translate-x-0 bg-[#63752e]/30 border border-[#63752e] shadow-[0_0_15px_rgba(99,117,46,0.4)] md:opacity-0 md:-translate-x-4 md:bg-transparent md:border-transparent md:shadow-none md:group-hover:opacity-100 md:group-hover:translate-x-0 md:group-hover:bg-[#63752e]/30 md:group-hover:border-[#63752e] md:group-hover:shadow-[0_0_15px_rgba(99,117,46,0.4)] pointer-events-none">
+        <ArrowRight className="text-[#fff1cb] w-5 h-5 transition-transform duration-300 md:group-hover:translate-x-0.5" />
       </div>
 
     </>
