@@ -154,9 +154,22 @@ export default function RulesPage() {
 
       {/* Main Desktop Navbar */}
       <div className="relative z-50">
-        <Navbar>
+        <Navbar className="selah-rnav">
           <NavBody>
-            <Link className="brand relative z-20" href="/" aria-label="SELAH 2026 home">
+            <Link
+              className="brand relative z-20 flex items-center gap-2.5 transition-all duration-300 group-data-[shrunk=true]:gap-0"
+              href="/"
+              aria-label="SELAH 2026 home"
+              style={{ textDecoration: "none" }}
+            >
+              <Image
+                src="/top_page/Selah_Logo.png"
+                alt="SELAH 2026 Logo"
+                width={40}
+                height={40}
+                priority
+                className="w-9 h-9 md:w-10 md:h-10 rounded-full object-contain shrink-0 transition-transform duration-200 hover:scale-105"
+              />
               <div className="transition-all duration-300 group-data-[shrunk=true]:w-0 group-data-[shrunk=true]:opacity-0 overflow-hidden whitespace-nowrap">
                 <strong className="text-2xl text-[#fff1cb]">
                   SELAH <span className="text-[#63752e]">2026</span>
@@ -168,20 +181,27 @@ export default function RulesPage() {
                 { name: "Home", link: "/" },
                 { name: "Events", link: "/#events" },
                 { name: "Rules", link: "/rules" },
-                { name: "About CYA", link: "/about-cya" },
-                { name: "Register", link: "/#pricing" },
+                { name: "Core Team", link: "/about-cya" },
               ]}
             />
           </NavBody>
         </Navbar>
 
         {/* Mobile Navigation */}
-        <div className="relative z-50 lg:hidden">
+        <div className="relative z-50 lg:hidden selah-smenu">
           <StaggeredMenu
             isFixed={true}
             logo={
               <div className="brand relative z-20 flex items-center">
-                <Link href="/" aria-label="SELAH 2026 home" style={{ textDecoration: "none" }}>
+                <Link href="/" aria-label="SELAH 2026 home" className="flex items-center gap-2.5" style={{ textDecoration: "none" }}>
+                  <Image
+                    src="/top_page/Selah_Logo.png"
+                    alt="SELAH 2026 Logo"
+                    width={34}
+                    height={34}
+                    priority
+                    className="w-8 h-8 md:w-9 md:h-9 rounded-full object-contain shrink-0"
+                  />
                   <strong className="text-2xl text-[#fff1cb]">
                     SELAH <span className="text-[#63752e]">2026</span>
                   </strong>
@@ -192,8 +212,7 @@ export default function RulesPage() {
               { label: "Home", link: "/" },
               { label: "Events", link: "/#events" },
               { label: "Rules", link: "/rules" },
-              { label: "About CYA", link: "/about-cya" },
-              { label: "Register", link: "/#pricing" },
+              { label: "Core Team", link: "/about-cya" },
             ] as any}
             colors={["#611e3c", "#63752e", "#fff1cb", "#611e3c"]}
             accentColor="#63752e"

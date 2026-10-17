@@ -1734,3 +1734,87 @@ h3 {
     @apply font-sans;
   }
 }
+
+/* ==========================================================================
+   SELAH Navbar - Scoped strictly for Homepage and Rules Page only
+   Separates navbar from page background so color can be updated as a whole
+   ========================================================================== */
+
+:root {
+  --selah-nav-bg: #fff1cb;
+  --selah-nav-border: rgba(99, 117, 46, 0.35);
+  --selah-nav-text: #611e3c;
+  --selah-nav-accent: #63752e;
+}
+
+.selah-rnav [data-shrunk] {
+  background: var(--selah-nav-bg) !important;
+  backdrop-filter: blur(14px) !important;
+  -webkit-backdrop-filter: blur(14px) !important;
+  border: 1px solid var(--selah-nav-border) !important;
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.25),
+    0 1px 0 rgba(255, 255, 255, 0.4) inset !important;
+  transition:
+    background-color 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
+}
+
+/* Full-sized navbar spacing on left and right */
+.selah-rnav [data-shrunk="false"],
+.selah-rnav [data-shrunk]:not([data-shrunk="true"]) {
+  padding-left: 1.5rem !important;
+  padding-right: 1.5rem !important;
+}
+
+/* Brand text on navbar background */
+.selah-rnav .brand strong {
+  color: var(--selah-nav-text) !important;
+}
+.selah-rnav .brand strong span {
+  color: var(--selah-nav-accent) !important;
+}
+.selah-rnav .brand div {
+  background: transparent !important;
+}
+
+/* Nav item link text: dark wine for high contrast */
+.selah-rnav a:not(.brand) > span {
+  color: var(--selah-nav-text) !important;
+  font-weight: 600 !important;
+}
+
+/* Hovered link item text: cream on the green pill */
+.selah-rnav a:not(.brand):hover > span,
+.selah-rnav a:not(.brand):focus-visible > span {
+  color: #fff1cb !important;
+}
+
+/* Hover pill background */
+.selah-rnav a:not(.brand) > div {
+  background: var(--selah-nav-accent) !important;
+}
+
+/* Mobile Header for Homepage and Rules Page */
+.selah-smenu .staggered-menu-header {
+  background: var(--selah-nav-bg) !important;
+  border-bottom: 1px solid var(--selah-nav-border) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15) !important;
+  transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.selah-smenu .brand strong {
+  color: var(--selah-nav-text) !important;
+}
+.selah-smenu .brand strong span {
+  color: var(--selah-nav-accent) !important;
+}
+
+.selah-smenu .sm-toggle {
+  color: var(--selah-nav-text) !important;
+}
+
+.selah-smenu .sm-icon-line {
+  background: var(--selah-nav-text) !important;
+}

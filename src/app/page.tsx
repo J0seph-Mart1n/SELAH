@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useState } from "react";
 import React from "react";
+import Image from "next/image";
 import { motion } from "framer-motion";
 import { SparklesText } from "@/components/ui/sparkles-text"
 import {
@@ -245,9 +246,22 @@ function App() {
 
   return (
     <div className="app-shell bg-transparent">
-      <Navbar>
+      <Navbar className="selah-rnav">
         <NavBody>
-          <a className="brand relative z-20" href="#top" aria-label="SELAH 2026 home">
+          <a
+            className="brand relative z-20 flex items-center gap-2.5 transition-all duration-300 group-data-[shrunk=true]:gap-0"
+            href="#top"
+            aria-label="SELAH 2026 home"
+            style={{ textDecoration: "none" }}
+          >
+            <Image
+              src="/top_page/Selah_Logo.png"
+              alt="SELAH 2026 Logo"
+              width={40}
+              height={40}
+              priority
+              className="w-9 h-9 md:w-10 md:h-10 rounded-full object-contain shrink-0 transition-transform duration-200 hover:scale-105"
+            />
             <div className="transition-all duration-300 group-data-[shrunk=true]:w-0 group-data-[shrunk=true]:opacity-0 overflow-hidden whitespace-nowrap">
               <strong className="text-2xl text-[#fff1cb]">
                 SELAH <span className="text-[#63752e]">2026</span>
@@ -256,21 +270,29 @@ function App() {
           </a>
           <NavItems
             items={[
-              { name: "Registration", link: "#events" },
+              { name: "Register", link: "#events" },
               { name: "Rules", link: "/rules" },
-              { name: "About CYA", link: "/about-cya" },
+              { name: "Core Team", link: "/about-cya" },
               { name: "Gallery", link: "#faq" },
             ]}
           />
         </NavBody>
       </Navbar>
 
-      <div className="relative z-50 lg:hidden">
+      <div className="relative z-50 lg:hidden selah-smenu">
         <StaggeredMenu
           isFixed={true}
           logo={
             <div className="brand relative z-20 flex items-center">
-              <a href="#top" aria-label="SELAH 2026 home" style={{ textDecoration: 'none' }}>
+              <a href="#top" aria-label="SELAH 2026 home" className="flex items-center gap-2.5" style={{ textDecoration: 'none' }}>
+                <Image
+                  src="/top_page/Selah_Logo.png"
+                  alt="SELAH 2026 Logo"
+                  width={34}
+                  height={34}
+                  priority
+                  className="w-8 h-8 md:w-9 md:h-9 rounded-full object-contain shrink-0"
+                />
                 <strong className="text-2xl text-[#fff1cb]">
                   SELAH <span className="text-[#63752e]">2026</span>
                 </strong>
@@ -278,9 +300,9 @@ function App() {
             </div>
           }
           items={[
-            { label: "Registration", link: "#events" },
+            { label: "Register", link: "#events" },
             { label: "Rules", link: "/rules" },
-            { label: "About CYA", link: "/about-cya" },
+            { label: "Core Team", link: "/about-cya" },
             { label: "Gallery", link: "#faq" },
           ] as any}
           colors={['#611e3c', '#63752e', '#fff1cb', '#611e3c']}
@@ -290,7 +312,7 @@ function App() {
         />
       </div>
 
-      <main id="top">
+      <main id="top" className="!pt-0">
         <div className="relative w-full overflow-hidden">
           <div className="absolute inset-0 z-0 pointer-events-none">
             <PrismaticBurst 
@@ -300,7 +322,7 @@ function App() {
               rayCount={4}
             />
           </div>
-          <section className="hero relative z-10" id="about">
+          <section className="hero relative z-10 !pt-28 md:!pt-32 min-h-screen" id="about">
             <div className="glow glow-coral" />
             <div className="glow glow-gold" />
             <div className="glow glow-cyan" />
