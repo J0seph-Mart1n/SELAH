@@ -15,6 +15,15 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "SELAH 2026 | Pause. Reflect. Lift Up.",
   description: "Inter-church youth cultural & sports festival uniting congregations in athletics, creative expression, and holy reverence.",
+  icons: {
+    icon: [
+      { url: "/favicon.ico" },
+      { url: "/top_page/Selah_Logo.png", type: "image/png" },
+    ],
+    apple: [
+      { url: "/top_page/Selah_Logo.png" },
+    ],
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
