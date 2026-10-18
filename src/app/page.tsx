@@ -153,35 +153,182 @@ const timelineEvents: {
   title: string;
   start: number; // hour (8-20)
   duration: number; // in hours
-  column: "cultural" | "sports";
+  column: "cultural" | "sports" | "both";
   color: string;
   description: string;
 }[] = [
     // Sports Events
-    { title: "Opening March & Oath", start: 8, duration: 1, column: "sports", color: "#63752e", description: "Flag march & sportsmanship oath" },
-    { title: "Basketball Qualifiers", start: 9, duration: 2, column: "sports", color: "#63752e", description: "Group stage matches across courts" },
-    { title: "Volleyball Pool Rounds", start: 11, duration: 1.5, column: "sports", color: "#63752e", description: "Pool matches across 8 parish squads" },
-    { title: "Lunch Break", start: 12.5, duration: 0.5, column: "sports", color: "#fff1cb", description: "Refreshments & rest" },
-    { title: "Futsal Semi-Finals", start: 13, duration: 2, column: "sports", color: "#63752e", description: "Rapid 20-min halves on pro turf" },
-    { title: "Table Tennis Finals", start: 15, duration: 1.5, column: "sports", color: "#63752e", description: "Singles & doubles championship" },
-    { title: "Basketball Finals", start: 17, duration: 2, column: "sports", color: "#63752e", description: "Championship match under lights" },
-    { title: "Trophy Ceremony", start: 19, duration: 1, column: "sports", color: "#fff1cb", description: "Awards & closing for sports" },
-
+    
+    { title: "Relay and 100M Sprint", start: 9, duration: 2, column: "sports", color: "#63752e", description: "Group stage matches across courts" },
+    { title: "Throwball", start: 13, duration: 3, column: "sports", color: "#63752e", description: "Pool matches across 8 parish squads" },
+    { title: "Futsal", start: 13, duration: 3, column: "sports", color: "#63752e", description: "Rapid 20-min halves on pro turf" },
+    { title: "Chess", start: 13, duration: 3, column: "sports", color: "#63752e", description: "Singles & doubles championship" },
+    { title: "Tug of War", start: 16, duration: 1.5, column: "sports", color: "#63752e", description: "Championship match under lights" },
+    
     // Cultural Events
-    { title: "Registration & Briefing", start: 8, duration: 1, column: "cultural", color: "#fff1cb", description: "Participant check-in & stage briefing" },
-    { title: "Choral Choir", start: 9, duration: 1.5, column: "cultural", color: "#63752e", description: "Sacred hymnody & four-part harmony" },
-    { title: "Solo Singing", start: 10.5, duration: 1.5, column: "cultural", color: "#fff1cb", description: "Individual vocal performances" },
-    { title: "Group Dance", start: 12, duration: 1.5, column: "cultural", color: "#63752e", description: "Choreographed cultural dance" },
-    { title: "Spoken Word & Poetry", start: 13.5, duration: 1, column: "cultural", color: "#fff1cb", description: "Original rhythmic narratives" },
-    { title: "Skit / Drama", start: 14.5, duration: 2, column: "cultural", color: "#63752e", description: "Sacred drama & theatrical showcase" },
-    { title: "Worship Band Showcase", start: 16.5, duration: 1.5, column: "cultural", color: "#fff1cb", description: "Original compositions & hymn covers" },
-    { title: "Cultural Awards", start: 18, duration: 1, column: "cultural", color: "#63752e", description: "Best performances & Spirit awards" },
-    { title: "Grand Worship Night", start: 19, duration: 1, column: "cultural", color: "#fff1cb", description: "Multi-church worship concert finale" },
+    { title: "Solo Dance", start: 10, duration: 3, column: "cultural", color: "#63752e", description: "Sacred hymnody & four-part harmony" },
+    { title: "Solo Singing", start: 10.5, duration: 2, column: "cultural", color: "#fff1cb", description: "Individual vocal performances" },
+    { title: "Group Dance", start: 8.5, duration: 1.5, column: "cultural", color: "#63752e", description: "Choreographed cultural dance" },
+    { title: "Mono Act", start: 8.5, duration: 2, column: "cultural", color: "#fff1cb", description: "Original rhythmic narratives" },
+    { title: "Street Play", start: 10.5, duration: 2.5, column: "cultural", color: "#63752e", description: "Sacred drama & theatrical showcase" },
+    { title: "Live Painting", start: 13, duration: 1.5, column: "cultural", color: "#fff1cb", description: "Original compositions & hymn covers" },
+    { title: "Battle of Bands", start: 17.5, duration: 1.5, column: "cultural", color: "#63752e", description: "Best performances & Spirit awards" },
+
+    // Common Events
+    { title: "Opening Ceremony", start: 8, duration: 0.5, column: "both", color: "#63752e", description: "Flag march & sportsmanship oath" },
+    { title: "Short Film & Photography Glimpes", start: 19, duration: 0.5, column: "both", color: "#63752e", description: "Flag march & sportsmanship oath" },
+    { title: "Prize Distribution & Conclusion", start: 19.5, duration: 1.5, column: "both", color: "#63752e", description: "Flag march & sportsmanship oath" },
   ];
+
+type TimelineEvent = typeof timelineEvents[0];
+
+interface LayoutEvent extends TimelineEvent {
+  lane: number;
+  totalLanes: number;
+  colSpan: number;
+}
+
+function computeEventLayout(events: TimelineEvent[]): LayoutEvent[] {
+  if (events.length === 0) return [];
+
+  // Sort events by start time ascending, then duration descending
+  const sorted = events.slice().sort((a, b) => {
+    if (a.start !== b.start) return a.start - b.start;
+    return b.duration - a.duration;
+  });
+
+  // Group into connected collision clusters
+  const clusters: TimelineEvent[][] = [];
+  let currentCluster: TimelineEvent[] = [];
+  let clusterEnd = -1;
+
+  for (const event of sorted) {
+    if (currentCluster.length === 0) {
+      currentCluster.push(event);
+      clusterEnd = event.start + event.duration;
+    } else if (event.start < clusterEnd) {
+      currentCluster.push(event);
+      clusterEnd = Math.max(clusterEnd, event.start + event.duration);
+    } else {
+      clusters.push(currentCluster);
+      currentCluster = [event];
+      clusterEnd = event.start + event.duration;
+    }
+  }
+  if (currentCluster.length > 0) {
+    clusters.push(currentCluster);
+  }
+
+  const result: LayoutEvent[] = [];
+
+  for (const cluster of clusters) {
+    const laneEnds: number[] = [];
+    const clusterEventsWithLane: { event: TimelineEvent; lane: number }[] = [];
+
+    for (const event of cluster) {
+      let assignedLane = -1;
+      for (let i = 0; i < laneEnds.length; i++) {
+        if (laneEnds[i] <= event.start) {
+          assignedLane = i;
+          laneEnds[i] = event.start + event.duration;
+          break;
+        }
+      }
+      if (assignedLane === -1) {
+        assignedLane = laneEnds.length;
+        laneEnds.push(event.start + event.duration);
+      }
+      clusterEventsWithLane.push({ event, lane: assignedLane });
+    }
+
+    const totalLanes = Math.max(1, laneEnds.length);
+
+    for (const { event, lane } of clusterEventsWithLane) {
+      // Check if this event can expand into empty adjacent lanes to the right
+      let colSpan = 1;
+      while (lane + colSpan < totalLanes) {
+        const nextLane = lane + colSpan;
+        const hasConflict = clusterEventsWithLane.some(
+          (other) =>
+            other.lane === nextLane &&
+            other.event.start < event.start + event.duration &&
+            other.event.start + other.event.duration > event.start
+        );
+        if (hasConflict) break;
+        colSpan++;
+      }
+
+      result.push({
+        ...event,
+        lane,
+        totalLanes,
+        colSpan,
+      });
+    }
+  }
+
+  return result;
+}
+
+const formatTimelineHour = (h: number) => {
+  const hourNum = Math.floor(h);
+  const minutes = Math.round((h - hourNum) * 60);
+  const minStr = minutes > 0 ? `:${String(minutes).padStart(2, '0')}` : '';
+  if (hourNum === 12) return `12${minStr} PM`;
+  return hourNum < 12 ? `${hourNum}${minStr} AM` : `${hourNum - 12}${minStr} PM`;
+};
+
+const formatEventTime = (h: number) => {
+  const hourNum = Math.floor(h);
+  const minutes = Math.round((h - hourNum) * 60);
+  const minStr = `:${String(minutes).padStart(2, '0')}`;
+  const period = hourNum >= 12 && hourNum < 24 ? 'PM' : 'AM';
+  const displayHour = hourNum === 0 ? 12 : hourNum > 12 ? hourNum - 12 : hourNum;
+  return `${displayHour}${minStr} ${period}`;
+};
+
+const getEventTheme = (column: "cultural" | "sports" | "both") => {
+  if (column === "cultural") {
+    return {
+      bg: "#fce7f3", // soft rose / pink
+      stripe: "#c239b3", // Teams magenta
+      border: "1px solid rgba(194, 57, 179, 0.3)",
+      textTitle: "#3d0f28", // dark wine
+      textTime: "#86198f", // magenta
+    };
+  }
+  if (column === "sports") {
+    return {
+      bg: "#e0e9fe", // soft periwinkle / lavender blue
+      stripe: "#4f52b2", // Teams indigo / royal blue
+      border: "1px solid rgba(79, 82, 178, 0.3)",
+      textTitle: "#1b1c3a", // deep navy
+      textTime: "#4338ca", // indigo
+    };
+  }
+  // column === 'both' (Joint / Common Events)
+  return {
+    bg: "#fff2c8", // warm cream / butter
+    stripe: "#d97706", // warm amber
+    border: "1px solid rgba(217, 119, 6, 0.35)",
+    textTitle: "#451a03", // dark espresso
+    textTime: "#b45309", // rich amber
+  };
+};
 
 function App() {
   const isChiefGuestFinalized = false;
   const [track, setTrack] = useState<Track>("sports");
+
+  const culturalEventsWithLayout = useMemo(
+    () => computeEventLayout(timelineEvents.filter((e) => e.column === 'cultural')),
+    []
+  );
+
+  const sportsEventsWithLayout = useMemo(
+    () => computeEventLayout(timelineEvents.filter((e) => e.column === 'sports')),
+    []
+  );
 
   const [query, setQuery] = useState("");
   const [openFaq, setOpenFaq] = useState<number | null>(null);
@@ -204,8 +351,8 @@ function App() {
       const todayStr = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}-${String(now.getDate()).padStart(2, '0')}`;
       if (todayStr === eventDateStr) {
         const hourDecimal = now.getHours() + now.getMinutes() / 60;
-        // Only show tracker between 8 AM and 8 PM
-        if (hourDecimal >= 8 && hourDecimal <= 20) {
+        // Only show tracker between 8 AM and 9 PM
+        if (hourDecimal >= 8 && hourDecimal <= 21) {
           setCurrentHour(hourDecimal);
         } else {
           setCurrentHour(null);
@@ -333,21 +480,20 @@ function App() {
             <div className="glow glow-coral" />
             <div className="glow glow-gold" />
             <div className="glow glow-cyan" />
-            <AnimatedContent distance={40} duration={0.8} ease="power3.out" threshold={0.1}>
-              <div className="hero-inner">
-                <h1>
-                <MorphingText texts={["SELAH", "सेलाह", "സേലാ", "סֶלָה", "SELAH"]} />
-                  <br />
+            <AnimatedContent distance={40} duration={0.8} ease="power3.out" threshold={0.1} className="w-full flex justify-center items-center">
+              <div className="hero-inner flex flex-col items-center justify-center text-center mx-auto">
+                <h1 className="text-center w-full flex flex-col items-center justify-center">
+                  <MorphingText texts={["SELAH", "सेलाह", "സേലാ", "סֶלָה", "SELAH"]} />
                   <span>2026</span>
                 </h1>
-                <p className="hero-subtitle">
-                  Pause. Reflect and Lift Up
+                <p className="hero-subtitle text-center mx-auto">
+                  Pause. Explore. Renew
                   <br className="desktop-only" />{" "}
                 </p>
                 <div className="text-[#fff1cb] font-semibold tracking-widest text-sm mt-8 uppercase text-center w-full">
                   Starting In
                 </div>
-                <div className="countdown" aria-label="Countdown to SELAH festival">
+                <div className="countdown mx-auto" aria-label="Countdown to SELAH festival">
                   {[
                     ["days", countdown.days],
                     ["hours", countdown.hours],
@@ -367,11 +513,11 @@ function App() {
                     </div>
                   ))}
                 </div>
-                <div className="hero-actions flex !flex-row !flex-nowrap w-full sm:w-auto justify-center gap-3">
-                  <a className="button button-primary button-large flex-1 sm:flex-none flex items-center justify-center gap-2 whitespace-nowrap px-2" href="#pricing">
+                <div className="hero-actions flex !flex-row !flex-nowrap w-full max-w-xs sm:max-w-md mx-auto justify-center items-center gap-3">
+                  <a className="button button-primary button-large flex-1 sm:flex-none flex items-center justify-center gap-2 whitespace-nowrap px-4" href="#pricing">
                     <Users size={17} /> Register
                   </a>
-                  <a className="button button-outline button-large flex-1 sm:flex-none flex items-center justify-center gap-2 whitespace-nowrap px-2" href="#events">
+                  <a className="button button-outline button-large flex-1 sm:flex-none flex items-center justify-center gap-2 whitespace-nowrap px-4" href="#events">
                     <Trophy size={17} /> Explore Events
                   </a>
                 </div>
@@ -705,32 +851,47 @@ function App() {
                 </p>
               </div>
 
-              {/* Calendar Container */}
-              <div className="relative max-w-5xl mx-auto" style={{ height: `${12 * 72 + 48}px` }}>
+              {/* Mobile Swipe Hint */}
+              <div className="flex md:hidden items-center justify-center mb-3">
+                <span className="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full text-[11px] font-medium text-[#fff1cb]/80 bg-[#fff1cb]/10 border border-[#fff1cb]/15 backdrop-blur-sm shadow-sm">
+                  <span className="animate-pulse">←</span>
+                  <span>Swipe horizontally to view full schedule</span>
+                  <span className="animate-pulse">→</span>
+                </span>
+              </div>
 
-                {/* Column Headers - sits above the grid */}
-                <div className="absolute top-0 left-[36px] sm:left-[48px] md:left-[72px] right-[36px] sm:right-[48px] md:right-[72px] grid grid-cols-2 h-[44px] z-10 rounded-full overflow-hidden shadow-lg border border-[#63752e]/50 bg-[#63752e]">
-                  <div className="flex items-center justify-center gap-1.5 md:gap-2 border-r border-[#fff1cb]/20 px-1">
-                    <Music2 size={15} className="text-[#fff1cb] shrink-0" />
-                    <span className="text-xs md:text-sm font-bold text-[#fff1cb] tracking-wider truncate">Cultural<span className="hidden sm:inline"> Events</span></span>
-                  </div>
-                  <div className="flex items-center justify-center gap-1.5 md:gap-2 px-1">
-                    <Medal size={15} className="text-[#fff1cb] shrink-0" />
-                    <span className="text-xs md:text-sm font-bold text-[#fff1cb] tracking-wider truncate">Sport<span className="hidden sm:inline"> Events</span></span>
-                  </div>
-                </div>
+              {/* Horizontally Scrollable Calendar Wrapper on Mobile */}
+              <div className="w-full overflow-x-auto overscroll-x-contain pb-4 pt-1 -mx-3 px-3 sm:mx-0 sm:px-0 schedule-scrollbar [-webkit-overflow-scrolling:touch]">
+                {/* Calendar Container */}
+                <div className="relative min-w-[780px] md:min-w-0 max-w-5xl mx-auto" style={{ height: `${13 * 72 + 48}px` }}>
 
-                {/* Time labels + grid lines (spanning full width) */}
-                {Array.from({ length: 13 }, (_, i) => i + 8).map((hour) => (
-                  <div key={hour} className="absolute left-0 right-0" style={{ top: `${48 + (hour - 8) * 72}px` }}>
-                    {/* Time label */}
-                    <span className="absolute left-0 w-[32px] sm:w-[44px] md:w-[68px] text-right pr-1 md:pr-2 text-[10px] md:text-xs text-[#fff1cb]/70 font-medium tabular-nums" style={{ transform: 'translateY(-50%)' }}>
-                      {hour === 12 ? '12 PM' : hour < 12 ? `${hour} AM` : `${hour - 12} PM`}
-                    </span>
-                    {/* Grid line */}
-                    <div className="absolute left-[36px] sm:left-[48px] md:left-[72px] right-[36px] sm:right-[48px] md:right-[72px] border-t border-[#fff1cb]/15" />
+                  {/* Column Headers - sits above the grid */}
+                  <div className="absolute top-0 left-[36px] sm:left-[48px] md:left-[72px] right-[36px] sm:right-[48px] md:right-[72px] grid grid-cols-2 h-[44px] z-10 rounded-full overflow-hidden shadow-lg border border-[#63752e]/50 bg-[#63752e]">
+                    <div className="flex items-center justify-center gap-1.5 md:gap-2 border-r border-[#fff1cb]/20 px-1">
+                      <Music2 size={15} className="text-[#fff1cb] shrink-0" />
+                      <span className="text-xs md:text-sm font-bold text-[#fff1cb] tracking-wider truncate">Cultural Events</span>
+                    </div>
+                    <div className="flex items-center justify-center gap-1.5 md:gap-2 px-1">
+                      <Medal size={15} className="text-[#fff1cb] shrink-0" />
+                      <span className="text-xs md:text-sm font-bold text-[#fff1cb] tracking-wider truncate">Sport Events</span>
+                    </div>
                   </div>
-                ))}
+
+                  {/* Time labels + grid lines (spanning full width) */}
+                  {Array.from({ length: 14 }, (_, i) => i + 8).map((hour) => (
+                    <div key={hour} className="absolute left-0 right-0" style={{ top: `${48 + (hour - 8) * 72}px` }}>
+                      {/* Left time label */}
+                      <span className="absolute left-0 w-[32px] sm:w-[44px] md:w-[68px] text-right pr-1 md:pr-2 text-[10px] md:text-xs text-[#fff1cb]/70 font-medium tabular-nums" style={{ transform: 'translateY(-50%)' }}>
+                        {hour === 12 ? '12 PM' : hour < 12 ? `${hour} AM` : `${hour - 12} PM`}
+                      </span>
+                      {/* Grid line */}
+                      <div className="absolute left-[36px] sm:left-[48px] md:left-[72px] right-[36px] sm:right-[48px] md:right-[72px] border-t border-[#fff1cb]/15" />
+                      {/* Right time label */}
+                      <span className="absolute right-0 w-[32px] sm:w-[44px] md:w-[68px] text-left pl-1 md:pl-2 text-[10px] md:text-xs text-[#fff1cb]/70 font-medium tabular-nums" style={{ transform: 'translateY(-50%)' }}>
+                        {hour === 12 ? '12 PM' : hour < 12 ? `${hour} AM` : `${hour - 12} PM`}
+                      </span>
+                    </div>
+                  ))}
 
                 {/* Live Time Tracker Line */}
                 {currentHour !== null && (
@@ -746,90 +907,163 @@ function App() {
                 )}
 
                 {/* Event Columns */}
-                <div className="absolute top-[48px] left-[36px] sm:left-[48px] md:left-[72px] right-[36px] sm:right-[48px] md:right-[72px] bottom-0 grid grid-cols-2">
+                <div className="absolute top-[48px] left-[36px] sm:left-[48px] md:left-[72px] right-[36px] sm:right-[48px] md:right-[72px] bottom-0">
                   {/* Column divider */}
                   <div className="absolute top-0 bottom-0 left-1/2 border-l border-[#fff1cb]/15 z-[1]" />
 
-                  {/* Cultural Events Column */}
-                  <div className="relative">
-                    {timelineEvents
-                      .filter((e) => e.column === 'cultural')
-                      .map((event) => {
-                        const formatHour = (h: number) => {
-                          if (h === 12) return '12 PM';
-                          return h < 12 ? `${h} AM` : `${h - 12} PM`;
-                        };
-                        const isActive = currentHour !== null && currentHour >= event.start && currentHour < event.start + event.duration;
-                        return (
+                  {/* Joint / Spanning Events (column === 'both') */}
+                  {timelineEvents
+                    .filter((e) => e.column === 'both')
+                    .map((event) => {
+                      const isActive = currentHour !== null && currentHour >= event.start && currentHour < event.start + event.duration;
+                      const theme = getEventTheme("both");
+                      return (
+                        <div
+                          key={event.title}
+                          className={`absolute left-1 right-1 md:left-2 md:right-2 rounded-md md:rounded-lg overflow-hidden flex cursor-pointer transition-all duration-200 hover:brightness-105 hover:z-20 shadow-sm z-[3] ${isActive ? '!z-[5] ring-2 ring-[#d97706] shadow-md' : ''}`}
+                          style={{
+                            top: `${(event.start - 8) * 72 + 2}px`,
+                            height: `${event.duration * 72 - 3}px`,
+                            backgroundColor: theme.bg,
+                            border: theme.border,
+                            boxShadow: isActive ? '0 0 16px rgba(217,119,6,0.4), inset 0 0 12px rgba(217,119,6,0.1)' : '0 1px 4px rgba(0,0,0,0.12)',
+                          }}
+                          title={`${event.title} (${formatEventTime(event.start)} - ${formatEventTime(event.start + event.duration)}): ${event.description}`}
+                        >
+                          {/* Teams-style Left Accent Stripe */}
                           <div
-                            key={event.title}
-                            className={`absolute left-1 right-1.5 md:left-2 md:right-3 rounded-lg overflow-hidden cursor-pointer transition-all duration-300 hover:brightness-105 hover:z-10 shadow-sm border border-[#63752e]/25 ${isActive ? 'z-[5] ring-2 ring-[#63752e] shadow-md' : ''}`}
-                            style={{
-                              top: `${(event.start - 8) * 72 + 2}px`,
-                              height: `${event.duration * 72 - 3}px`,
-                              backgroundColor: '#fff1cb',
-                              borderLeft: '4px solid #63752e',
-                              boxShadow: isActive ? '0 0 16px rgba(99,117,46,0.4), inset 0 0 12px rgba(99,117,46,0.1)' : '0 2px 6px rgba(0,0,0,0.15)',
-                            }}
-                          >
-                            <div className="px-2 py-1.5 h-full flex flex-col justify-start">
-                              <div className={`text-[11px] md:text-xs font-bold leading-tight truncate text-[#611e3c]`}>{event.title}</div>
-                              {event.duration >= 1 && (
-                                <div className="text-[10px] md:text-[11px] text-[#63752e] font-semibold leading-tight mt-0.5 truncate">
-                                  {formatHour(event.start)} - {formatHour(event.start + event.duration)}
-                                </div>
-                              )}
-                              {event.duration >= 1.5 && (
-                                <div className="text-[10px] md:text-[11px] mt-0.5 leading-tight truncate text-[#611e3c]/80">
-                                  {event.description}
-                                </div>
-                              )}
-                            </div>
-                          </div>
-                        );
-                      })}
-                  </div>
+                            className="w-[5px] shrink-0 h-full"
+                            style={{ backgroundColor: theme.stripe }}
+                          />
 
-                  {/* Sports Events Column */}
-                  <div className="relative">
-                    {timelineEvents
-                      .filter((e) => e.column === 'sports')
-                      .map((event) => {
-                        const formatHour = (h: number) => {
-                          if (h === 12) return '12 PM';
-                          return h < 12 ? `${h} AM` : `${h - 12} PM`;
-                        };
+                          <div className="flex-1 min-w-0 px-2.5 py-1 md:px-3 md:py-1.5 flex flex-col justify-center h-full">
+                            <div className="flex items-center justify-between gap-2">
+                              <div className="flex items-center gap-2 min-w-0">
+                                <span className="text-[11px] md:text-xs font-bold leading-tight truncate" style={{ color: theme.textTitle }}>
+                                  {event.title}
+                                </span>
+                              </div>
+                              <div className="text-[9.5px] md:text-[11px] font-semibold shrink-0 whitespace-nowrap" style={{ color: theme.textTime }}>
+                                {formatEventTime(event.start)} – {formatEventTime(event.start + event.duration)}
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })}
+
+                  {/* 2-Column Grid for Cultural & Sports Events */}
+                  <div className="absolute inset-0 grid grid-cols-2 pointer-events-none">
+                    {/* Cultural Events Column */}
+                    <div className="relative h-full pl-1 pr-1.5 md:pl-2 md:pr-3 pointer-events-auto">
+                      {culturalEventsWithLayout.map((event) => {
                         const isActive = currentHour !== null && currentHour >= event.start && currentHour < event.start + event.duration;
+                        const leftPercent = (event.lane / event.totalLanes) * 100;
+                        const widthPercent = (event.colSpan / event.totalLanes) * 100;
+                        const theme = getEventTheme("cultural");
+
                         return (
                           <div
-                            key={event.title}
-                            className={`absolute left-1.5 right-1 md:left-3 md:right-2 rounded-lg overflow-hidden cursor-pointer transition-all duration-300 hover:brightness-105 hover:z-10 shadow-sm border border-[#63752e]/25 ${isActive ? 'z-[5] ring-2 ring-[#63752e] shadow-md' : ''}`}
+                            key={`${event.title}-${event.start}`}
+                            className="absolute px-0.5 md:px-1 transition-all duration-300"
                             style={{
                               top: `${(event.start - 8) * 72 + 2}px`,
                               height: `${event.duration * 72 - 3}px`,
-                              backgroundColor: '#fff1cb',
-                              borderLeft: '4px solid #63752e',
-                              boxShadow: isActive ? '0 0 16px rgba(99,117,46,0.4), inset 0 0 12px rgba(99,117,46,0.1)' : '0 2px 6px rgba(0,0,0,0.15)',
+                              left: `${leftPercent}%`,
+                              width: `${widthPercent}%`,
+                              zIndex: isActive ? 15 : event.lane + 2,
                             }}
+                            title={`${event.title} (${formatEventTime(event.start)} - ${formatEventTime(event.start + event.duration)}): ${event.description}`}
                           >
-                            <div className="px-2 py-1.5 h-full flex flex-col justify-start">
-                              <div className={`text-[11px] md:text-xs font-bold leading-tight truncate text-[#611e3c]`}>{event.title}</div>
-                              {event.duration >= 1 && (
-                                <div className="text-[10px] md:text-[11px] text-[#63752e] font-semibold leading-tight mt-0.5 truncate">
-                                  {formatHour(event.start)} - {formatHour(event.start + event.duration)}
+                            <div
+                              className={`w-full h-full rounded-md md:rounded-lg overflow-hidden flex cursor-pointer transition-all duration-200 hover:brightness-105 hover:shadow-md ${isActive ? 'ring-2 ring-[#c239b3] shadow-md' : ''}`}
+                              style={{
+                                backgroundColor: theme.bg,
+                                border: theme.border,
+                                boxShadow: isActive ? '0 0 16px rgba(194,57,179,0.4), inset 0 0 12px rgba(194,57,179,0.1)' : '0 1px 3px rgba(0,0,0,0.1)',
+                              }}
+                            >
+                              {/* Teams-style Left Accent Stripe */}
+                              <div
+                                className="w-[5px] shrink-0 h-full"
+                                style={{ backgroundColor: theme.stripe }}
+                              />
+
+                              <div className="flex-1 min-w-0 px-1.5 py-1 md:px-2 md:py-1.5 flex flex-col justify-start">
+                                <div className="text-[10.5px] md:text-xs font-bold leading-tight line-clamp-2" style={{ color: theme.textTitle }}>
+                                  {event.title}
                                 </div>
-                              )}
-                              {event.duration >= 1.5 && (
-                                <div className="text-[10px] md:text-[11px] mt-0.5 leading-tight truncate text-[#611e3c]/80">
-                                  {event.description}
+                                <div
+                                  className="text-[9px] sm:text-[9.5px] md:text-[10.5px] font-semibold leading-tight mt-0.5 flex flex-wrap items-center gap-x-1"
+                                  style={{ color: theme.textTime }}
+                                >
+                                  <span className="whitespace-nowrap">{formatEventTime(event.start)}</span>
+                                  <span className="opacity-60">–</span>
+                                  <span className="whitespace-nowrap">{formatEventTime(event.start + event.duration)}</span>
                                 </div>
-                              )}
+                              </div>
                             </div>
                           </div>
                         );
                       })}
+                    </div>
+
+                    {/* Sports Events Column */}
+                    <div className="relative h-full pl-1.5 pr-1 md:pl-3 md:pr-2 pointer-events-auto">
+                      {sportsEventsWithLayout.map((event) => {
+                        const isActive = currentHour !== null && currentHour >= event.start && currentHour < event.start + event.duration;
+                        const leftPercent = (event.lane / event.totalLanes) * 100;
+                        const widthPercent = (event.colSpan / event.totalLanes) * 100;
+                        const theme = getEventTheme("sports");
+
+                        return (
+                          <div
+                            key={`${event.title}-${event.start}`}
+                            className="absolute px-0.5 md:px-1 transition-all duration-300"
+                            style={{
+                              top: `${(event.start - 8) * 72 + 2}px`,
+                              height: `${event.duration * 72 - 3}px`,
+                              left: `${leftPercent}%`,
+                              width: `${widthPercent}%`,
+                              zIndex: isActive ? 15 : event.lane + 2,
+                            }}
+                            title={`${event.title} (${formatEventTime(event.start)} - ${formatEventTime(event.start + event.duration)}): ${event.description}`}
+                          >
+                            <div
+                              className={`w-full h-full rounded-md md:rounded-lg overflow-hidden flex cursor-pointer transition-all duration-200 hover:brightness-105 hover:shadow-md ${isActive ? 'ring-2 ring-[#4f52b2] shadow-md' : ''}`}
+                              style={{
+                                backgroundColor: theme.bg,
+                                border: theme.border,
+                                boxShadow: isActive ? '0 0 16px rgba(79,82,178,0.4), inset 0 0 12px rgba(79,82,178,0.1)' : '0 1px 3px rgba(0,0,0,0.1)',
+                              }}
+                            >
+                              {/* Teams-style Left Accent Stripe */}
+                              <div
+                                className="w-[5px] shrink-0 h-full"
+                                style={{ backgroundColor: theme.stripe }}
+                              />
+
+                              <div className="flex-1 min-w-0 px-1.5 py-1 md:px-2 md:py-1.5 flex flex-col justify-start">
+                                <div className="text-[10.5px] md:text-xs font-bold leading-tight line-clamp-2" style={{ color: theme.textTitle }}>
+                                  {event.title}
+                                </div>
+                                <div
+                                  className="text-[9px] sm:text-[9.5px] md:text-[10.5px] font-semibold leading-tight mt-0.5 flex flex-wrap items-center gap-x-1"
+                                  style={{ color: theme.textTime }}
+                                >
+                                  <span className="whitespace-nowrap">{formatEventTime(event.start)}</span>
+                                  <span className="opacity-60">–</span>
+                                  <span className="whitespace-nowrap">{formatEventTime(event.start + event.duration)}</span>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        );
+                      })}
+                    </div>
                   </div>
                 </div>
+              </div>
               </div>
             </div>
           </AnimatedContent>
