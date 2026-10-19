@@ -13,15 +13,15 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "SELAH 2026 | Pause. Reflect. Lift Up.",
+  title: "SELAH 2026 | Pause. Explore. Renew.",
   description: "Inter-church youth cultural & sports festival uniting congregations in athletics, creative expression, and holy reverence.",
   icons: {
     icon: [
       { url: "/favicon.ico" },
-      { url: "/top_page/Selah_Logo.png", type: "image/png" },
+      { url: "/top_page/Selah_Logo_BG.png", type: "image/png" },
     ],
     apple: [
-      { url: "/top_page/Selah_Logo.png" },
+      { url: "/top_page/Selah_Logo_BG.png" },
     ],
   },
 };

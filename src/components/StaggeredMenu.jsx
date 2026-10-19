@@ -435,7 +435,18 @@ export const StaggeredMenu = ({
             {items && items.length ? (
               items.map((it, idx) => (
                 <li className="sm-panel-itemWrap" key={it.label + idx}>
-                  <a className="sm-panel-item" href={it.link} aria-label={it.ariaLabel} data-index={idx + 1}>
+                  <a
+                    className="sm-panel-item"
+                    href={it.link}
+                    aria-label={it.ariaLabel}
+                    data-index={idx + 1}
+                    target={it.target || (it.link?.startsWith('http') ? '_blank' : undefined)}
+                    rel={it.rel || (it.target === '_blank' || it.link?.startsWith('http') ? 'noopener noreferrer' : undefined)}
+                    onClick={(e) => {
+                      if (it.onClick) it.onClick(e);
+                      if (open) toggleMenu();
+                    }}
+                  >
                     <span className="sm-panel-itemLabel">{it.label}</span>
                   </a>
                 </li>

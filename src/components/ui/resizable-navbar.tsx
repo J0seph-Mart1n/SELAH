@@ -26,6 +26,8 @@ interface NavItemsProps {
   items: {
     name: string;
     link: string;
+    target?: string;
+    rel?: string;
   }[];
   className?: string;
   onItemClick?: () => void;
@@ -132,6 +134,8 @@ export const NavItems = ({ items, className, onItemClick }: NavItemsProps) => {
           className="relative px-4 py-2"
           key={`link-${idx}`}
           href={item.link}
+          target={item.target || (item.link?.startsWith("http") ? "_blank" : undefined)}
+          rel={item.rel || (item.target === "_blank" || item.link?.startsWith("http") ? "noopener noreferrer" : undefined)}
         >
           {hovered === idx && (
             <motion.div

@@ -233,14 +233,10 @@ export default function RulesPage() {
 
             {/* Quick Action Buttons */}
             <div className="flex flex-wrap items-center justify-center gap-3 mt-8">
-              <button
-                onClick={() => window.print()}
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-xs sm:text-sm font-semibold bg-[#fff1cb] hover:bg-[#fff1cb]/90 border border-[#63752e]/40 text-[#611e3c] transition-all shadow-md"
-              >
-                <Printer size={15} />  Download Brochure
-              </button>
               <Link
-                href="/#pricing"
+                href="https://forms.gle/CiWs9cgA88599SMk6"
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full text-xs sm:text-sm font-bold bg-[#63752e] hover:bg-[#63752e]/85 text-[#fff1cb] shadow-lg shadow-[#63752e]/25 transition-all"
               >
                 <Users size={15} /> Register Delegation

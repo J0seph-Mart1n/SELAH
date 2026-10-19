@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { Sparkles } from "lucide-react";
 import { SiInstagram } from "react-icons/si";
 import ParticleText from "./ParticleText";
@@ -25,9 +26,14 @@ export default function Footer() {
         {/* Brand Column */}
         <div className="flex flex-col h-full">
           <Link className="brand flex items-center gap-3 text-[#fff1cb] mb-6 group w-fit" href="/">
-            <div className="brand-mark bg-[#63752e] text-[#fff1cb] p-1.5 rounded flex items-center justify-center transition-transform duration-300 group-hover:rotate-12 shadow-[0_0_15px_rgba(99,117,46,0.4)]">
-              <Sparkles size={18} />
-            </div>
+             <Image
+                          src="/top_page/Selah_Logo_BG.png"
+                          alt="SELAH 2026 Logo"
+                          width={40}
+                          height={40}
+                          priority
+                          className="w-9 h-9 md:w-10 md:h-10 rounded-full object-contain shrink-0 transition-transform duration-200 hover:scale-105"
+              />
             <div className="text-xl font-bold tracking-wide">
               SELAH <span className="text-[#fff1cb]">2026</span>
             </div>
@@ -68,9 +74,7 @@ export default function Footer() {
               <SiInstagram size={18} />
             </a>
           </div>
-          <p className="text-[#fff1cb]/70 text-xs mt-4 max-w-xs leading-relaxed">
-            Stay tuned to official announcements, fixtures, and media drops.
-          </p>
+
         </div>
       </div>
 
@@ -93,7 +97,7 @@ export default function Footer() {
           fontSize="24vw"
           fontWeight={900}
           fontFamily="inherit"
-          className="leading-none tracking-tighter opacity-35 pointer-events-auto"
+          className="leading-none tracking-tighter opacity-45 pointer-events-auto"
           glow={false}
         />
       </div>

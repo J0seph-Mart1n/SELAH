@@ -418,7 +418,7 @@ function App() {
           </a>
           <NavItems
             items={[
-              { name: "Register", link: "#events" },
+              { name: "Register", link: "https://forms.gle/CiWs9cgA88599SMk6", target: "_blank" },
               { name: "Rules", link: "/rules" },
               { name: "Core Team", link: "/about-cya" },
               { name: "Gallery", link: "#faq" },
@@ -448,7 +448,7 @@ function App() {
             </div>
           }
           items={[
-            { label: "Register", link: "#events" },
+            { label: "Register", link: "https://forms.gle/CiWs9cgA88599SMk6", target: "_blank" },
             { label: "Rules", link: "/rules" },
             { label: "Core Team", link: "/about-cya" },
             { label: "Gallery", link: "#faq" },
@@ -486,7 +486,7 @@ function App() {
                   <MorphingText texts={["SELAH", "सेलाह", "സേലാ", "סֶלָה", "SELAH"]} />
                   <span>2026</span>
                 </h1>
-                <p className="hero-subtitle text-center mx-auto">
+                <p className="hero-subtitle text-center mx-auto" >
                   Pause. Explore. Renew
                   <br className="desktop-only" />{" "}
                 </p>
@@ -514,7 +514,12 @@ function App() {
                   ))}
                 </div>
                 <div className="hero-actions flex !flex-row !flex-nowrap w-full max-w-xs sm:max-w-md mx-auto justify-center items-center gap-3">
-                  <a className="button button-primary button-large flex-1 sm:flex-none flex items-center justify-center gap-2 whitespace-nowrap px-4" href="#pricing">
+                  <a
+                    className="button button-primary button-large flex-1 sm:flex-none flex items-center justify-center gap-2 whitespace-nowrap px-4"
+                    href="https://forms.gle/CiWs9cgA88599SMk6"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
                     <Users size={17} /> Register
                   </a>
                   <a className="button button-outline button-large flex-1 sm:flex-none flex items-center justify-center gap-2 whitespace-nowrap px-4" href="#events">
@@ -534,16 +539,15 @@ function App() {
           <AnimatedContent distance={60} duration={0.8} ease="power3.out" threshold={0.1}>
             <div className="section-heading flex flex-col items-center text-center max-w-2xl mx-auto mb-20 px-4">
               <h2 className="text-4xl md:text-6xl font-black mb-6 text-[#fff1cb] leading-tight">
-                Mega <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#fff1cb] to-[#63752e]">Prize Pool</span>
+                Mega Prize Pool
               </h2>
               <SparklesText
                 className="text-4xl md:text-5xl font-black mb-1 leading-tight"
                 colors={{ first: "#fff1cb", second: "#63752e" }}
                 sparklesCount={12}
               >
-                <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#fff1cb] to-[#63752e]">₹45,000</span>
+                ₹45,000
               </SparklesText>
-
             </div>
 
             <div className="flex flex-col lg:flex-row items-center lg:items-end justify-center gap-8 lg:gap-8 xl:gap-10 max-w-6xl mx-auto px-4 lg:px-8 mt-16 relative z-10 pb-8">
@@ -624,7 +628,7 @@ function App() {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="section-heading flex flex-col items-center text-center max-w-2xl mx-auto mb-16 px-4">
                 <h2 className="text-4xl md:text-5xl lg:text-6xl font-black mb-6 text-[#fff1cb] leading-tight">
-                  Special Chief <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#fff1cb] to-[#63752e]">Guest</span>
+                  Special Chief Guest
                 </h2>
               </div>
 
@@ -698,7 +702,7 @@ function App() {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="section-heading flex flex-col items-center text-center max-w-2xl mx-auto mb-16 px-4">
                 <h2 className="text-4xl md:text-5xl font-black mb-6 text-[#fff1cb] leading-tight">
-                  Our <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#fff1cb] to-[#63752e]">Sponsors</span>
+                  Our Sponsors
                 </h2>
               </div>
 
@@ -737,7 +741,7 @@ function App() {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="section-heading flex flex-col items-center text-center max-w-2xl mx-auto mb-16 px-4">
                 <h2 className="text-4xl md:text-5xl font-black mb-6 text-[#fff1cb] leading-tight">
-                  Father Vicar's <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#fff1cb] to-[#63752e]">Message</span>
+                  Father Vicar's Message
                 </h2>
               </div>
               
@@ -785,7 +789,7 @@ function App() {
         <section className="section arena-section" id="events">
           <AnimatedContent distance={60} duration={0.8} ease="power3.out" threshold={0.1}>
             <div className="center-heading">
-              <h2>Cultural and Sport Events</h2>
+              <h2 className="text-4xl md:text-5xl font-black mb-6 text-[#fff1cb] leading-tight">Cultural and Sport Events</h2>
               <p>
                 Explore the different Cultural and Sport events in SELAH 2026. Click on the event card for further information and rules about the event.
               </p>
@@ -844,7 +848,7 @@ function App() {
             <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
               <div className="section-heading flex flex-col items-center text-center max-w-2xl mx-auto mb-16 px-4">
                 <h2 className="text-4xl md:text-5xl font-black mb-4 text-[#fff1cb] leading-tight">
-                  Event <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#fff1cb] to-[#63752e]">Schedule</span>
+                  Event Schedule
                 </h2>
                 <p className="text-[#fff1cb]/70 text-sm md:text-base leading-relaxed">
                   A full day schedule of cultural performances and sports tournaments.
