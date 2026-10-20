@@ -41,7 +41,7 @@ export const team: TeamMember[] = [
     role: "Director",
     group: "Director",
     // EDIT: swap for "/team/fr-joy-kakkanatu.jpg" once the real photo is uploaded
-    photo: "/cya/Fr._Joy_2.png",
+    photo: "/cya/Fr._Joy_New_BG.png",
   },
   {
     id: "br-jeeson",

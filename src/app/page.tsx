@@ -47,102 +47,102 @@ type EventCard = {
 const eventCards: Record<Track, EventCard[]> = {
   sports: [
     {
-      title: "Chess",
+      title: "Blitz Chess",
       description:
-        "Full-court FIBA rules, shot clock enforced, with regional officials and sudden-death overtime.",
+        "Standard FIDE rules with digital chess clocks and touch-move regulations.",
       image:
         "/events/chess.jpg",
     },
     {
       title: "Throwball",
       description:
-        "Best of three sets with group double elimination leading to the stadium finals.",
+        "One set of 20 points with Knockout format.",
       image:
         "events/Throwball.jpg",
     },
     {
-      title: "Football",
+      title: "Futsal",
       description:
-        "Rapid 20-minute halves on pro turf surfaces. Precision touch, discipline, and teamwork.",
+        "Rapid 20-minute Match on turf surfaces.",
       image:
         "/events/Football.jpg",
     },
     {
       title: "Tug of War",
       description:
-        "Rapid 20-minute halves on pro turf surfaces. Precision touch, discipline, and teamwork.",
+        "Best of 3 sets match with Knockout format.",
       image:
         "/events/TugOfWar.jpg",
     },
     {
       title: "Mixed Relay",
       description:
-        "Rapid 20-minute halves on pro turf surfaces. Precision touch, discipline, and teamwork.",
+        "2 Boys and 2 Girls Team.",
       image:
         "/events/MixedRelay.jpg",
     },
   ],
   culture: [
     {
-      title: "Group Dance",
+      title: "The Big Picture",
       description:
-        "Sacred hymnody reimagined through four-part harmony and original congregational ballads.",
+        "Group Dance event with the theme as Big Indian Wedding.",
       image:
         "/events/GroupDance.jpg",
     },
     {
-      title: "Short Film",
+      title: "Frame By Frame",
       description:
-        "Original composition plus a classic hymn arrangement, scored for musicality and resonance.",
+        "Make a Short Flim with no political and offensive theme.",
       image:
         "/events/ShortFilm.jpg",
     },
     {
-      title: "Live Painting",
+      title: "The Art of the Moment",
       description:
-        "Original rhythmic narratives addressing redemption, mental health, and contemporary faith.",
+        "Live Canvas Art with the theme to be said on the event day.",
       image:
         "/events/Painting.jpg",
     },
     {
-      title: "Solo Singing",
+      title: "Pitch Perfect",
       description:
-        "Original rhythmic narratives addressing redemption, mental health, and contemporary faith.",
+        "Solo Singing event with open ended song.",
       image:
         "/events/SoloSinging.jpeg",
     },
     {
-      title: "Solo Dance",
+      title: "Dance Unleashed",
       description:
-        "Original rhythmic narratives addressing redemption, mental health, and contemporary faith.",
+        "Solo Dance event with open ended theme.",
       image:
         "/events/SoloDancing.avif",
     },
     {
-      title: "Street Play / Nukkad Natak",
+      title: "Nukkad Natak",
       description:
-        "Original rhythmic narratives addressing redemption, mental health, and contemporary faith.",
+        "Street Play with the theme as Faith.",
       image:
         "events/StreetPlay.jpg",
     },
     {
-      title: "Mono Act",
+      title: "Alter Ego",
       description:
-        "Original rhythmic narratives addressing redemption, mental health, and contemporary faith.",
+        "Mono Act event with a biblical theme.",
       image:
         "/events/MonoAct.avif",
     },
     {
-      title: "Photography",
+      title: "Perspectives",
       description:
-        "Original rhythmic narratives addressing redemption, mental health, and contemporary faith.",
+        "Photography event. Take 3 Pictures and tell a story about it.",
       image:
         "/events/Photography.jpg",
     },
     {
-      title: "Music Band",
+      title: "Battle of the Bands",
       description:
-        "Original rhythmic narratives addressing redemption, mental health, and contemporary faith.",
+        "Music Band Event. 4 Jacks and 4 Mics will be provided to the band.",
       image:
         "/events/MusicBand.jpg",
     },
@@ -318,6 +318,7 @@ const getEventTheme = (column: "cultural" | "sports" | "both") => {
 
 function App() {
   const isChiefGuestFinalized = false;
+  const showSponsors = false;
   const [track, setTrack] = useState<Track>("sports");
 
   const culturalEventsWithLayout = useMemo(
@@ -418,10 +419,10 @@ function App() {
           </a>
           <NavItems
             items={[
-              { name: "Register", link: "https://forms.gle/CiWs9cgA88599SMk6", target: "_blank" },
+              { name: "Register", link: "https://forms.fillout.com/t/f1G5aTFnoRus", target: "_blank" },
               { name: "Rules", link: "/rules" },
               { name: "Core Team", link: "/about-cya" },
-              { name: "Gallery", link: "#faq" },
+              { name: "Gallery", link: "/gallery" },
             ]}
           />
         </NavBody>
@@ -448,10 +449,10 @@ function App() {
             </div>
           }
           items={[
-            { label: "Register", link: "https://forms.gle/CiWs9cgA88599SMk6", target: "_blank" },
+            { label: "Register", link: "https://forms.fillout.com/t/f1G5aTFnoRus", target: "_blank" },
             { label: "Rules", link: "/rules" },
             { label: "Core Team", link: "/about-cya" },
-            { label: "Gallery", link: "#faq" },
+            { label: "Gallery", link: "/gallery" },
           ] as any}
           colors={['#611e3c', '#63752e', '#fff1cb', '#611e3c']}
           accentColor="#63752e"
@@ -516,7 +517,7 @@ function App() {
                 <div className="hero-actions flex !flex-row !flex-nowrap w-full max-w-xs sm:max-w-md mx-auto justify-center items-center gap-3">
                   <a
                     className="button button-primary button-large flex-1 sm:flex-none flex items-center justify-center gap-2 whitespace-nowrap px-4"
-                    href="https://forms.gle/CiWs9cgA88599SMk6"
+                    href="https://forms.fillout.com/t/f1G5aTFnoRus"
                     target="_blank"
                     rel="noopener noreferrer"
                   >
@@ -706,22 +707,30 @@ function App() {
                 </h2>
               </div>
 
-              <div className="w-[100vw] relative left-1/2 -translate-x-1/2 overflow-hidden py-4">
-                <ScrollVelocity
-                  scrollContainerRef={undefined}
-                  parallaxStyle={undefined}
-                  scrollerStyle={undefined}
-                  velocity={100}
-                  numCopies={6}
-                  damping={50}
-                  stiffness={400}
-                  texts={[
-                    "Sponser 1 • Sponser 2 •",
-                    "Sponsor 3 • Sponsor 4 •"
-                  ] as any}
-                  className="text-4xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#fff1cb]/60 via-[#fff1cb] to-[#fff1cb]/60 tracking-[0.2em] uppercase inline-block py-2 mb-4 drop-shadow-[0_0_15px_rgba(255,241,203,0.2)]"
-                />
-              </div>
+              {showSponsors ? (
+                <div className="w-[100vw] relative left-1/2 -translate-x-1/2 overflow-hidden py-4">
+                  <ScrollVelocity
+                    scrollContainerRef={undefined}
+                    parallaxStyle={undefined}
+                    scrollerStyle={undefined}
+                    velocity={100}
+                    numCopies={6}
+                    damping={50}
+                    stiffness={400}
+                    texts={[
+                      "Sponsor 1 • Sponsor 2 •",
+                      "Sponsor 3 • Sponsor 4 •"
+                    ] as any}
+                    className="text-4xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#fff1cb]/60 via-[#fff1cb] to-[#fff1cb]/60 tracking-[0.2em] uppercase inline-block py-2 mb-4 drop-shadow-[0_0_15px_rgba(255,241,203,0.2)]"
+                  />
+                </div>
+              ) : (
+                <div className="text-center py-6">
+                  <p className="text-2xl sm:text-3xl md:text-4xl font-black text-[#fff1cb] tracking-wider uppercase drop-shadow-md">
+                    Revealing Soon
+                  </p>
+                </div>
+              )}
 
               <div className="mt-16 text-center">
                 <button className="relative inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-[#fff1cb]/40">
@@ -749,7 +758,7 @@ function App() {
                 {/* Left Side - Full Height Image */}
                 <div className="w-full md:w-5/12 min-h-[350px] relative flex-shrink-0">
                   <img 
-                    src="/cya/Fr._Joy.jpeg"
+                    src="/cya/Fr._Joy_New.jpeg"
                     alt="Father Vicar" 
                     className="absolute inset-0 w-full h-full object-cover"
                   />
@@ -790,7 +799,7 @@ function App() {
           <AnimatedContent distance={60} duration={0.8} ease="power3.out" threshold={0.1}>
             <div className="center-heading">
               <h2 className="text-4xl md:text-5xl font-black mb-6 text-[#fff1cb] leading-tight">Cultural and Sport Events</h2>
-              <p>
+              <p className="!text-base md:!text-[18px] !max-w-xl text-[#fff1cb]/85 leading-relaxed mx-auto">
                 Explore the different Cultural and Sport events in SELAH 2026. Click on the event card for further information and rules about the event.
               </p>
             </div>
@@ -850,7 +859,7 @@ function App() {
                 <h2 className="text-4xl md:text-5xl font-black mb-4 text-[#fff1cb] leading-tight">
                   Event Schedule
                 </h2>
-                <p className="text-[#fff1cb]/70 text-sm md:text-base leading-relaxed">
+                <p className="!text-base md:!text-[18px] !max-w-xl text-[#fff1cb]/85 leading-relaxed mx-auto">
                   A full day schedule of cultural performances and sports tournaments.
                 </p>
               </div>
@@ -1124,7 +1133,7 @@ function EventCardView({ card }: { card: EventCard }) {
       <div className="relative z-10 flex flex-col h-full justify-end pointer-events-none">
         <div className="magic-bento-card__content">
           <h2 className="magic-bento-card__title !font-bold !text-[#fff1cb] !text-xl !mb-2 drop-shadow-md pr-12">{card.title}</h2>
-          <p className="magic-bento-card__description !text-[#fff1cb]/85 !opacity-100 line-clamp-3 pr-12">{card.description}</p>
+          <p className="magic-bento-card__description !text-[13px] !leading-snug !text-[#fff1cb] !opacity-100 line-clamp-3 pr-12">{card.description}</p>
         </div>
       </div>
       

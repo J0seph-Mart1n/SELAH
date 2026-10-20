@@ -9,14 +9,15 @@ import ParticleText from "./ParticleText";
 interface QuickLink {
   label: string;
   href: string;
+  target?: string
 }
 
 const QUICK_LINKS: QuickLink[] = [
-  { label: "Registration Form", href: "/#pricing" },
+  { label: "Registration Form", href: "https://forms.fillout.com/t/f1G5aTFnoRus", target:"_blank"},
   { label: "Events", href: "/#events" },
   { label: "Rules", href: "/rules" },
   { label: "About CYA", href: "/about-cya" },
-  { label: "Gallery", href: "/#faq" },
+  { label: "Gallery", href: "/gallery" },
 ];
 
 export default function Footer() {
@@ -52,6 +53,8 @@ export default function Footer() {
               <Link
                 key={link.label}
                 href={link.href}
+                target={link.target}
+                rel="noopener noreferrer"
                 className="text-[#fff1cb]/75 hover:text-[#fff1cb] text-sm transition-colors duration-200 w-fit"
               >
                 {link.label}

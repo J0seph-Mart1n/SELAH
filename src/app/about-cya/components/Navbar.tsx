@@ -14,7 +14,7 @@ const NAV_LINKS = [
   { name: "Home", link: "/" },
   { name: "Rules", link: "/rules" },
   { name: "Events", link: "/#events" },
-  { name: "Gallery", link: "/#faq" },
+  { name: "Gallery", link: "/gallery" },
 ];
 
 function Brand({ collapsible = false }: { collapsible?: boolean }) {

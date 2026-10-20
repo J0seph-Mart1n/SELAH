@@ -179,9 +179,9 @@ export default function RulesPage() {
             <NavItems
               items={[
                 { name: "Home", link: "/" },
-                { name: "Events", link: "/#events" },
                 { name: "Rules", link: "/rules" },
                 { name: "Core Team", link: "/about-cya" },
+                { name: "Gallery", link: "/gallery" },
               ]}
             />
           </NavBody>
@@ -210,9 +210,9 @@ export default function RulesPage() {
             }
             items={[
               { label: "Home", link: "/" },
-              { label: "Events", link: "/#events" },
               { label: "Rules", link: "/rules" },
               { label: "Core Team", link: "/about-cya" },
+              { label: "Gallery", link: "/gallery" },
             ] as any}
             colors={["#611e3c", "#63752e", "#fff1cb", "#611e3c"]}
             accentColor="#63752e"
