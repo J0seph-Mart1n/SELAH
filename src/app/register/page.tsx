@@ -216,35 +216,49 @@ export default function RegisterPage() {
   // Compute fee summary
   const feeSummary = useMemo(() => {
     let groupCount = 0;
-    let individualCount = 0;
-    const selectedList: Array<{ event: RegistrationEventConfig; participants: Participant[] }> = [];
+    let individualEventsCount = 0;
+    let individualParticipantsCount = 0;
+    const selectedList: Array<{
+      event: RegistrationEventConfig;
+      participants: Participant[];
+      calculatedFee: number;
+    }> = [];
 
     REGISTRATION_EVENTS.forEach((event) => {
       const state = eventsState[event.id];
       if (state?.enabled) {
+        let calculatedFee = 0;
+        if (event.type === "group") {
+          groupCount += 1;
+          calculatedFee = PAYMENT_DETAILS.groupFee;
+        } else {
+          individualEventsCount += 1;
+          const count = state.participants.length;
+          individualParticipantsCount += count;
+          calculatedFee = count * PAYMENT_DETAILS.individualFee;
+        }
+
         selectedList.push({
           event,
           participants: state.participants,
+          calculatedFee,
         });
-        if (event.type === "group") {
-          groupCount += 1;
-        } else {
-          individualCount += 1;
-        }
       }
     });
 
     const groupTotal = groupCount * PAYMENT_DETAILS.groupFee;
-    const individualTotal = individualCount * PAYMENT_DETAILS.individualFee;
+    const individualTotal = individualParticipantsCount * PAYMENT_DETAILS.individualFee;
     const grandTotal = groupTotal + individualTotal;
 
     return {
       groupCount,
-      individualCount,
+      individualEventsCount,
+      individualParticipantsCount,
+      individualCount: individualParticipantsCount,
       groupTotal,
       individualTotal,
       grandTotal,
-      totalEvents: groupCount + individualCount,
+      totalEvents: groupCount + individualEventsCount,
       selectedList,
     };
   }, [eventsState]);
@@ -311,6 +325,15 @@ export default function RegisterPage() {
             return {
               valid: false,
               error: `Please enter all participant names in the ${event.title} squad table.`,
+            };
+          }
+
+          // Check if any participant gender is blank (MANDATORY FOR ALL EVENTS)
+          const emptyGender = state.participants.find((p) => !p.gender);
+          if (emptyGender) {
+            return {
+              valid: false,
+              error: `Please select the gender (Male / Female) for all participants in ${event.title}.`,
             };
           }
 
@@ -441,11 +464,16 @@ export default function RegisterPage() {
       REGISTRATION_EVENTS.forEach((event) => {
         const state = eventsState[event.id];
         if (state?.enabled && state.participants.length > 0) {
+          const calculatedFee =
+            event.type === "group"
+              ? PAYMENT_DETAILS.groupFee
+              : state.participants.length * PAYMENT_DETAILS.individualFee;
+
           cleanRegistrations[event.id] = {
             eventId: event.id,
             title: event.title,
             type: event.type,
-            fee: event.fee,
+            fee: calculatedFee,
             participants: state.participants,
           };
         }
@@ -717,7 +745,6 @@ export default function RegisterPage() {
                     onChange={(e) => setParishDetails({ ...parishDetails, email: e.target.value })}
                     className="w-full px-4 py-3 rounded-2xl bg-[#2d0c1b]/80 border border-[#fff1cb]/20 focus:border-[#63752e] focus:outline-none text-[#fff1cb] placeholder:text-[#fff1cb]/30 text-sm transition-colors"
                   />
-                  <span className="text-[11px] text-[#fff1cb]/60 mt-1 block">Confirmation slip and updates will be sent here.</span>
                 </div>
 
                 {/* 2. Name of the Parish */}
@@ -733,7 +760,6 @@ export default function RegisterPage() {
                     onChange={(e) => setParishDetails({ ...parishDetails, parishName: e.target.value })}
                     className="w-full px-4 py-3 rounded-2xl bg-[#2d0c1b]/80 border border-[#fff1cb]/20 focus:border-[#63752e] focus:outline-none text-[#fff1cb] placeholder:text-[#fff1cb]/30 text-sm transition-colors"
                   />
-                  <span className="text-[11px] text-[#fff1cb]/60 mt-1 block">Specify your church or parish title clearly.</span>
                 </div>
 
                 {/* 3. Name of person filling form */}
@@ -749,7 +775,6 @@ export default function RegisterPage() {
                     onChange={(e) => setParishDetails({ ...parishDetails, representativeName: e.target.value })}
                     className="w-full px-4 py-3 rounded-2xl bg-[#2d0c1b]/80 border border-[#fff1cb]/20 focus:border-[#63752e] focus:outline-none text-[#fff1cb] placeholder:text-[#fff1cb]/30 text-sm transition-colors"
                   />
-                  <span className="text-[11px] text-[#fff1cb]/60 mt-1 block">CYA President, Youth Leader, or Representative.</span>
                 </div>
 
                 {/* 4. Contact Number */}
@@ -765,36 +790,9 @@ export default function RegisterPage() {
                     onChange={(e) => setParishDetails({ ...parishDetails, contactNumber: e.target.value })}
                     className="w-full px-4 py-3 rounded-2xl bg-[#2d0c1b]/80 border border-[#fff1cb]/20 focus:border-[#63752e] focus:outline-none text-[#fff1cb] placeholder:text-[#fff1cb]/30 text-sm transition-colors"
                   />
-                  <span className="text-[11px] text-[#fff1cb]/60 mt-1 block">Primary mobile number for day-of-event coordination.</span>
                 </div>
 
-                {/* Optional Alternate Phone */}
-                <div>
-                  <label className="block text-sm font-semibold text-[#fff1cb] mb-2">
-                    Alternate Phone / WhatsApp (Optional)
-                  </label>
-                  <input
-                    type="tel"
-                    placeholder="e.g. +91 91234 56789"
-                    value={parishDetails.alternatePhone}
-                    onChange={(e) => setParishDetails({ ...parishDetails, alternatePhone: e.target.value })}
-                    className="w-full px-4 py-3 rounded-2xl bg-[#2d0c1b]/80 border border-[#fff1cb]/20 focus:border-[#63752e] focus:outline-none text-[#fff1cb] placeholder:text-[#fff1cb]/30 text-sm transition-colors"
-                  />
-                </div>
 
-                {/* Additional Notes */}
-                <div>
-                  <label className="block text-sm font-semibold text-[#fff1cb] mb-2">
-                    Special Remarks / Parish Notes (Optional)
-                  </label>
-                  <input
-                    type="text"
-                    placeholder="e.g. Bringing parish youth banner, need acoustic plug"
-                    value={parishDetails.notes}
-                    onChange={(e) => setParishDetails({ ...parishDetails, notes: e.target.value })}
-                    className="w-full px-4 py-3 rounded-2xl bg-[#2d0c1b]/80 border border-[#fff1cb]/20 focus:border-[#63752e] focus:outline-none text-[#fff1cb] placeholder:text-[#fff1cb]/30 text-sm transition-colors"
-                  />
-                </div>
               </div>
 
               {/* Action buttons */}
@@ -835,7 +833,7 @@ export default function RegisterPage() {
                 </div>
 
                 <div className="px-3 py-1.5 rounded-xl bg-[#2d0c1b] border border-[#63752e]/40 text-xs text-[#fff1cb]/90 shrink-0 shadow-sm w-fit self-start sm:self-auto">
-                  <span className="font-semibold text-[#63752e]">Sports Fee:</span> Group ₹800 • Individual ₹250
+                  <span className="font-semibold text-[#63752e]">Sports Fee:</span> Group ₹800 • Individual ₹250/participant
                 </div>
               </div>
 
@@ -843,13 +841,12 @@ export default function RegisterPage() {
               <div className="mb-5 sm:mb-6 p-3.5 sm:p-4 rounded-2xl bg-[#2d0c1b]/80 border border-[#63752e]/30 text-xs sm:text-sm text-[#fff1cb]/90 space-y-1.5 shadow-md">
                 <div className="flex items-center gap-2 font-semibold text-[#fff1cb]">
                   <Info className="w-4 h-4 text-[#63752e] shrink-0" />
-                  Official PDF Instructions for Sports Events:
+                  Filling Instructions for Sports Events:
                 </div>
                 <ul className="list-disc list-inside text-[#fff1cb]/80 pl-1 sm:pl-2 space-y-1">
                   <li>Check the event box to open that sport&apos;s interactive participant table.</li>
                   <li>Specify the <strong>Captain</strong> for group events using the Role dropdown.</li>
                   <li>Indicate <strong>Substitutes</strong> where permitted (e.g. Futsal, Throwball, Tug of War).</li>
-                  <li>Example format: <em>George Mathew (Male, Captain), Shwetha (Female, Player), Victor (Male, Substitute)</em>.</li>
                 </ul>
               </div>
 
@@ -918,7 +915,7 @@ export default function RegisterPage() {
                 </div>
 
                 <div className="px-3 py-1.5 rounded-xl bg-[#2d0c1b] border border-[#63752e]/40 text-xs text-[#fff1cb]/90 shrink-0 shadow-sm w-fit self-start sm:self-auto">
-                  <span className="font-semibold text-[#63752e]">Cultural Fee:</span> Group ₹800 • Individual ₹250
+                  <span className="font-semibold text-[#63752e]">Cultural Fee:</span> Group ₹800 • Individual ₹250/participant
                 </div>
               </div>
 
@@ -1019,7 +1016,7 @@ export default function RegisterPage() {
                     <div className="space-y-3">
                       {/* Event Row details */}
                       <div className="max-h-56 overflow-y-auto space-y-2 pr-1 text-xs sm:text-sm">
-                        {feeSummary.selectedList.map(({ event, participants }) => (
+                        {feeSummary.selectedList.map(({ event, participants, calculatedFee }) => (
                           <div
                             key={event.id}
                             className="flex items-start sm:items-center justify-between gap-2 p-2.5 sm:p-3 rounded-2xl bg-[#4a162d]/50 border border-[#fff1cb]/10"
@@ -1040,11 +1037,12 @@ export default function RegisterPage() {
                                 </span>
                               </div>
                               <span className="text-[#fff1cb]/60 text-[11px] sm:text-xs">
-                                ({participants.length} participant{participants.length !== 1 ? "s" : ""})
+                                ({participants.length} participant{participants.length !== 1 ? "s" : ""}
+                                {event.type === "individual" ? " × ₹250" : ""})
                               </span>
                             </div>
                             <div className="font-mono font-bold text-[#fff1cb] text-xs sm:text-sm shrink-0">
-                              ₹{event.fee}
+                              ₹{calculatedFee}
                             </div>
                           </div>
                         ))}
@@ -1057,7 +1055,9 @@ export default function RegisterPage() {
                           <span className="font-mono font-semibold text-[#fff1cb]">₹{feeSummary.groupTotal}</span>
                         </div>
                         <div className="flex justify-between items-center">
-                          <span>Individual Events ({feeSummary.individualCount} × ₹250):</span>
+                          <span>
+                            Individual Entries ({feeSummary.individualParticipantsCount} participant{feeSummary.individualParticipantsCount !== 1 ? "s" : ""} × ₹250):
+                          </span>
                           <span className="font-mono font-semibold text-[#fff1cb]">₹{feeSummary.individualTotal}</span>
                         </div>
                       </div>
@@ -1459,7 +1459,7 @@ export default function RegisterPage() {
               <div className="text-xs sm:text-sm truncate">
                 <span className="font-bold text-[#fff1cb]">{feeSummary.totalEvents} Event(s)</span>
                 <span className="hidden sm:inline text-[#fff1cb]/60 ml-1.5">
-                  ({feeSummary.groupCount} Group, {feeSummary.individualCount} Ind.)
+                  ({feeSummary.groupCount} Group{feeSummary.individualParticipantsCount > 0 ? `, ${feeSummary.individualParticipantsCount} Ind. Participant${feeSummary.individualParticipantsCount !== 1 ? "s" : ""}` : ""})
                 </span>
               </div>
             </div>
@@ -1475,11 +1475,16 @@ export default function RegisterPage() {
               <button
                 type="button"
                 onClick={() => {
-                  const check = validateStep(currentStep);
-                  if (!check.valid) {
-                    setSubmissionError(check.error || "Please check participants before proceeding.");
-                    return;
+                  for (let s = 1; s <= 3; s++) {
+                    const check = validateStep(s);
+                    if (!check.valid) {
+                      setCurrentStep(s);
+                      setSubmissionError(check.error || "Please check participants before proceeding.");
+                      window.scrollTo({ top: 320, behavior: "smooth" });
+                      return;
+                    }
                   }
+                  setSubmissionError(null);
                   setCurrentStep(4);
                   window.scrollTo({ top: 320, behavior: "smooth" });
                 }}
@@ -1521,6 +1526,8 @@ function EventTableCard({
   onUpdate,
   onReset,
 }: EventTableCardProps) {
+  const isBattleOfBands = event.id === "battle-of-bands";
+
   // Real-time validation helper
   const validationInfo = useMemo(() => {
     if (!state.enabled) return null;
@@ -1528,6 +1535,7 @@ function EventTableCard({
     const count = state.participants.length;
     const boysCount = state.participants.filter((p) => p.gender === "Male").length;
     const girlsCount = state.participants.filter((p) => p.gender === "Female").length;
+    const missingGenderCount = state.participants.filter((p) => !p.gender).length;
     const captainCount = state.participants.filter((p) => p.role === "Captain" || p.role === "Team Leader" || p.role === "Band Leader").length;
 
     let isValid = true;
@@ -1536,6 +1544,9 @@ function EventTableCard({
     if (count < event.minParticipants) {
       isValid = false;
       message = `Requires minimum ${event.minParticipants} participant(s). (${count} added)`;
+    } else if (missingGenderCount > 0) {
+      isValid = false;
+      message = `Gender selection required (${missingGenderCount} missing)`;
     } else if (event.genderRestriction === "mixed-2b2g") {
       if (boysCount < 2 || girlsCount < 2) {
         isValid = false;
@@ -1560,10 +1571,10 @@ function EventTableCard({
         message = `All Girls Squad (${girlsCount} players)`;
       }
     } else {
-      message = `${count} participant(s) registered`;
+      message = `${count} participant(s) (${boysCount} Boys, ${girlsCount} Girls)`;
     }
 
-    return { isValid, message, count, boysCount, girlsCount, captainCount };
+    return { isValid, message, count, boysCount, girlsCount, captainCount, missingGenderCount };
   }, [state, event]);
 
   return (
@@ -1606,7 +1617,13 @@ function EventTableCard({
                 : "bg-[#fff1cb]/10 text-[#fff1cb]/80 border border-[#fff1cb]/20"
             }`}
           >
-            {event.type === "group" ? "Group Event" : "Individual"} • ₹{event.fee}
+            {event.type === "group"
+              ? `Group Event • ₹${event.fee}`
+              : state.enabled && state.participants.length > 1
+              ? `Individual • ₹${state.participants.length * PAYMENT_DETAILS.individualFee} (${state.participants.length} × ₹250)`
+              : state.enabled && state.participants.length === 1
+              ? `Individual • ₹250`
+              : `Individual • ₹250 / participant`}
           </span>
 
           <button
@@ -1737,19 +1754,24 @@ function EventTableCard({
                             Gender <span className="text-red-400">*</span>
                           </label>
                           <select
+                            required
                             value={participant.gender}
                             onChange={(e) =>
                               onUpdate(participant.id, "gender", e.target.value as "Male" | "Female")
                             }
-                            className="w-full px-2.5 py-2 rounded-xl bg-[#2d0c1b] border border-[#fff1cb]/20 focus:border-[#63752e] focus:outline-none text-[#fff1cb] text-xs transition-colors"
+                            className={`w-full px-2.5 py-2 rounded-xl bg-[#2d0c1b] border focus:border-[#63752e] focus:outline-none text-xs transition-colors ${
+                              !participant.gender
+                                ? "border-amber-400/50 text-[#fff1cb]/60"
+                                : "border-[#fff1cb]/20 text-[#fff1cb]"
+                            }`}
                           >
-                            <option value="" disabled className="bg-[#2d0c1b]">
-                              Gender
+                            <option value="" disabled className="bg-[#2d0c1b] text-[#fff1cb]/40">
+                              Select Gender *
                             </option>
-                            <option value="Male" className="bg-[#2d0c1b]">
+                            <option value="Male" className="bg-[#2d0c1b] text-[#fff1cb]">
                               Male
                             </option>
-                            <option value="Female" className="bg-[#2d0c1b]">
+                            <option value="Female" className="bg-[#2d0c1b] text-[#fff1cb]">
                               Female
                             </option>
                           </select>
@@ -1778,19 +1800,21 @@ function EventTableCard({
                         </div>
                       </div>
 
-                      {/* Notes / Details */}
-                      <div>
-                        <label className="block text-[11px] font-medium text-[#fff1cb]/60 mb-1">
-                          Notes / Details (Optional)
-                        </label>
-                        <input
-                          type="text"
-                          placeholder="e.g. Lead, Substitute, Acoustic Guitar..."
-                          value={participant.notes || ""}
-                          onChange={(e) => onUpdate(participant.id, "notes", e.target.value)}
-                          className="w-full px-3 py-1.5 rounded-xl bg-[#2d0c1b]/80 border border-[#fff1cb]/15 focus:border-[#63752e] focus:outline-none text-[#fff1cb] placeholder:text-[#fff1cb]/30 text-xs transition-colors"
-                        />
-                      </div>
+                      {/* Notes / Details - Only for Battle of the Bands */}
+                      {isBattleOfBands && (
+                        <div>
+                          <label className="block text-[11px] font-medium text-[#fff1cb]/60 mb-1">
+                            Notes / Instrument Details (Optional)
+                          </label>
+                          <input
+                            type="text"
+                            placeholder="e.g. Lead, Substitute, Acoustic Guitar..."
+                            value={participant.notes || ""}
+                            onChange={(e) => onUpdate(participant.id, "notes", e.target.value)}
+                            className="w-full px-3 py-1.5 rounded-xl bg-[#2d0c1b]/80 border border-[#fff1cb]/15 focus:border-[#63752e] focus:outline-none text-[#fff1cb] placeholder:text-[#fff1cb]/30 text-xs transition-colors"
+                          />
+                        </div>
+                      )}
                     </div>
                   ))}
                 </div>
@@ -1808,7 +1832,9 @@ function EventTableCard({
                           Gender <span className="text-red-400">*</span>
                         </th>
                         <th className="py-2.5 px-3 min-w-[140px]">Role / Status</th>
-                        <th className="py-2.5 px-3 min-w-[140px]">Notes / Details</th>
+                        {isBattleOfBands && (
+                          <th className="py-2.5 px-3 min-w-[140px]">Notes / Details</th>
+                        )}
                         <th className="py-2.5 px-3 w-12 text-center">Action</th>
                       </tr>
                     </thead>
@@ -1830,19 +1856,24 @@ function EventTableCard({
                           </td>
                           <td className="py-2 px-3">
                             <select
+                              required
                               value={participant.gender}
                               onChange={(e) =>
                                 onUpdate(participant.id, "gender", e.target.value as "Male" | "Female")
                               }
-                              className="w-full px-3 py-1.5 rounded-xl bg-[#2d0c1b] border border-[#fff1cb]/20 focus:border-[#63752e] focus:outline-none text-[#fff1cb] text-xs md:text-sm transition-colors"
+                              className={`w-full px-3 py-1.5 rounded-xl bg-[#2d0c1b] border focus:border-[#63752e] focus:outline-none text-xs md:text-sm transition-colors ${
+                                !participant.gender
+                                  ? "border-amber-400/50 text-[#fff1cb]/60"
+                                  : "border-[#fff1cb]/20 text-[#fff1cb]"
+                              }`}
                             >
-                              <option value="" disabled className="bg-[#2d0c1b]">
-                                Select Gender
+                              <option value="" disabled className="bg-[#2d0c1b] text-[#fff1cb]/40">
+                                Select Gender *
                               </option>
-                              <option value="Male" className="bg-[#2d0c1b]">
+                              <option value="Male" className="bg-[#2d0c1b] text-[#fff1cb]">
                                 Male
                               </option>
-                              <option value="Female" className="bg-[#2d0c1b]">
+                              <option value="Female" className="bg-[#2d0c1b] text-[#fff1cb]">
                                 Female
                               </option>
                             </select>
@@ -1865,15 +1896,17 @@ function EventTableCard({
                               )}
                             </select>
                           </td>
-                          <td className="py-2 px-3">
-                            <input
-                              type="text"
-                              placeholder="e.g. Lead, Guitar, etc."
-                              value={participant.notes || ""}
-                              onChange={(e) => onUpdate(participant.id, "notes", e.target.value)}
-                              className="w-full px-3 py-1.5 rounded-xl bg-[#2d0c1b]/80 border border-[#fff1cb]/20 focus:border-[#63752e] focus:outline-none text-[#fff1cb] placeholder:text-[#fff1cb]/30 text-xs transition-colors"
-                            />
-                          </td>
+                          {isBattleOfBands && (
+                            <td className="py-2 px-3">
+                              <input
+                                type="text"
+                                placeholder="e.g. Lead, Guitar, etc."
+                                value={participant.notes || ""}
+                                onChange={(e) => onUpdate(participant.id, "notes", e.target.value)}
+                                className="w-full px-3 py-1.5 rounded-xl bg-[#2d0c1b]/80 border border-[#fff1cb]/20 focus:border-[#63752e] focus:outline-none text-[#fff1cb] placeholder:text-[#fff1cb]/30 text-xs transition-colors"
+                              />
+                            </td>
+                          )}
                           <td className="py-2 px-3 text-center">
                             <button
                               type="button"

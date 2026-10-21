@@ -34,7 +34,7 @@ export const REGISTRATION_EVENTS: RegistrationEventConfig[] = [
   // ==========================================
   {
     id: "mixed-relay",
-    pdfNumber: 5,
+    pdfNumber: 1,
     title: "Mixed Relay",
     category: "sports",
     type: "group",
@@ -56,7 +56,7 @@ export const REGISTRATION_EVENTS: RegistrationEventConfig[] = [
   },
   {
     id: "100m-race",
-    pdfNumber: 6,
+    pdfNumber: 2,
     title: "100 M Race",
     category: "sports",
     type: "individual",
@@ -71,7 +71,7 @@ export const REGISTRATION_EVENTS: RegistrationEventConfig[] = [
   },
   {
     id: "blitz-chess",
-    pdfNumber: 7,
+    pdfNumber: 3,
     title: "Blitz Chess",
     category: "sports",
     type: "individual",
@@ -86,7 +86,7 @@ export const REGISTRATION_EVENTS: RegistrationEventConfig[] = [
   },
   {
     id: "tug-of-war",
-    pdfNumber: 8,
+    pdfNumber: 4,
     title: "Tug Of War",
     category: "sports",
     type: "group",
@@ -109,7 +109,7 @@ export const REGISTRATION_EVENTS: RegistrationEventConfig[] = [
   },
   {
     id: "throwball",
-    pdfNumber: 9,
+    pdfNumber: 5,
     title: "Throwball",
     category: "sports",
     type: "group",
@@ -133,7 +133,7 @@ export const REGISTRATION_EVENTS: RegistrationEventConfig[] = [
   },
   {
     id: "futsal",
-    pdfNumber: 10,
+    pdfNumber: 6,
     title: "Futsal",
     category: "sports",
     type: "group",
@@ -160,7 +160,7 @@ export const REGISTRATION_EVENTS: RegistrationEventConfig[] = [
   // ==========================================
   {
     id: "group-dance",
-    pdfNumber: 11,
+    pdfNumber: 7,
     title: "The Big Picture (Group Dance)",
     category: "cultural",
     type: "group",
@@ -180,7 +180,7 @@ export const REGISTRATION_EVENTS: RegistrationEventConfig[] = [
   },
   {
     id: "short-film",
-    pdfNumber: 12,
+    pdfNumber: 8,
     title: "Frame By Frame (Short Film)",
     category: "cultural",
     type: "group",
@@ -198,7 +198,7 @@ export const REGISTRATION_EVENTS: RegistrationEventConfig[] = [
   },
   {
     id: "live-canvas",
-    pdfNumber: 13,
+    pdfNumber: 9,
     title: "The Art Of The Moment (Live Canvas)",
     category: "cultural",
     type: "individual",
@@ -213,7 +213,7 @@ export const REGISTRATION_EVENTS: RegistrationEventConfig[] = [
   },
   {
     id: "solo-singing",
-    pdfNumber: 14,
+    pdfNumber: 10,
     title: "Pitch Perfect (Solo Singing)",
     category: "cultural",
     type: "individual",
@@ -228,7 +228,7 @@ export const REGISTRATION_EVENTS: RegistrationEventConfig[] = [
   },
   {
     id: "solo-dance",
-    pdfNumber: 15,
+    pdfNumber: 11,
     title: "Dance Unleashed (Solo Dance)",
     category: "cultural",
     type: "individual",
@@ -243,7 +243,7 @@ export const REGISTRATION_EVENTS: RegistrationEventConfig[] = [
   },
   {
     id: "nukkad-natak",
-    pdfNumber: 16,
+    pdfNumber: 12,
     title: "Nukkad Natak (Street Play)",
     category: "cultural",
     type: "group",
@@ -264,7 +264,7 @@ export const REGISTRATION_EVENTS: RegistrationEventConfig[] = [
   },
   {
     id: "mono-act",
-    pdfNumber: 17,
+    pdfNumber: 13,
     title: "Alter Ego (Mono Act)",
     category: "cultural",
     type: "individual",
@@ -279,7 +279,7 @@ export const REGISTRATION_EVENTS: RegistrationEventConfig[] = [
   },
   {
     id: "photography",
-    pdfNumber: 18,
+    pdfNumber: 14,
     title: "Perspectives (Photography)",
     category: "cultural",
     type: "individual",
@@ -294,7 +294,7 @@ export const REGISTRATION_EVENTS: RegistrationEventConfig[] = [
   },
   {
     id: "battle-of-bands",
-    pdfNumber: 19,
+    pdfNumber: 15,
     title: "Battle of the Bands (Music Band)",
     category: "cultural",
     type: "group",

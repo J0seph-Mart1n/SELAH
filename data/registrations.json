@@ -56,5 +56,56 @@
         ]
       }
     }
+  },
+  {
+    "registrationId": "SELAH26-STMARY-11CN7",
+    "timestamp": "2026-10-21T21:18:28.568Z",
+    "parishDetails": {
+      "email": "jacob@example.com",
+      "parishName": "St. Mary Church",
+      "representativeName": "Jacob Thomas",
+      "contactNumber": "9876543210",
+      "alternatePhone": "",
+      "notes": ""
+    },
+    "totalFee": 750,
+    "payment": {
+      "utrNumber": "428719283719",
+      "payerName": "Jacob Thomas",
+      "paymentDate": "2026-10-21T21:18:28.568Z",
+      "hasScreenshot": false,
+      "screenshotName": null
+    },
+    "events": {
+      "solo-singing": {
+        "eventId": "solo-singing",
+        "title": "Pitch Perfect (Solo Singing)",
+        "type": "individual",
+        "fee": 750,
+        "participants": [
+          {
+            "id": "solo-singing-p-1792617381937-0",
+            "name": "Alice Smith",
+            "gender": "Male",
+            "role": "Vocalist",
+            "notes": ""
+          },
+          {
+            "id": "solo-singing-p-1792617390468-czg2",
+            "name": "Bob Jones",
+            "gender": "Male",
+            "role": "Vocalist",
+            "notes": ""
+          },
+          {
+            "id": "solo-singing-p-1792617394083-uehd",
+            "name": "Charlie Brown",
+            "gender": "Male",
+            "role": "Vocalist",
+            "notes": ""
+          }
+        ]
+      }
+    }
   }
 ]

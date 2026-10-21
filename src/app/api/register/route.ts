@@ -30,6 +30,31 @@ export async function POST(request: Request) {
       );
     }
 
+    // Validate that all participants have a valid name and mandatory gender
+    for (const key of eventKeys) {
+      const reg = registrations[key];
+      if (!reg?.participants || reg.participants.length === 0) {
+        return NextResponse.json(
+          { success: false, error: `No participants added for ${reg?.title || key}.` },
+          { status: 400 }
+        );
+      }
+      for (const p of reg.participants) {
+        if (!p.name?.trim()) {
+          return NextResponse.json(
+            { success: false, error: `Participant name cannot be blank in ${reg.title || key}.` },
+            { status: 400 }
+          );
+        }
+        if (!p.gender || (p.gender !== "Male" && p.gender !== "Female")) {
+          return NextResponse.json(
+            { success: false, error: `Gender is mandatory for all participants in ${reg.title || key}. Please select Male or Female.` },
+            { status: 400 }
+          );
+        }
+      }
+    }
+
     // Generate unique registration code
     const randomSuffix = Math.random().toString(36).substring(2, 7).toUpperCase();
     const sanitizedParish = (parishDetails.parishName || "PARISH")
