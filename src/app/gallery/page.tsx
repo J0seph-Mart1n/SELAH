@@ -63,7 +63,7 @@ export default function GalleryPage() {
             <NavItems
               items={[
                 { name: "Home", link: "/" },
-                { name: "Register", link: "https://forms.fillout.com/t/f1G5aTFnoRus", target: "_blank" },
+                { name: "Register", link: "/register" },
                 { name: "Rules", link: "/rules" },
                 { name: "Core Team", link: "/about-cya" },
                 { name: "Gallery", link: "/gallery" },
@@ -95,7 +95,7 @@ export default function GalleryPage() {
             }
             items={[
               { label: "Home", link: "/" },
-              { label: "Register", link: "https://forms.fillout.com/t/f1G5aTFnoRus", target: "_blank" },
+              { label: "Register", link: "/register" },
               { label: "Rules", link: "/rules" },
               { label: "Core Team", link: "/about-cya" },
               { label: "Gallery", link: "/gallery" },

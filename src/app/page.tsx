@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 import { motion } from "framer-motion";
 import { SparklesText } from "@/components/ui/sparkles-text"
 import {
@@ -419,7 +420,7 @@ function App() {
           </a>
           <NavItems
             items={[
-              { name: "Register", link: "https://forms.fillout.com/t/f1G5aTFnoRus", target: "_blank" },
+              { name: "Register", link: "/register" },
               { name: "Rules", link: "/rules" },
               { name: "Core Team", link: "/about-cya" },
               { name: "Gallery", link: "/gallery" },
@@ -449,7 +450,7 @@ function App() {
             </div>
           }
           items={[
-            { label: "Register", link: "https://forms.fillout.com/t/f1G5aTFnoRus", target: "_blank" },
+            { label: "Register", link: "/register" },
             { label: "Rules", link: "/rules" },
             { label: "Core Team", link: "/about-cya" },
             { label: "Gallery", link: "/gallery" },
@@ -515,14 +516,12 @@ function App() {
                   ))}
                 </div>
                 <div className="hero-actions flex !flex-row !flex-nowrap w-full max-w-xs sm:max-w-md mx-auto justify-center items-center gap-3">
-                  <a
+                  <Link
                     className="button button-primary button-large flex-1 sm:flex-none flex items-center justify-center gap-2 whitespace-nowrap px-4"
-                    href="https://forms.fillout.com/t/f1G5aTFnoRus"
-                    target="_blank"
-                    rel="noopener noreferrer"
+                    href="/register"
                   >
                     <Users size={17} /> Register
-                  </a>
+                  </Link>
                   <a className="button button-outline button-large flex-1 sm:flex-none flex items-center justify-center gap-2 whitespace-nowrap px-4" href="#events">
                     <Trophy size={17} /> Explore Events
                   </a>

@@ -1,0 +1,60 @@
+[
+  {
+    "registrationId": "SELAH26-STPETE-B9GBA",
+    "timestamp": "2026-10-21T20:01:15.265Z",
+    "parishDetails": {
+      "email": "test@church.com",
+      "parishName": "St. Peter Parish",
+      "representativeName": "John Doe",
+      "contactNumber": "9876543210",
+      "alternatePhone": "",
+      "notes": ""
+    },
+    "totalFee": 800,
+    "payment": {
+      "utrNumber": "123456789012",
+      "payerName": "St Marys Parish",
+      "paymentDate": "2026-10-21T20:01:15.265Z",
+      "hasScreenshot": false,
+      "screenshotName": null
+    },
+    "events": {
+      "mixed-relay": {
+        "eventId": "mixed-relay",
+        "title": "Mixed Relay",
+        "type": "group",
+        "fee": 800,
+        "participants": [
+          {
+            "id": "mixed-relay-p-1792612750810-0",
+            "name": "John M",
+            "gender": "Male",
+            "role": "Captain",
+            "notes": ""
+          },
+          {
+            "id": "mixed-relay-p-1792612750810-1",
+            "name": "Alex P",
+            "gender": "Male",
+            "role": "Runner",
+            "notes": ""
+          },
+          {
+            "id": "mixed-relay-p-1792612750810-2",
+            "name": "Mary S",
+            "gender": "Female",
+            "role": "Runner",
+            "notes": ""
+          },
+          {
+            "id": "mixed-relay-p-1792612750810-3",
+            "name": "Jane D",
+            "gender": "Female",
+            "role": "Runner",
+            "notes": ""
+          }
+        ]
+      }
+    }
+  }
+]

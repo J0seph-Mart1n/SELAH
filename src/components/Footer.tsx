@@ -13,7 +13,7 @@ interface QuickLink {
 }
 
 const QUICK_LINKS: QuickLink[] = [
-  { label: "Registration Form", href: "https://forms.fillout.com/t/f1G5aTFnoRus", target:"_blank"},
+  { label: "Registration Form", href: "/register" },
   { label: "Events", href: "/#events" },
   { label: "Rules", href: "/rules" },
   { label: "About CYA", href: "/about-cya" },
@@ -78,7 +78,14 @@ export default function Footer() {
             </a>
           </div>
 
+          
         </div>
+      </div>
+
+      <div className="relative z-10 flex justify-center items-center w-full px-6 mt-12 mb-1">
+        <p className="text-xs sm:text-sm text-[#fff1cb]/80 flex items-center justify-center gap-1.5 font-medium whitespace-nowrap text-center">
+          Made with <span className="text-red-500 inline-block text-sm sm:text-base">❤️</span> by Joseph and Aaron
+        </p>
       </div>
 
       {/* Massive Background Interactive Particle Text */}

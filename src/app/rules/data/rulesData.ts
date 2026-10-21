@@ -127,7 +127,7 @@ export const EVENT_RULES: EventRule[] = [
   // ==========================================
   {
     id: "football",
-    title: "Football (5-a-side Turf)",
+    title: "Futsal (5-a-side Game)",
     category: "sports",
     categoryLabel: "Sports",
     image: "/events/Football.jpg",
@@ -143,7 +143,7 @@ export const EVENT_RULES: EventRule[] = [
       "Direct kick-ins from touchlines within 4 seconds",
     ],
     rules: [
-      "Each team consists of 5 players on the pitch (including 1 goalkeeper) and a maximum of 3 rolling substitutes.",
+      "Each team consists of 5 players on the pitch (including 1 goalkeeper) and a maximum of 2 rolling substitutes.",
       "Matches will have two 10-minute halves with a 3-minute halftime. In playoff rounds, matches tied in normal time proceed straight to a 3-penalty shootout, followed by sudden death.",
       "Sliding tackles are strictly prohibited for player safety on turf. Any intentional slide toward an opponent is treated as a foul and may warrant a yellow card.",
       "Goalkeepers cannot kick the ball directly from their hands across the halfway line on the fly; it must touch the ground or a player first.",
@@ -156,7 +156,7 @@ export const EVENT_RULES: EventRule[] = [
   },
   {
     id: "chess",
-    title: "Chess Championship",
+    title: "Blitz Chess",
     category: "sports",
     categoryLabel: "Sports",
     image: "/events/chess.jpg",
@@ -184,7 +184,7 @@ export const EVENT_RULES: EventRule[] = [
   },
   {
     id: "throwball",
-    title: "Throwball Tournament",
+    title: "Throwball",
     category: "sports",
     categoryLabel: "Sports",
     image: "/events/Throwball.jpg",
@@ -213,7 +213,7 @@ export const EVENT_RULES: EventRule[] = [
   },
   {
     id: "tug-of-war",
-    title: "Tug of War",
+    title: "Tug Of War",
     category: "sports",
     categoryLabel: "Sports",
     image: "/events/TugOfWar.jpg",
@@ -241,7 +241,7 @@ export const EVENT_RULES: EventRule[] = [
   },
   {
     id: "mixed-relay",
-    title: "Mixed Sprint Relay (4x100m)",
+    title: "Mixed Relay (4x100m)",
     category: "sports",
     categoryLabel: "Sports",
     image: "/events/MixedRelay.jpg",
@@ -272,7 +272,7 @@ export const EVENT_RULES: EventRule[] = [
   // ==========================================
   {
     id: "group-dance",
-    title: "Group Dance",
+    title: "The Big Picture (Group Dance)",
     category: "cultural",
     categoryLabel: "Cultural",
     image: "/events/GroupDance.jpg",
@@ -305,7 +305,7 @@ export const EVENT_RULES: EventRule[] = [
   },
   {
     id: "short-film",
-    title: "Short Film Contest",
+    title: "Frame By Frame (Short Film)",
     category: "cultural",
     categoryLabel: "Cultural",
     image: "/events/ShortFilm.jpg",
@@ -339,7 +339,7 @@ export const EVENT_RULES: EventRule[] = [
   },
   {
     id: "live-painting",
-    title: "Live Painting (On-the-Spot)",
+    title: "The Art Of The Moment (Live Canvas)",
     category: "cultural",
     categoryLabel: "Cultural",
     image: "/events/Painting.jpg",
@@ -373,7 +373,7 @@ export const EVENT_RULES: EventRule[] = [
   },
   {
     id: "solo-singing",
-    title: "Solo Vocal Championship",
+    title: "Pitch Perfect (Solo Singing)",
     category: "cultural",
     categoryLabel: "Cultural",
     image: "/events/SoloSinging.jpeg",
@@ -408,7 +408,7 @@ export const EVENT_RULES: EventRule[] = [
   },
   {
     id: "solo-dance",
-    title: "Solo Dance",
+    title: "Dance Unleashed (Solo Dance)",
     category: "cultural",
     categoryLabel: "Cultural",
     image: "/events/SoloDancing.avif",
@@ -440,7 +440,7 @@ export const EVENT_RULES: EventRule[] = [
   },
   {
     id: "street-play",
-    title: "Street Play (Nukkad Natak)",
+    title: "Nukkad Natak (Street Play)",
     category: "cultural",
     categoryLabel: "Cultural",
     image: "/events/StreetPlay.jpg",
@@ -474,7 +474,7 @@ export const EVENT_RULES: EventRule[] = [
   },
   {
     id: "mono-act",
-    title: "Mono Act (Dramatic Solo)",
+    title: "Alter Ego (Mono Act)",
     category: "cultural",
     categoryLabel: "Cultural",
     image: "/events/MonoAct.avif",
@@ -507,7 +507,7 @@ export const EVENT_RULES: EventRule[] = [
   },
   {
     id: "photography",
-    title: "Festival Photography Contest",
+    title: "Perspectives (Photography)",
     category: "cultural",
     categoryLabel: "Cultural",
     image: "/events/Photography.jpg",
@@ -541,7 +541,7 @@ export const EVENT_RULES: EventRule[] = [
   },
   {
     id: "music-band",
-    title: "Battle of the Bands (Worship Band)",
+    title: "Battle of the Bands (Music Band)",
     category: "cultural",
     categoryLabel: "Cultural",
     image: "/events/MusicBand.jpg",

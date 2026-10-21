@@ -179,6 +179,7 @@ export default function RulesPage() {
             <NavItems
               items={[
                 { name: "Home", link: "/" },
+                { name: "Register", link: "/register" },
                 { name: "Rules", link: "/rules" },
                 { name: "Core Team", link: "/about-cya" },
                 { name: "Gallery", link: "/gallery" },
@@ -210,6 +211,7 @@ export default function RulesPage() {
             }
             items={[
               { label: "Home", link: "/" },
+              { label: "Register", link: "/register" },
               { label: "Rules", link: "/rules" },
               { label: "Core Team", link: "/about-cya" },
               { label: "Gallery", link: "/gallery" },
@@ -234,9 +236,7 @@ export default function RulesPage() {
             {/* Quick Action Buttons */}
             <div className="flex flex-wrap items-center justify-center gap-3 mt-8">
               <Link
-                href="https://forms.gle/CiWs9cgA88599SMk6"
-                target="_blank"
-                rel="noopener noreferrer"
+                href="/register"
                 className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full text-xs sm:text-sm font-bold bg-[#63752e] hover:bg-[#63752e]/85 text-[#fff1cb] shadow-lg shadow-[#63752e]/25 transition-all"
               >
                 <Users size={15} /> Register Delegation
@@ -482,21 +482,6 @@ export default function RulesPage() {
                         <p className="text-sm sm:text-base text-[#611e3c]/90 font-medium leading-relaxed mb-6">
                           {event.overview}
                         </p>
-
-                        {/* Key Highlights Checklist */}
-                        <div className="mb-6 p-4 rounded-xl bg-[#63752e]/10 border-l-4 border-[#63752e]">
-                          <div className="text-xs font-bold text-[#611e3c] uppercase tracking-wider mb-2 flex items-center gap-1.5">
-                            Critical Highlights
-                          </div>
-                          <ul className="space-y-1.5 text-xs sm:text-sm text-[#611e3c]/90">
-                            {event.keyHighlights.map((hl, i) => (
-                              <li key={i} className="flex items-start gap-2">
-                                <span className="text-[#63752e] font-black">✓</span>
-                                <span className="font-medium">{hl}</span>
-                              </li>
-                            ))}
-                          </ul>
-                        </div>
 
                         {/* Expand / Collapse Button */}
                         <div className="flex items-center justify-between pt-2 border-t border-[#611e3c]/15">
