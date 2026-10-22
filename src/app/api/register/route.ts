@@ -75,22 +75,30 @@ export async function POST(request: Request) {
         paymentDate: payment.paymentDate || timestamp,
         hasScreenshot: Boolean(payment.screenshotBase64 || payment.screenshotName),
         screenshotName: payment.screenshotName || null,
+        ...(payment.screenshotBase64 && payment.screenshotBase64.length < 500000
+          ? { screenshotBase64: payment.screenshotBase64 }
+          : {}),
       },
       events: registrations,
     };
 
-    // 1. Save to Firebase Cloud Firestore (if configured)
+    // 1. Save to Firebase Cloud Firestore
     let savedToFirestore = false;
+    let firestoreError: string | null = null;
     try {
-      if (process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID) {
+      const projectId = process.env.FIREBASE_PROJECT_ID || process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID;
+      if (projectId) {
         const { db } = await import("@/lib/firebase");
         const { doc, setDoc } = await import("firebase/firestore");
         await setDoc(doc(db, "registrations", registrationId), record);
         savedToFirestore = true;
-        console.log(`[Firebase] Successfully saved registration ${registrationId} to Firestore.`);
+        console.log(`[Firebase] Successfully stored registration ${registrationId} in Firestore collection 'registrations'.`);
+      } else {
+        console.warn("[Firebase] Firestore save skipped: No FIREBASE_PROJECT_ID configured in environment.");
       }
     } catch (fbErr: any) {
-      console.warn("[Firebase] Could not save to Firestore:", fbErr?.message || fbErr);
+      firestoreError = fbErr?.message || String(fbErr);
+      console.error(`[Firebase] Failed to save registration ${registrationId} to Firestore:`, fbErr);
     }
 
     // 2. Save record to local JSON database file (as fallback / local backup)
@@ -117,6 +125,7 @@ export async function POST(request: Request) {
       registrationId,
       timestamp,
       savedToFirestore,
+      firestoreError: firestoreError || null,
       message: "Registration submitted successfully!",
       summary: {
         parishName: parishDetails.parishName,
