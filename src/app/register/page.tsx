@@ -95,6 +95,7 @@ export default function RegisterPage() {
 
   // UI / Submission state
   const [copiedUpi, setCopiedUpi] = useState<boolean>(false);
+  const [copiedPhone, setCopiedPhone] = useState<boolean>(false);
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [submissionError, setSubmissionError] = useState<string | null>(null);
   const [submissionSuccess, setSubmissionSuccess] = useState<any | null>(null);
@@ -143,7 +144,10 @@ export default function RegisterPage() {
             : event.genderRestriction === "girls-only"
             ? "Female"
             : "",
-        role: event.defaultRoles[0] || "Participant",
+        role:
+          current.participants.length >= event.minParticipants && event.defaultRoles.includes("Substitute")
+            ? "Substitute"
+            : event.defaultRoles[0] || "Participant",
         notes: "",
       };
 
@@ -283,6 +287,13 @@ export default function RegisterPage() {
     setTimeout(() => setCopiedUpi(false), 2500);
   };
 
+  // Copy Phone Number
+  const handleCopyPhone = () => {
+    navigator.clipboard.writeText(PAYMENT_DETAILS.phone);
+    setCopiedPhone(true);
+    setTimeout(() => setCopiedPhone(false), 2500);
+  };
+
   // Validate current step
   const validateStep = (stepNumber: number): { valid: boolean; error?: string } => {
     if (stepNumber === 1) {
@@ -345,6 +356,15 @@ export default function RegisterPage() {
               return {
                 valid: false,
                 error: `${event.title} must have at least 2 Boys and 2 Girls specified. (Current: ${boys} Boys, ${girls} Girls).`,
+              };
+            }
+          } else if (event.genderRestriction === "mixed-4b2g") {
+            const boys = state.participants.filter((p) => p.gender === "Male").length;
+            const girls = state.participants.filter((p) => p.gender === "Female").length;
+            if (boys < 4 || girls < 2) {
+              return {
+                valid: false,
+                error: `${event.title} must have at least 4 Boys and 2 Girls specified. (Current: ${boys} Boys, ${girls} Girls).`,
               };
             }
           } else if (event.genderRestriction === "boys-only") {
@@ -602,7 +622,7 @@ export default function RegisterPage() {
         {/* Header Hero Section */}
         <div className="w-full text-center mb-10 pt-6 sm:pt-10">
           <h1 className="text-3xl md:text-5xl font-bold tracking-tight text-[#fff1cb] mb-8 pb-5 sm:mb-10">
-            SELAH 2026 Registration Form
+            Registration Form
           </h1>
 
           {/* Event Quick Meta Card */}
@@ -923,7 +943,7 @@ export default function RegisterPage() {
               <div className="mb-5 sm:mb-6 p-3.5 sm:p-4 rounded-2xl bg-[#2d0c1b]/80 border border-[#63752e]/30 text-xs sm:text-sm text-[#fff1cb]/90 space-y-1.5 shadow-md">
                 <div className="flex items-center gap-2 font-semibold text-[#fff1cb]">
                   <Info className="w-4 h-4 text-[#63752e] shrink-0" />
-                  Official PDF Instructions for Cultural Events:
+                  Filling Instructions for Cultural Events:
                 </div>
                 <ul className="list-disc list-inside text-[#fff1cb]/80 pl-1 sm:pl-2 space-y-1">
                   <li>Fill the participants table under each event you wish to participate.</li>
@@ -993,7 +1013,7 @@ export default function RegisterPage() {
                   <div>
                     <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-[#fff1cb]">Step 4: Registration Fee & Payment Instructions</h2>
                     <p className="text-xs sm:text-sm text-[#fff1cb]/70">
-                      Calculated automatically based on your event participation as outlined in page 4 & 5 of the PDF form.
+                      Calculated automatically based on your event participation.
                     </p>
                   </div>
                 </div>
@@ -1079,9 +1099,9 @@ export default function RegisterPage() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 items-center p-3.5 sm:p-6 rounded-2xl sm:rounded-3xl bg-[#2d0c1b]/80 border border-[#fff1cb]/15 shadow-xl">
                   {/* Left: Official QR Card */}
                   <div className="flex flex-col items-center text-center p-4 sm:p-5 rounded-2xl bg-[#4a162d]/90 border border-[#fff1cb]/20 shadow-md">
-                    <div className="text-xs uppercase tracking-wider text-[#63752e] font-bold mb-2 flex items-center gap-1.5">
+                    <div className="text-xs uppercase tracking-wider text-[#fff1cb] font-bold mb-2 flex items-center gap-1.5">
                       <QrCode className="w-4 h-4" />
-                      Official UPI Payment QR
+                      UPI Payment QR
                     </div>
                     <div className="relative w-44 h-44 sm:w-56 sm:h-56 bg-white p-2 rounded-2xl sm:rounded-3xl shadow-xl overflow-hidden mb-3">
                       <Image
@@ -1095,7 +1115,7 @@ export default function RegisterPage() {
                     <div className="text-xs text-[#fff1cb]/90 font-medium">
                       ICICI Bank • {PAYMENT_DETAILS.recipientName}
                     </div>
-                    <div className="text-[11px] sm:text-xs font-mono text-[#63752e] bg-[#fff1cb]/10 px-2.5 py-0.5 rounded-full mt-1 break-all">
+                    <div className="text-[11px] sm:text-xs font-mono text-[#fff1cb] bg-[#fff1cb]/10 px-2.5 py-0.5 rounded-full mt-1 break-all">
                       UPI ID: {PAYMENT_DETAILS.upiId}
                     </div>
                   </div>
@@ -1118,12 +1138,23 @@ export default function RegisterPage() {
                             {PAYMENT_DETAILS.recipientName}: <span className="font-mono">{PAYMENT_DETAILS.phone}</span>
                           </div>
                         </div>
-                        <a
-                          href={`tel:+91${PAYMENT_DETAILS.phone}`}
-                          className="self-end sm:self-auto px-3.5 py-1.5 rounded-xl bg-[#63752e] hover:bg-[#839c3d] text-xs font-bold text-[#fff1cb] transition-colors"
+                        <button
+                          type="button"
+                          onClick={handleCopyPhone}
+                          className="self-end sm:self-auto px-3.5 py-1.5 rounded-xl bg-[#2d0c1b] hover:bg-[#1d0711] border border-[#fff1cb]/20 text-xs font-semibold text-[#fff1cb] flex items-center gap-1.5 transition-colors"
                         >
-                          Call / Pay
-                        </a>
+                          {copiedPhone ? (
+                            <>
+                              <Check className="w-3.5 h-3.5 text-green-400" />
+                              Copied!
+                            </>
+                          ) : (
+                            <>
+                              <Copy className="w-3.5 h-3.5" />
+                              Copy
+                            </>
+                          )}
+                        </button>
                       </div>
 
                       <div className="p-3 sm:p-3.5 rounded-2xl bg-[#4a162d] border border-[#fff1cb]/15 flex flex-col sm:flex-row sm:items-center justify-between gap-2 shadow-sm">
@@ -1168,97 +1199,6 @@ export default function RegisterPage() {
                         </li>
                       </ul>
                     </div>
-                  </div>
-                </div>
-
-                {/* Verification Fields */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6 pt-2">
-                  {/* UTR / Transaction Reference */}
-                  <div>
-                    <label className="block text-xs sm:text-sm font-semibold text-[#fff1cb] mb-1.5">
-                      Transaction UTR / Ref Number <span className="text-red-400">*</span>
-                    </label>
-                    <input
-                      type="text"
-                      required
-                      placeholder="e.g. 428719283719 (12-digit UPI ref)"
-                      value={utrNumber}
-                      onChange={(e) => setUtrNumber(e.target.value)}
-                      className="w-full px-3.5 py-2.5 sm:px-4 sm:py-3 rounded-xl sm:rounded-2xl bg-[#2d0c1b]/80 border border-[#fff1cb]/20 focus:border-[#63752e] focus:outline-none text-[#fff1cb] placeholder:text-[#fff1cb]/30 text-xs sm:text-sm font-mono transition-colors"
-                    />
-                    <span className="text-[11px] text-[#fff1cb]/60 mt-1 block">
-                      Found in your GPay / PhonePe payment success details.
-                    </span>
-                  </div>
-
-                  {/* Payer Name */}
-                  <div>
-                    <label className="block text-xs sm:text-sm font-semibold text-[#fff1cb] mb-1.5">
-                      Payer Account Name
-                    </label>
-                    <input
-                      type="text"
-                      placeholder={`Defaults to ${parishDetails.representativeName || "Representative"}`}
-                      value={payerName}
-                      onChange={(e) => setPayerName(e.target.value)}
-                      className="w-full px-3.5 py-2.5 sm:px-4 sm:py-3 rounded-xl sm:rounded-2xl bg-[#2d0c1b]/80 border border-[#fff1cb]/20 focus:border-[#63752e] focus:outline-none text-[#fff1cb] placeholder:text-[#fff1cb]/30 text-xs sm:text-sm transition-colors"
-                    />
-                    <span className="text-[11px] text-[#fff1cb]/60 mt-1 block">
-                      Name appearing on the bank account or UPI app.
-                    </span>
-                  </div>
-
-                  {/* Payment Screenshot Upload */}
-                  <div className="md:col-span-2">
-                    <label className="block text-xs sm:text-sm font-semibold text-[#fff1cb] mb-1.5">
-                      Upload Payment Screenshot (Recommended)
-                    </label>
-                    <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 p-3.5 sm:p-4 rounded-xl sm:rounded-2xl bg-[#2d0c1b]/60 border border-dashed border-[#fff1cb]/30 shadow-inner">
-                      <label className="flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-[#4a162d] hover:bg-[#63752e]/40 border border-[#fff1cb]/20 cursor-pointer text-xs font-semibold text-[#fff1cb] transition-colors shrink-0 shadow-sm w-full sm:w-auto">
-                        <Upload className="w-4 h-4" />
-                        Choose Screenshot Image
-                        <input
-                          type="file"
-                          accept="image/*"
-                          onChange={handleScreenshotChange}
-                          className="hidden"
-                        />
-                      </label>
-
-                      {screenshotFileName ? (
-                        <div className="flex items-center justify-between sm:justify-start gap-2 text-xs text-[#fff1cb]/80 min-w-0">
-                          <div className="flex items-center gap-2 truncate">
-                            <CheckCircle2 className="w-4 h-4 text-green-400 shrink-0" />
-                            <span className="truncate">{screenshotFileName}</span>
-                          </div>
-                          <button
-                            type="button"
-                            onClick={() => {
-                              setScreenshotPreview(null);
-                              setScreenshotFileName(null);
-                            }}
-                            className="text-red-400 hover:text-red-300 text-xs shrink-0 underline ml-2"
-                          >
-                            Remove
-                          </button>
-                        </div>
-                      ) : (
-                        <span className="text-xs text-[#fff1cb]/50">
-                          Supports PNG, JPG, WEBP. Verifies instant approval by registration desk.
-                        </span>
-                      )}
-                    </div>
-
-                    {screenshotPreview && (
-                      <div className="mt-3 relative w-28 h-28 sm:w-32 sm:h-32 rounded-xl sm:rounded-2xl overflow-hidden border border-[#fff1cb]/20 shadow-md">
-                        <Image
-                          src={screenshotPreview}
-                          alt="Payment Screenshot Preview"
-                          fill
-                          className="object-cover"
-                        />
-                      </div>
-                    )}
                   </div>
                 </div>
 
@@ -1551,6 +1491,13 @@ function EventTableCard({
       if (boysCount < 2 || girlsCount < 2) {
         isValid = false;
         message = `Requires at least 2 Boys & 2 Girls (Current: ${boysCount} Boys, ${girlsCount} Girls)`;
+      } else {
+        message = `Valid squad: ${boysCount} Boys, ${girlsCount} Girls`;
+      }
+    } else if (event.genderRestriction === "mixed-4b2g") {
+      if (boysCount < 4 || girlsCount < 2) {
+        isValid = false;
+        message = `Requires at least 4 Boys & 2 Girls (Current: ${boysCount} Boys, ${girlsCount} Girls)`;
       } else {
         message = `Valid squad: ${boysCount} Boys, ${girlsCount} Girls`;
       }

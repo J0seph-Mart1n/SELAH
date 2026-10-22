@@ -79,7 +79,21 @@ export async function POST(request: Request) {
       events: registrations,
     };
 
-    // Save record to local JSON database file
+    // 1. Save to Firebase Cloud Firestore (if configured)
+    let savedToFirestore = false;
+    try {
+      if (process.env.NEXT_PUBLIC_FIREBASE_PROJECT_ID) {
+        const { db } = await import("@/lib/firebase");
+        const { doc, setDoc } = await import("firebase/firestore");
+        await setDoc(doc(db, "registrations", registrationId), record);
+        savedToFirestore = true;
+        console.log(`[Firebase] Successfully saved registration ${registrationId} to Firestore.`);
+      }
+    } catch (fbErr: any) {
+      console.warn("[Firebase] Could not save to Firestore:", fbErr?.message || fbErr);
+    }
+
+    // 2. Save record to local JSON database file (as fallback / local backup)
     const dataDir = path.join(process.cwd(), "data");
     await fs.mkdir(dataDir, { recursive: true });
     const filePath = path.join(dataDir, "registrations.json");
@@ -102,6 +116,7 @@ export async function POST(request: Request) {
       success: true,
       registrationId,
       timestamp,
+      savedToFirestore,
       message: "Registration submitted successfully!",
       summary: {
         parishName: parishDetails.parishName,

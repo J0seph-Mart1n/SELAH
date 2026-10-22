@@ -23,7 +23,7 @@ export interface RegistrationEventConfig {
   requiredBoys?: number;
   requiredGirls?: number;
   maxSubstitutes?: number;
-  genderRestriction?: "boys-only" | "girls-only" | "mixed-2b2g" | "any";
+  genderRestriction?: "boys-only" | "girls-only" | "mixed-2b2g" | "mixed-4b2g" | "any";
   defaultRoles: string[];
   defaultRows: Array<{ gender: "Male" | "Female" | ""; role: string; notes?: string }>;
 }
@@ -91,17 +91,19 @@ export const REGISTRATION_EVENTS: RegistrationEventConfig[] = [
     category: "sports",
     type: "group",
     fee: 800,
-    specification: "2 Boys, 2 Girls Team (3 Substitutes)",
-    descriptionHint: "4 Main Playing (2 Boys, 2 Girls) + up to 3 Substitutes (Total max 7).",
-    minParticipants: 4,
-    maxParticipants: 7,
-    requiredBoys: 2,
+    specification: "4 Boys, 2 Girls Team (3 Substitutes)",
+    descriptionHint: "6 Main Pullers (4 Boys, 2 Girls) + up to 3 Substitutes (Total max 9).",
+    minParticipants: 6,
+    maxParticipants: 9,
+    requiredBoys: 4,
     requiredGirls: 2,
     maxSubstitutes: 3,
-    genderRestriction: "mixed-2b2g",
-    defaultRoles: ["Player", "Captain", "Substitute", "Anchor"],
+    genderRestriction: "mixed-4b2g",
+    defaultRoles: ["Player", "Captain", "Anchor", "Substitute"],
     defaultRows: [
       { gender: "Male", role: "Captain" },
+      { gender: "Male", role: "Anchor" },
+      { gender: "Male", role: "Player" },
       { gender: "Male", role: "Player" },
       { gender: "Female", role: "Player" },
       { gender: "Female", role: "Player" },
@@ -304,12 +306,12 @@ export const REGISTRATION_EVENTS: RegistrationEventConfig[] = [
     minParticipants: 4,
     maxParticipants: 12,
     genderRestriction: "any",
-    defaultRoles: ["Vocalist", "Guitarist", "Drummer", "Bassist", "Keyboardist", "Band Leader"],
+    defaultRoles: ["Vocalist", "Instrumentalist", "Band Leader"],
     defaultRows: [
       { gender: "", role: "Band Leader" },
       { gender: "", role: "Vocalist" },
-      { gender: "", role: "Guitarist" },
-      { gender: "", role: "Drummer" },
+      { gender: "", role: "Instrumentalist" },
+      { gender: "", role: "Instrumentalist" },
     ],
   },
 ];
@@ -327,7 +329,7 @@ export const PAYMENT_DETAILS = {
   phone: "9172232178",
   upiId: "9172232178.etb@icici",
   bankName: "ICICI Bank",
-  qrImagePath: "/payment/selah_payment_qr.png",
+  qrImagePath: "/payment/QR_Code_Payment.jpeg",
   groupFee: 800,
   individualFee: 250,
 };
