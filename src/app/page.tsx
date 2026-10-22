@@ -18,6 +18,7 @@ import BorderGlow from "@/components/BorderGlow";
 import ScrollVelocity from "@/components/ScrollVelocity";
 import MagicBento from "@/components/MagicBento";
 import AnimatedContent from "@/components/AnimatedContent";
+import Counter from "@/components/Counter";
 import Footer from "@/components/Footer";
 import {
   ArrowRight,
@@ -81,6 +82,13 @@ const eventCards: Record<Track, EventCard[]> = {
         "2 Boys and 2 Girls Team.",
       image:
         "/events/MixedRelay.jpg",
+    },
+    {
+      title: "100 M Race",
+      description:
+        "Individual 100m sprint showdown. Up to 5 participants per parish.",
+      image:
+        "/events/100mRace.png",
     },
   ],
   culture: [
@@ -482,7 +490,7 @@ function App() {
             <div className="glow glow-coral" />
             <div className="glow glow-gold" />
             <div className="glow glow-cyan" />
-            <AnimatedContent distance={40} duration={0.8} ease="power3.out" threshold={0.1} className="w-full flex justify-center items-center">
+            <AnimatedContent distance={60} duration={2.8} ease="power3.out" threshold={0.1} className="w-full flex justify-center items-center">
               <div className="hero-inner flex flex-col items-center justify-center text-center mx-auto">
                 <h1 className="text-center w-full flex flex-col items-center justify-center">
                   <MorphingText texts={["SELAH", "सेलाह", "സേലാ", "סֶלָה", "SELAH"]} />
@@ -492,28 +500,52 @@ function App() {
                   Pause. Explore. Renew
                   <br className="desktop-only" />{" "}
                 </p>
-                <div className="text-[#fff1cb] font-semibold tracking-widest text-sm mt-8 uppercase text-center w-full">
-                  Starting In
-                </div>
-                <div className="countdown mx-auto" aria-label="Countdown to SELAH festival">
-                  {[
-                    ["days", countdown.days],
-                    ["hours", countdown.hours],
-                    ["minutes", countdown.minutes],
-                    ["seconds", countdown.seconds],
-                  ].map(([label, value], index) => (
-                    <div
-                      className={
-                        index === 0 || index === 3
-                          ? "count-cell highlight"
-                          : "count-cell"
-                      }
-                      key={label}
-                    >
-                      <strong>{String(value).padStart(2, "0")}</strong>
-                      <span>{label}</span>
-                    </div>
-                  ))}
+                <div className="w-full max-w-md mx-auto mt-7 mb-3">
+                  <div className="text-[#fff1cb] font-semibold tracking-widest text-xs sm:text-sm mb-3 sm:mb-4 uppercase text-center w-full">
+                    Starting In
+                  </div>
+
+                  <div
+                    className="selah-counter-card flex items-start justify-center gap-1.5 sm:gap-2.5"
+                    aria-label="Countdown to SELAH festival"
+                  >
+                    {(
+                      [
+                        ["Days", countdown.days],
+                        ["Hours", countdown.hours],
+                        ["Minutes", countdown.minutes],
+                        ["Seconds", countdown.seconds],
+                      ] as const
+                    ).map(([label, value], index) => (
+                      <React.Fragment key={label}>
+                        {index > 0 && (
+                          <div
+                            className="flex flex-col justify-center items-center gap-1.5 h-[44px] sm:h-[54px] px-0.5 sm:px-1"
+                            aria-hidden="true"
+                          >
+                            <span className="w-1 sm:w-1.5 h-1 sm:h-1.5 rounded-full bg-[#fff1cb]/60"></span>
+                            <span className="w-1 sm:w-1.5 h-1 sm:h-1.5 rounded-full bg-[#fff1cb]/60"></span>
+                          </div>
+                        )}
+
+                        <div className="flex flex-col items-center">
+                          <Counter
+                            value={value}
+                            minDigits={2}
+                            fontSize={24}
+                            fontWeight="700"
+                            textColor="#fff1cb"
+                            gap={4}
+                            fade={0.12}
+                            direction="down"
+                          />
+                          <span className="text-[#fff1cb]/80 text-[10px] sm:text-[11px] font-semibold uppercase mt-2 text-center tracking-wider">
+                            {label}
+                          </span>
+                        </div>
+                      </React.Fragment>
+                    ))}
+                  </div>
                 </div>
                 <div className="hero-actions flex !flex-row !flex-nowrap w-full max-w-xs sm:max-w-md mx-auto justify-center items-center gap-3">
                   <Link
@@ -1093,19 +1125,32 @@ function App() {
 function EventCardView({ card }: { card: EventCard }) {
   const slugMap: Record<string, string> = {
     "Chess": "chess",
+    "Blitz Chess": "chess",
     "Throwball": "throwball",
     "Football": "football",
+    "Futsal": "football",
     "Tug of War": "tug-of-war",
     "Mixed Relay": "mixed-relay",
+    "100 M Race": "100m-race",
+    "100m Race": "100m-race",
     "Group Dance": "group-dance",
+    "The Big Picture": "group-dance",
     "Short Film": "short-film",
+    "Frame By Frame": "short-film",
     "Live Painting": "live-painting",
+    "The Art of the Moment": "live-painting",
     "Solo Singing": "solo-singing",
+    "Pitch Perfect": "solo-singing",
     "Solo Dance": "solo-dance",
+    "Dance Unleashed": "solo-dance",
     "Street Play / Nukkad Natak": "street-play",
+    "Nukkad Natak": "street-play",
     "Mono Act": "mono-act",
+    "Alter Ego": "mono-act",
     "Photography": "photography",
+    "Perspectives": "photography",
     "Music Band": "music-band",
+    "Battle of the Bands": "music-band",
   };
   const slug = slugMap[card.title] || "";
   const ruleUrl = slug ? `/rules#${slug}` : "/rules";
