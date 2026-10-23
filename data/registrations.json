@@ -107,5 +107,299 @@
         ]
       }
     }
+  },
+  {
+    "registrationId": "SELAH26-CARMEL-IG657",
+    "timestamp": "2026-10-23T11:47:24.067Z",
+    "parishDetails": {
+      "parishName": "Carmel Parish",
+      "representativeName": "Joseph",
+      "contactNumber": "9172232178",
+      "email": "jmkl0987@gmail.com"
+    },
+    "totalFee": 2650,
+    "eventsCount": 4,
+    "totalParticipants": 14,
+    "payment": {
+      "method": "UPI",
+      "status": "Pending Verification",
+      "amount": 2650,
+      "utrNumber": null,
+      "payerName": "Joseph",
+      "paymentDate": "2026-10-23T11:47:24.067Z",
+      "hasScreenshot": false,
+      "screenshotName": null
+    },
+    "events": {
+      "mixed-relay": {
+        "eventId": "mixed-relay",
+        "title": "Mixed Relay",
+        "category": "sports",
+        "type": "group",
+        "fee": 800,
+        "participants": [
+          {
+            "id": "mixed-relay-p-1792754618117-0",
+            "name": "sdrv",
+            "gender": "Male",
+            "role": "Captain",
+            "notes": ""
+          },
+          {
+            "id": "mixed-relay-p-1792754618117-1",
+            "name": "dzrv",
+            "gender": "Male",
+            "role": "Runner",
+            "notes": ""
+          },
+          {
+            "id": "mixed-relay-p-1792754618117-2",
+            "name": "dzrv",
+            "gender": "Female",
+            "role": "Runner",
+            "notes": ""
+          },
+          {
+            "id": "mixed-relay-p-1792754618117-3",
+            "name": "darv",
+            "gender": "Female",
+            "role": "Runner",
+            "notes": ""
+          }
+        ]
+      },
+      "blitz-chess": {
+        "eventId": "blitz-chess",
+        "title": "Blitz Chess",
+        "category": "sports",
+        "type": "individual",
+        "fee": 250,
+        "participants": [
+          {
+            "id": "blitz-chess-p-1792754635947-0",
+            "name": "vaerv",
+            "gender": "Female",
+            "role": "Player",
+            "notes": ""
+          }
+        ]
+      },
+      "futsal": {
+        "eventId": "futsal",
+        "title": "Futsal",
+        "category": "sports",
+        "type": "group",
+        "fee": 800,
+        "participants": [
+          {
+            "id": "futsal-p-1792754626409-0",
+            "name": "darv",
+            "gender": "Male",
+            "role": "Captain",
+            "notes": ""
+          },
+          {
+            "id": "futsal-p-1792754626409-1",
+            "name": "drv",
+            "gender": "Male",
+            "role": "Goalkeeper",
+            "notes": ""
+          },
+          {
+            "id": "futsal-p-1792754626409-2",
+            "name": "earv",
+            "gender": "Male",
+            "role": "Player",
+            "notes": ""
+          },
+          {
+            "id": "futsal-p-1792754626409-3",
+            "name": "adrv",
+            "gender": "Male",
+            "role": "Player",
+            "notes": ""
+          },
+          {
+            "id": "futsal-p-1792754626409-4",
+            "name": "adrv",
+            "gender": "Male",
+            "role": "Player",
+            "notes": ""
+          }
+        ]
+      },
+      "group-dance": {
+        "eventId": "group-dance",
+        "title": "The Big Picture (Group Dance)",
+        "category": "cultural",
+        "type": "group",
+        "fee": 800,
+        "participants": [
+          {
+            "id": "group-dance-p-1792754678987-0",
+            "name": "dzvt",
+            "gender": "Male",
+            "role": "Captain / Lead",
+            "notes": ""
+          },
+          {
+            "id": "group-dance-p-1792754678987-1",
+            "name": "ddv",
+            "gender": "Female",
+            "role": "Dancer",
+            "notes": ""
+          },
+          {
+            "id": "group-dance-p-1792754678987-2",
+            "name": "sdrrv",
+            "gender": "Male",
+            "role": "Dancer",
+            "notes": ""
+          },
+          {
+            "id": "group-dance-p-1792754731779-fpku",
+            "name": "servt",
+            "gender": "Male",
+            "role": "Dancer",
+            "notes": ""
+          }
+        ]
+      }
+    }
+  },
+  {
+    "registrationId": "SELAH26-AWSEC-BZXD8",
+    "timestamp": "2026-10-23T12:07:35.212Z",
+    "parishDetails": {
+      "parishName": "awsec",
+      "representativeName": "awerf",
+      "contactNumber": "1212121212",
+      "email": "asre@gmail.com"
+    },
+    "totalFee": 2100,
+    "eventsCount": 4,
+    "totalParticipants": 12,
+    "events": {
+      "mixed-relay": {
+        "eventId": "mixed-relay",
+        "title": "Mixed Relay",
+        "category": "sports",
+        "type": "group",
+        "fee": 800,
+        "participants": [
+          {
+            "id": "mixed-relay-p-1792757206206-0",
+            "name": "darv",
+            "gender": "Male",
+            "role": "Captain",
+            "notes": ""
+          },
+          {
+            "id": "mixed-relay-p-1792757206206-1",
+            "name": "aerfv",
+            "gender": "Male",
+            "role": "Runner",
+            "notes": ""
+          },
+          {
+            "id": "mixed-relay-p-1792757206206-2",
+            "name": "aadrv",
+            "gender": "Female",
+            "role": "Runner",
+            "notes": ""
+          },
+          {
+            "id": "mixed-relay-p-1792757206206-3",
+            "name": "aeerv",
+            "gender": "Female",
+            "role": "Runner",
+            "notes": ""
+          }
+        ]
+      },
+      "tug-of-war": {
+        "eventId": "tug-of-war",
+        "title": "Tug Of War",
+        "category": "sports",
+        "type": "group",
+        "fee": 800,
+        "participants": [
+          {
+            "id": "tug-of-war-p-1792757210374-0",
+            "name": "earv",
+            "gender": "Male",
+            "role": "Captain",
+            "notes": ""
+          },
+          {
+            "id": "tug-of-war-p-1792757210374-1",
+            "name": "aerv",
+            "gender": "Male",
+            "role": "Anchor",
+            "notes": ""
+          },
+          {
+            "id": "tug-of-war-p-1792757210374-2",
+            "name": "aerv",
+            "gender": "Male",
+            "role": "Player",
+            "notes": ""
+          },
+          {
+            "id": "tug-of-war-p-1792757210374-3",
+            "name": "asdrv",
+            "gender": "Male",
+            "role": "Player",
+            "notes": ""
+          },
+          {
+            "id": "tug-of-war-p-1792757210374-4",
+            "name": "arv",
+            "gender": "Female",
+            "role": "Player",
+            "notes": ""
+          },
+          {
+            "id": "tug-of-war-p-1792757210374-5",
+            "name": "aredv",
+            "gender": "Female",
+            "role": "Player",
+            "notes": ""
+          }
+        ]
+      },
+      "live-canvas": {
+        "eventId": "live-canvas",
+        "title": "The Art Of The Moment (Live Canvas)",
+        "category": "cultural",
+        "type": "individual",
+        "fee": 250,
+        "participants": [
+          {
+            "id": "live-canvas-p-1792757225990-0",
+            "name": "dfrv",
+            "gender": "Male",
+            "role": "Artist",
+            "notes": ""
+          }
+        ]
+      },
+      "solo-singing": {
+        "eventId": "solo-singing",
+        "title": "Pitch Perfect (Solo Singing)",
+        "category": "cultural",
+        "type": "individual",
+        "fee": 250,
+        "participants": [
+          {
+            "id": "solo-singing-p-1792757230752-0",
+            "name": "aerv",
+            "gender": "Male",
+            "role": "Vocalist",
+            "notes": ""
+          }
+        ]
+      }
+    }
   }
 ]

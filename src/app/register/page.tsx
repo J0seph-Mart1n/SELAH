@@ -52,8 +52,6 @@ interface ParishDetails {
   parishName: string;
   representativeName: string;
   contactNumber: string;
-  alternatePhone?: string;
-  notes?: string;
 }
 
 interface EventRegistrationState {
@@ -71,8 +69,6 @@ export default function RegisterPage() {
     parishName: "",
     representativeName: "",
     contactNumber: "",
-    alternatePhone: "",
-    notes: "",
   });
 
   // Selected Events State
@@ -86,12 +82,6 @@ export default function RegisterPage() {
     });
     return initial;
   });
-
-  // Payment State
-  const [utrNumber, setUtrNumber] = useState<string>("");
-  const [payerName, setPayerName] = useState<string>("");
-  const [screenshotPreview, setScreenshotPreview] = useState<string | null>(null);
-  const [screenshotFileName, setScreenshotFileName] = useState<string | null>(null);
 
   // UI / Submission state
   const [copiedUpi, setCopiedUpi] = useState<boolean>(false);
@@ -267,19 +257,6 @@ export default function RegisterPage() {
     };
   }, [eventsState]);
 
-  // Handle screenshot file upload
-  const handleScreenshotChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (!file) return;
-
-    setScreenshotFileName(file.name);
-    const reader = new FileReader();
-    reader.onloadend = () => {
-      setScreenshotPreview(reader.result as string);
-    };
-    reader.readAsDataURL(file);
-  };
-
   // Copy UPI ID
   const handleCopyUPI = () => {
     navigator.clipboard.writeText(PAYMENT_DETAILS.upiId);
@@ -396,12 +373,6 @@ export default function RegisterPage() {
           error: "You must register for at least one sports or cultural event.",
         };
       }
-      if (!utrNumber.trim() || utrNumber.trim().length < 6) {
-        return {
-          valid: false,
-          error: "Please enter a valid Transaction Ref / UTR number from your payment app.",
-        };
-      }
       return { valid: true };
     }
 
@@ -480,7 +451,10 @@ export default function RegisterPage() {
 
     try {
       // Build clean payload with only enabled events
-      const cleanRegistrations: Record<string, { eventId: string; title: string; type: string; fee: number; participants: Participant[] }> = {};
+      const cleanRegistrations: Record<
+        string,
+        { eventId: string; title: string; category?: string; type: string; fee: number; participants: Participant[] }
+      > = {};
       REGISTRATION_EVENTS.forEach((event) => {
         const state = eventsState[event.id];
         if (state?.enabled && state.participants.length > 0) {
@@ -492,6 +466,7 @@ export default function RegisterPage() {
           cleanRegistrations[event.id] = {
             eventId: event.id,
             title: event.title,
+            category: event.category,
             type: event.type,
             fee: calculatedFee,
             participants: state.participants,
@@ -503,15 +478,14 @@ export default function RegisterPage() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          parishDetails,
+          parishDetails: {
+            email: parishDetails.email.trim(),
+            parishName: parishDetails.parishName.trim(),
+            representativeName: parishDetails.representativeName.trim(),
+            contactNumber: parishDetails.contactNumber.trim(),
+          },
           registrations: cleanRegistrations,
           totalFee: feeSummary.grandTotal,
-          payment: {
-            utrNumber: utrNumber.trim(),
-            payerName: payerName.trim() || parishDetails.representativeName,
-            screenshotBase64: screenshotPreview,
-            screenshotName: screenshotFileName,
-          },
         }),
       });
 
@@ -533,6 +507,28 @@ export default function RegisterPage() {
     } finally {
       setIsSubmitting(false);
     }
+  };
+
+  // Reset form completely for new parish registration
+  const handleResetForm = () => {
+    setParishDetails({
+      email: "",
+      parishName: "",
+      representativeName: "",
+      contactNumber: "",
+    });
+    const freshEvents: Record<string, EventRegistrationState> = {};
+    REGISTRATION_EVENTS.forEach((event) => {
+      freshEvents[event.id] = {
+        enabled: false,
+        participants: [],
+      };
+    });
+    setEventsState(freshEvents);
+    setSubmissionSuccess(null);
+    setSubmissionError(null);
+    setCurrentStep(1);
+    window.scrollTo({ top: 320, behavior: "smooth" });
   };
 
   return (
@@ -1252,12 +1248,6 @@ export default function RegisterPage() {
                 <h2 className="text-2xl md:text-4xl font-extrabold text-[#fff1cb]">
                   Registration Successfully Submitted!
                 </h2>
-                <p className="text-sm md:text-base text-[#fff1cb]/80 max-w-xl mx-auto">
-                  Your parish squad entries have been officially received. Please retain your Registration ID for reporting on 5th December, 2026.
-                </p>
-                <div className="inline-block px-5 py-2.5 rounded-2xl bg-[#2d0c1b] border border-[#63752e] text-sm md:text-base font-mono font-bold text-[#fff1cb] shadow-md">
-                  Registration Token: <span className="text-[#63752e]">{submissionSuccess.registrationId}</span>
-                </div>
               </div>
 
               {/* Receipt Details Grid */}
@@ -1283,8 +1273,10 @@ export default function RegisterPage() {
                 </div>
 
                 <div className="p-4 rounded-2xl bg-[#2d0c1b]/70 border border-[#fff1cb]/10 shadow-sm">
-                  <div className="text-[#fff1cb]/50 text-[11px] uppercase">Payment Ref / UTR</div>
-                  <div className="font-mono font-semibold text-[#fff1cb] text-sm">{utrNumber}</div>
+                  <div className="text-[#fff1cb]/50 text-[11px] uppercase">Events Registered</div>
+                  <div className="font-semibold text-[#fff1cb] text-sm">
+                    {feeSummary.totalEvents} {feeSummary.totalEvents === 1 ? "Event" : "Events"}
+                  </div>
                 </div>
 
                 <div className="p-4 rounded-2xl bg-[#2d0c1b]/70 border border-[#fff1cb]/10 shadow-sm">
@@ -1309,7 +1301,7 @@ export default function RegisterPage() {
                     >
                       <div className="flex items-center justify-between mb-2.5">
                         <span className="font-bold text-sm text-[#fff1cb]">{data.title}</span>
-                        <span className="text-xs font-mono text-[#63752e] bg-[#fff1cb]/10 px-2 py-0.5 rounded-lg">₹{data.fee}</span>
+                        <span className="text-xs font-mono text-[#fff1cb] bg-[#fff1cb]/10 px-2 py-0.5 rounded-lg">₹{data.fee}</span>
                       </div>
                       <table className="w-full text-xs text-left">
                         <thead>
@@ -1373,10 +1365,7 @@ export default function RegisterPage() {
 
                   <button
                     type="button"
-                    onClick={() => {
-                      setSubmissionSuccess(null);
-                      setCurrentStep(1);
-                    }}
+                    onClick={handleResetForm}
                     className="px-6 py-2.5 rounded-2xl bg-[#63752e] hover:bg-[#839c3d] text-[#fff1cb] font-bold text-sm transition-colors shadow-lg"
                   >
                     Register Another Parish

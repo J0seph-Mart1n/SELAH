@@ -19,6 +19,7 @@ import ScrollVelocity from "@/components/ScrollVelocity";
 import MagicBento from "@/components/MagicBento";
 import AnimatedContent from "@/components/AnimatedContent";
 import Counter from "@/components/Counter";
+import ThemeMusicPlayer from "@/components/ThemeMusicPlayer";
 import Footer from "@/components/Footer";
 import {
   ArrowRight,
@@ -500,52 +501,41 @@ function App() {
                   Pause. Explore. Renew
                   <br className="desktop-only" />{" "}
                 </p>
-                <div className="w-full max-w-md mx-auto mt-7 mb-3">
-                  <div className="text-[#fff1cb] font-semibold tracking-widest text-xs sm:text-sm mb-3 sm:mb-4 uppercase text-center w-full">
-                    Starting In
-                  </div>
-
-                  <div
-                    className="selah-counter-card flex items-start justify-center gap-1.5 sm:gap-2.5"
-                    aria-label="Countdown to SELAH festival"
-                  >
-                    {(
-                      [
-                        ["Days", countdown.days],
-                        ["Hours", countdown.hours],
-                        ["Minutes", countdown.minutes],
-                        ["Seconds", countdown.seconds],
-                      ] as const
-                    ).map(([label, value], index) => (
-                      <React.Fragment key={label}>
-                        {index > 0 && (
-                          <div
-                            className="flex flex-col justify-center items-center gap-1.5 h-[44px] sm:h-[54px] px-0.5 sm:px-1"
-                            aria-hidden="true"
-                          >
-                            <span className="w-1 sm:w-1.5 h-1 sm:h-1.5 rounded-full bg-[#fff1cb]/60"></span>
-                            <span className="w-1 sm:w-1.5 h-1 sm:h-1.5 rounded-full bg-[#fff1cb]/60"></span>
-                          </div>
-                        )}
-
-                        <div className="flex flex-col items-center">
-                          <Counter
-                            value={value}
-                            minDigits={2}
-                            fontSize={24}
-                            fontWeight="700"
-                            textColor="#fff1cb"
-                            gap={4}
-                            fade={0.12}
-                            direction="down"
-                          />
-                          <span className="text-[#fff1cb]/80 text-[10px] sm:text-[11px] font-semibold uppercase mt-2 text-center tracking-wider">
-                            {label}
-                          </span>
-                        </div>
-                      </React.Fragment>
-                    ))}
-                  </div>
+                <div className="text-[#fff1cb] font-semibold tracking-widest text-sm mt-8 uppercase text-center w-full">
+                  Starting In
+                </div>
+                <div className="countdown mx-auto" aria-label="Countdown to SELAH festival">
+                  {(
+                    [
+                      ["days", countdown.days],
+                      ["hours", countdown.hours],
+                      ["minutes", countdown.minutes],
+                      ["seconds", countdown.seconds],
+                    ] as const
+                  ).map(([label, value], index) => (
+                    <div
+                      className={
+                        index === 0 || index === 3
+                          ? "count-cell highlight"
+                          : "count-cell"
+                      }
+                      key={label}
+                    >
+                      <strong className="flex justify-center items-center">
+                        <Counter
+                          value={value}
+                          minDigits={2}
+                          fontSize={28}
+                          fontWeight="700"
+                          textColor="#fff1cb"
+                          gap={2}
+                          fade={0.2}
+                          direction="down"
+                        />
+                      </strong>
+                      <span>{label}</span>
+                    </div>
+                  ))}
                 </div>
                 <div className="hero-actions flex !flex-row !flex-nowrap w-full max-w-xs sm:max-w-md mx-auto justify-center items-center gap-3">
                   <Link
@@ -1117,6 +1107,9 @@ function App() {
       <AnimatedContent distance={40} duration={0.8} ease="power3.out" threshold={0.1}>
         <Footer />
       </AnimatedContent>
+
+      {/* Floating FIFA Theme Music Player with Speaker Mute Control */}
+      <ThemeMusicPlayer />
     </div>
   );
 }

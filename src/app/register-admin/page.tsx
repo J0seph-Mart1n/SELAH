@@ -28,7 +28,6 @@ import {
   Trash2,
   AlertCircle,
   CheckCircle2,
-  Image as ImageIcon,
   ArrowLeft,
   FileSpreadsheet,
   X,
@@ -59,19 +58,11 @@ interface RegistrationRecord {
     parishName: string;
     representativeName: string;
     contactNumber: string;
-    alternatePhone?: string;
     email: string;
-    notes?: string;
   };
   totalFee: number;
-  payment: {
-    utrNumber: string;
-    payerName?: string;
-    paymentDate?: string;
-    hasScreenshot?: boolean;
-    screenshotName?: string | null;
-    screenshotBase64?: string | null;
-  };
+  eventsCount?: number;
+  totalParticipants?: number;
   events: Record<string, EventRegistration>;
 }
 
@@ -90,7 +81,6 @@ export default function RegisterAdminPage() {
   const [firestoreConnected, setFirestoreConnected] = useState<boolean>(true);
   const [copiedId, setCopiedId] = useState<string | null>(null);
   const [expandedCards, setExpandedCards] = useState<Record<string, boolean>>({});
-  const [screenshotModalUrl, setScreenshotModalUrl] = useState<string | null>(null);
   const [deleteCandidate, setDeleteCandidate] = useState<RegistrationRecord | null>(null);
   const [isDeleting, setIsDeleting] = useState(false);
 
@@ -248,8 +238,7 @@ export default function RegisterAdminPage() {
           record.parishDetails?.parishName?.toLowerCase().includes(q) ||
           record.parishDetails?.representativeName?.toLowerCase().includes(q) ||
           record.parishDetails?.contactNumber?.includes(q) ||
-          record.parishDetails?.email?.toLowerCase().includes(q) ||
-          record.payment?.utrNumber?.toLowerCase().includes(q);
+          record.parishDetails?.email?.toLowerCase().includes(q);
 
         // Event filter match
         let matchesEvent = true;
@@ -316,9 +305,9 @@ export default function RegisterAdminPage() {
         "Parish Name",
         "Representative Name",
         "Contact Number",
-        "Alternate Phone",
         "Email",
         "Event Title",
+        "Event Category",
         "Event Type",
         "Event Fee",
         "Participant Name",
@@ -326,10 +315,6 @@ export default function RegisterAdminPage() {
         "Participant Role",
         "Participant Notes",
         "Total Parish Fee",
-        "Payment UTR",
-        "Payer Name",
-        "Has Screenshot",
-        "Parish Notes",
       ],
     ];
 
@@ -339,13 +324,8 @@ export default function RegisterAdminPage() {
       const pName = r.parishDetails?.parishName || "";
       const repName = r.parishDetails?.representativeName || "";
       const phone = r.parishDetails?.contactNumber || "";
-      const altPhone = r.parishDetails?.alternatePhone || "";
       const email = r.parishDetails?.email || "";
       const totalFee = r.totalFee?.toString() || "0";
-      const utr = r.payment?.utrNumber || "";
-      const payer = r.payment?.payerName || "";
-      const hasScreenshot = r.payment?.hasScreenshot ? "Yes" : "No";
-      const pNotes = (r.parishDetails?.notes || "").replace(/"/g, '""');
 
       const eventsList = Object.values(r.events || {});
       if (eventsList.length === 0) {
@@ -355,7 +335,6 @@ export default function RegisterAdminPage() {
           `"${pName}"`,
           `"${repName}"`,
           phone,
-          altPhone,
           email,
           "None",
           "",
@@ -364,15 +343,13 @@ export default function RegisterAdminPage() {
           "",
           "",
           "",
+          "",
           totalFee,
-          utr,
-          `"${payer}"`,
-          hasScreenshot,
-          `"${pNotes}"`,
         ]);
       } else {
-        eventsList.forEach((ev) => {
+        eventsList.forEach((ev: any) => {
           const evTitle = ev.title || "";
+          const evCategory = ev.category || "";
           const evType = ev.type || "";
           const evFee = ev.fee?.toString() || "0";
 
@@ -383,9 +360,9 @@ export default function RegisterAdminPage() {
               `"${pName}"`,
               `"${repName}"`,
               phone,
-              altPhone,
               email,
               `"${evTitle}"`,
+              evCategory,
               evType,
               evFee,
               "No Participants",
@@ -393,22 +370,18 @@ export default function RegisterAdminPage() {
               "",
               "",
               totalFee,
-              utr,
-              `"${payer}"`,
-              hasScreenshot,
-              `"${pNotes}"`,
             ]);
           } else {
-            ev.participants.forEach((part) => {
+            ev.participants.forEach((part: Participant) => {
               rows.push([
                 regId,
                 time,
                 `"${pName}"`,
                 `"${repName}"`,
                 phone,
-                altPhone,
                 email,
                 `"${evTitle}"`,
+                evCategory,
                 evType,
                 evFee,
                 `"${part.name || ""}"`,
@@ -416,10 +389,6 @@ export default function RegisterAdminPage() {
                 `"${part.role || ""}"`,
                 `"${(part.notes || "").replace(/"/g, '""')}"`,
                 totalFee,
-                utr,
-                `"${payer}"`,
-                hasScreenshot,
-                `"${pNotes}"`,
               ]);
             });
           }
@@ -688,7 +657,7 @@ export default function RegisterAdminPage() {
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search by parish, representative, ID, UTR, phone, email..."
+                placeholder="Search by parish, representative, ID, phone, email..."
                 className="w-full pl-10 pr-4 py-2.5 bg-slate-950/70 border border-slate-800 rounded-xl text-xs sm:text-sm text-white placeholder-slate-500 focus:outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500/40 transition-all"
               />
               {searchQuery && (
@@ -872,12 +841,6 @@ export default function RegisterAdminPage() {
                         <div className="text-[11px] px-2.5 py-1 rounded-full bg-slate-800 text-slate-300 border border-slate-700/60 font-medium text-center">
                           {eventList.length} {eventList.length === 1 ? "Event" : "Events"}
                         </div>
-
-                        {record.payment?.utrNumber && (
-                          <div className="text-[10px] font-mono px-2 py-0.5 rounded bg-indigo-500/10 text-indigo-300 border border-indigo-500/20 text-center">
-                            UTR: {record.payment.utrNumber}
-                          </div>
-                        )}
                       </div>
                     </div>
 
@@ -914,7 +877,7 @@ export default function RegisterAdminPage() {
                         exit={{ opacity: 0, height: 0 }}
                         className="border-t border-slate-800 bg-slate-950/60 p-5 space-y-6"
                       >
-                        {/* Section 1: Parish & Payment Information */}
+                        {/* Section 1: Parish & Registration Information */}
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                           {/* Parish Details Card */}
                           <div className="p-4 rounded-xl bg-slate-900/80 border border-slate-800 space-y-2">
@@ -931,20 +894,14 @@ export default function RegisterAdminPage() {
                                 {record.parishDetails?.representativeName}
                               </div>
                               <div>
-                                <span className="text-slate-500">Primary Phone: </span>
+                                <span className="text-slate-500">Contact Phone: </span>
                                 <a
                                   href={`tel:${record.parishDetails?.contactNumber}`}
-                                  className="text-amber-400 hover:underline"
+                                  className="text-amber-400 hover:underline font-mono"
                                 >
                                   {record.parishDetails?.contactNumber}
                                 </a>
                               </div>
-                              {record.parishDetails?.alternatePhone && (
-                                <div>
-                                  <span className="text-slate-500">Alternate Phone: </span>
-                                  {record.parishDetails.alternatePhone}
-                                </div>
-                              )}
                               <div>
                                 <span className="text-slate-500">Email: </span>
                                 <a
@@ -954,18 +911,13 @@ export default function RegisterAdminPage() {
                                   {record.parishDetails?.email}
                                 </a>
                               </div>
-                              {record.parishDetails?.notes && (
-                                <div className="pt-1.5 text-slate-400 italic border-t border-slate-800">
-                                  &ldquo;{record.parishDetails.notes}&rdquo;
-                                </div>
-                              )}
                             </div>
                           </div>
 
-                          {/* Payment Details Card */}
+                          {/* Registration Fee & Summary Card */}
                           <div className="p-4 rounded-xl bg-slate-900/80 border border-slate-800 space-y-2">
                             <h4 className="text-xs font-bold uppercase tracking-wider text-emerald-400 flex items-center gap-1.5">
-                              <CreditCard className="w-3.5 h-3.5" /> Payment & Verification
+                              <CreditCard className="w-3.5 h-3.5" /> Registration Fee Summary
                             </h4>
                             <div className="text-xs space-y-1.5 text-slate-300">
                               <div>
@@ -975,41 +927,17 @@ export default function RegisterAdminPage() {
                                 </strong>
                               </div>
                               <div>
-                                <span className="text-slate-500">UTR / Ref Number: </span>
-                                <span className="font-mono text-white bg-slate-950 px-2 py-0.5 rounded border border-slate-800">
-                                  {record.payment?.utrNumber || "N/A"}
+                                <span className="text-slate-500">Registered Events: </span>
+                                <span className="text-slate-200 font-medium">
+                                  {eventList.length} {eventList.length === 1 ? "Event" : "Events"}
                                 </span>
                               </div>
                               <div>
-                                <span className="text-slate-500">Payer Name: </span>
-                                {record.payment?.payerName || record.parishDetails?.representativeName}
+                                <span className="text-slate-500">Submitted On: </span>
+                                <span className="text-slate-300">
+                                  {record.timestamp ? new Date(record.timestamp).toLocaleString("en-IN") : "N/A"}
+                                </span>
                               </div>
-                              {record.payment?.paymentDate && (
-                                <div>
-                                  <span className="text-slate-500">Payment Date: </span>
-                                  {new Date(record.payment.paymentDate).toLocaleString("en-IN")}
-                                </div>
-                              )}
-
-                              {/* Screenshot Preview */}
-                              {record.payment?.screenshotBase64 ? (
-                                <div className="pt-2">
-                                  <button
-                                    onClick={() => setScreenshotModalUrl(record.payment.screenshotBase64 || null)}
-                                    className="px-3 py-1.5 rounded-lg bg-indigo-500/10 border border-indigo-500/30 text-indigo-300 hover:bg-indigo-500/20 text-xs flex items-center gap-1.5 transition-colors"
-                                  >
-                                    <ImageIcon className="w-3.5 h-3.5" />
-                                    <span>View Payment Screenshot</span>
-                                  </button>
-                                </div>
-                              ) : record.payment?.hasScreenshot ? (
-                                <div className="pt-1 text-slate-400 text-[11px] flex items-center gap-1">
-                                  <CheckCircle2 className="w-3 h-3 text-emerald-400" />
-                                  <span>Screenshot uploaded ({record.payment.screenshotName || "image"})</span>
-                                </div>
-                              ) : (
-                                <div className="pt-1 text-slate-500 text-[11px]">No screenshot uploaded</div>
-                              )}
                             </div>
                           </div>
                         </div>
@@ -1147,37 +1075,6 @@ export default function RegisterAdminPage() {
                   <span>Delete Record</span>
                 </button>
               </div>
-            </motion.div>
-          </div>
-        )}
-      </AnimatePresence>
-
-      {/* Payment Screenshot Modal */}
-      <AnimatePresence>
-        {screenshotModalUrl && (
-          <div
-            onClick={() => setScreenshotModalUrl(null)}
-            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/90 backdrop-blur-md cursor-pointer"
-          >
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.95 }}
-              onClick={(e) => e.stopPropagation()}
-              className="relative max-w-3xl max-h-[90vh] bg-slate-900 border border-slate-800 rounded-2xl p-2 overflow-hidden shadow-2xl"
-            >
-              <button
-                onClick={() => setScreenshotModalUrl(null)}
-                className="absolute top-4 right-4 z-10 p-2 rounded-full bg-black/60 hover:bg-black text-white transition-colors"
-              >
-                <X className="w-5 h-5" />
-              </button>
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                src={screenshotModalUrl}
-                alt="Payment Receipt Screenshot"
-                className="w-full h-auto max-h-[85vh] object-contain rounded-xl"
-              />
             </motion.div>
           </div>
         )}

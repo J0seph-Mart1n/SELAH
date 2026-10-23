@@ -5,19 +5,12 @@ import path from "path";
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { parishDetails, registrations, payment, totalFee } = body;
+    const { parishDetails, registrations, totalFee } = body;
 
     // Basic validation
     if (!parishDetails?.email || !parishDetails?.parishName || !parishDetails?.representativeName || !parishDetails?.contactNumber) {
       return NextResponse.json(
         { success: false, error: "Please provide all required parish and representative details." },
-        { status: 400 }
-      );
-    }
-
-    if (!payment?.utrNumber) {
-      return NextResponse.json(
-        { success: false, error: "Payment UTR / Transaction Reference number is required." },
         { status: 400 }
       );
     }
@@ -31,6 +24,7 @@ export async function POST(request: Request) {
     }
 
     // Validate that all participants have a valid name and mandatory gender
+    let totalParticipants = 0;
     for (const key of eventKeys) {
       const reg = registrations[key];
       if (!reg?.participants || reg.participants.length === 0) {
@@ -39,6 +33,7 @@ export async function POST(request: Request) {
           { status: 400 }
         );
       }
+      totalParticipants += reg.participants.length;
       for (const p of reg.participants) {
         if (!p.name?.trim()) {
           return NextResponse.json(
@@ -64,21 +59,22 @@ export async function POST(request: Request) {
     const registrationId = `SELAH26-${sanitizedParish}-${randomSuffix}`;
     const timestamp = new Date().toISOString();
 
+    // Clean parish details to store exactly what was submitted in the form
+    const cleanedParishDetails = {
+      parishName: parishDetails.parishName?.trim() || "",
+      representativeName: parishDetails.representativeName?.trim() || "",
+      contactNumber: parishDetails.contactNumber?.trim() || "",
+      email: parishDetails.email?.trim() || "",
+    };
+
+    // Firebase Firestore schema matching ONLY fields present in the form
     const record = {
       registrationId,
       timestamp,
-      parishDetails,
-      totalFee,
-      payment: {
-        utrNumber: payment.utrNumber,
-        payerName: payment.payerName || parishDetails.representativeName,
-        paymentDate: payment.paymentDate || timestamp,
-        hasScreenshot: Boolean(payment.screenshotBase64 || payment.screenshotName),
-        screenshotName: payment.screenshotName || null,
-        ...(payment.screenshotBase64 && payment.screenshotBase64.length < 500000
-          ? { screenshotBase64: payment.screenshotBase64 }
-          : {}),
-      },
+      parishDetails: cleanedParishDetails,
+      totalFee: typeof totalFee === "number" ? totalFee : Number(totalFee) || 0,
+      eventsCount: eventKeys.length,
+      totalParticipants,
       events: registrations,
     };
 
@@ -128,13 +124,13 @@ export async function POST(request: Request) {
       firestoreError: firestoreError || null,
       message: "Registration submitted successfully!",
       summary: {
-        parishName: parishDetails.parishName,
-        representativeName: parishDetails.representativeName,
-        email: parishDetails.email,
-        contactNumber: parishDetails.contactNumber,
+        parishName: cleanedParishDetails.parishName,
+        representativeName: cleanedParishDetails.representativeName,
+        email: cleanedParishDetails.email,
+        contactNumber: cleanedParishDetails.contactNumber,
         eventsCount: eventKeys.length,
-        totalFee,
-        utrNumber: payment.utrNumber,
+        totalParticipants,
+        totalFee: record.totalFee,
       },
     });
   } catch (error: any) {
