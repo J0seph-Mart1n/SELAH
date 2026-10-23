@@ -1,4 +1,5 @@
 "use client";
+import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { Menu, X } from "lucide-react";
 import {
@@ -127,32 +128,57 @@ export const NavItems = ({ items, className, onItemClick }: NavItemsProps) => {
         className,
       )}
     >
-      {items.map((item, idx) => (
-        <a
-          onMouseEnter={() => setHovered(idx)}
-          onClick={onItemClick}
-          className="relative px-4 py-2"
-          key={`link-${idx}`}
-          href={item.link}
-          target={item.target || (item.link?.startsWith("http") ? "_blank" : undefined)}
-          rel={item.rel || (item.target === "_blank" || item.link?.startsWith("http") ? "noopener noreferrer" : undefined)}
-        >
-          {hovered === idx && (
-            <motion.div
-              layoutId="hovered"
-              className="absolute inset-0 h-full w-full rounded-full bg-[#63752e]"
-            />
-          )}
-          <span
-            className={cn(
-              "relative z-20 transition-colors duration-200",
-              hovered === idx ? "text-[#fff1cb] font-semibold" : "text-[#fff1cb]/80"
+      {items.map((item, idx) => {
+        const isInternal = item.link?.startsWith("/") || item.link?.startsWith("#");
+        const linkContent = (
+          <>
+            {hovered === idx && (
+              <motion.div
+                layoutId="hovered"
+                className="absolute inset-0 h-full w-full rounded-full bg-[#63752e]"
+              />
             )}
+            <span
+              className={cn(
+                "relative z-20 transition-colors duration-200",
+                hovered === idx ? "text-[#fff1cb] font-semibold" : "text-[#fff1cb]/80"
+              )}
+            >
+              {item.name}
+            </span>
+          </>
+        );
+
+        if (isInternal) {
+          return (
+            <Link
+              key={`link-${idx}`}
+              href={item.link}
+              onMouseEnter={() => setHovered(idx)}
+              onClick={onItemClick}
+              className="relative px-4 py-2"
+              target={item.target}
+              rel={item.rel}
+            >
+              {linkContent}
+            </Link>
+          );
+        }
+
+        return (
+          <a
+            key={`link-${idx}`}
+            href={item.link}
+            onMouseEnter={() => setHovered(idx)}
+            onClick={onItemClick}
+            className="relative px-4 py-2"
+            target={item.target || (item.link?.startsWith("http") ? "_blank" : undefined)}
+            rel={item.rel || (item.target === "_blank" || item.link?.startsWith("http") ? "noopener noreferrer" : undefined)}
           >
-            {item.name}
-          </span>
-        </a>
-      ))}
+            {linkContent}
+          </a>
+        );
+      })}
     </motion.div>
   );
 };

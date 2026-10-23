@@ -326,6 +326,9 @@ const getEventTheme = (column: "cultural" | "sports" | "both") => {
   };
 };
 
+// Track whether the user has already entered during this browser session
+let hasEnteredSession = false;
+
 function App() {
   const isChiefGuestFinalized = false;
   const showSponsors = false;
@@ -341,7 +344,31 @@ function App() {
     []
   );
 
-  const [hasEntered, setHasEntered] = useState(false);
+  const [hasEntered, setHasEntered] = useState<boolean>(hasEnteredSession);
+
+  useEffect(() => {
+    if (
+      hasEnteredSession ||
+      (typeof window !== "undefined" &&
+        (sessionStorage.getItem("selah_has_entered") === "true" ||
+          document.cookie.indexOf("selah_has_entered=1") !== -1 ||
+          document.documentElement.classList.contains("selah-entered")))
+    ) {
+      setHasEntered(true);
+      hasEnteredSession = true;
+    }
+  }, []);
+
+  const handleSiteEnter = () => {
+    setHasEntered(true);
+    hasEnteredSession = true;
+    if (typeof window !== "undefined") {
+      sessionStorage.setItem("selah_has_entered", "true");
+      document.cookie = "selah_has_entered=1; path=/; SameSite=Lax";
+      document.documentElement.classList.add("selah-entered");
+    }
+  };
+
   const [query, setQuery] = useState("");
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [anthemPlaying, setAnthemPlaying] = useState(false);
@@ -407,7 +434,7 @@ function App() {
   return (
     <div className="app-shell bg-transparent">
       {/* Floating FIFA Theme Music Player with Welcome Overlay rendered first */}
-      <ThemeMusicPlayer hasEntered={hasEntered} onEnter={() => setHasEntered(true)} />
+      <ThemeMusicPlayer hasEntered={hasEntered} onEnter={handleSiteEnter} />
 
       {/* Main Page Content - Animations start after welcome button click */}
       <motion.div

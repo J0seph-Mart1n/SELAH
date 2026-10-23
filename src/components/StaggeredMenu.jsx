@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useCallback, useLayoutEffect, useRef, useState } from 'react';
+import Link from 'next/link';
 import { gsap } from 'gsap';
 import './StaggeredMenu.css';
 
@@ -433,24 +434,48 @@ export const StaggeredMenu = ({
         <div className="sm-panel-inner">
           <ul className="sm-panel-list" role="list" data-numbering={displayItemNumbering || undefined}>
             {items && items.length ? (
-              items.map((it, idx) => (
-                <li className="sm-panel-itemWrap" key={it.label + idx}>
-                  <a
-                    className="sm-panel-item"
-                    href={it.link}
-                    aria-label={it.ariaLabel}
-                    data-index={idx + 1}
-                    target={it.target || (it.link?.startsWith('http') ? '_blank' : undefined)}
-                    rel={it.rel || (it.target === '_blank' || it.link?.startsWith('http') ? 'noopener noreferrer' : undefined)}
-                    onClick={(e) => {
-                      if (it.onClick) it.onClick(e);
-                      if (open) toggleMenu();
-                    }}
-                  >
-                    <span className="sm-panel-itemLabel">{it.label}</span>
-                  </a>
-                </li>
-              ))
+              items.map((it, idx) => {
+                const isInternal = it.link?.startsWith('/') || it.link?.startsWith('#');
+                if (isInternal) {
+                  return (
+                    <li className="sm-panel-itemWrap" key={it.label + idx}>
+                      <Link
+                        className="sm-panel-item"
+                        href={it.link}
+                        aria-label={it.ariaLabel}
+                        data-index={idx + 1}
+                        target={it.target}
+                        rel={it.rel}
+                        onClick={(e) => {
+                          if (it.onClick) it.onClick(e);
+                          if (open) toggleMenu();
+                        }}
+                      >
+                        <span className="sm-panel-itemLabel">{it.label}</span>
+                      </Link>
+                    </li>
+                  );
+                }
+
+                return (
+                  <li className="sm-panel-itemWrap" key={it.label + idx}>
+                    <a
+                      className="sm-panel-item"
+                      href={it.link}
+                      aria-label={it.ariaLabel}
+                      data-index={idx + 1}
+                      target={it.target || (it.link?.startsWith('http') ? '_blank' : undefined)}
+                      rel={it.rel || (it.target === '_blank' || it.link?.startsWith('http') ? 'noopener noreferrer' : undefined)}
+                      onClick={(e) => {
+                        if (it.onClick) it.onClick(e);
+                        if (open) toggleMenu();
+                      }}
+                    >
+                      <span className="sm-panel-itemLabel">{it.label}</span>
+                    </a>
+                  </li>
+                );
+              })
             ) : (
               <li className="sm-panel-itemWrap" aria-hidden="true">
                 <span className="sm-panel-item">

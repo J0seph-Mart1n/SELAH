@@ -48,7 +48,7 @@ export default function WelcomeOverlay({ isOpen, onEnter }: WelcomeOverlayProps)
             filter: "blur(12px)",
             transition: { duration: 0.7, ease: [0.16, 1, 0.3, 1] },
           }}
-          className="fixed inset-0 z-[9999] flex items-center justify-center bg-[#12030b] overflow-hidden select-none cursor-default"
+          className="selah-welcome-overlay fixed inset-0 z-[9999] flex items-center justify-center bg-[#12030b] overflow-hidden select-none cursor-default"
           style={{ willChange: "opacity, transform, filter" }}
         >
           {/* Dynamic Background Gradients & Glows */}

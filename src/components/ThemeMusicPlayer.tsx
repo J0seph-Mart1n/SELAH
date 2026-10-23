@@ -35,10 +35,30 @@ export default function ThemeMusicPlayer({
       setIsPlaying(false);
       return;
     }
-  }, [isHomepage]);
+
+    // Returning to homepage after having entered: resume music if not muted
+    if (hasEntered && !isMuted) {
+      const audio = audioRef.current;
+      if (audio && audio.paused) {
+        audio.volume = 0.35;
+        audio
+          .play()
+          .then(() => {
+            setIsPlaying(true);
+          })
+          .catch(() => {});
+      }
+    }
+  }, [isHomepage, hasEntered, isMuted]);
 
   // Handle entry from the Welcome Overlay
   const handleEnter = (withSound: boolean = true) => {
+    if (typeof window !== "undefined") {
+      sessionStorage.setItem("selah_has_entered", "true");
+      document.cookie = "selah_has_entered=1; path=/; SameSite=Lax";
+      document.documentElement.classList.add("selah-entered");
+    }
+
     if (isControlled) {
       controlledOnEnter?.(withSound);
     } else {
