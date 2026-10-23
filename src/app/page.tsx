@@ -341,6 +341,7 @@ function App() {
     []
   );
 
+  const [hasEntered, setHasEntered] = useState(false);
   const [query, setQuery] = useState("");
   const [openFaq, setOpenFaq] = useState<number | null>(null);
   const [anthemPlaying, setAnthemPlaying] = useState(false);
@@ -405,8 +406,18 @@ function App() {
 
   return (
     <div className="app-shell bg-transparent">
-      <Navbar className="selah-rnav">
-        <NavBody>
+      {/* Floating FIFA Theme Music Player with Welcome Overlay rendered first */}
+      <ThemeMusicPlayer hasEntered={hasEntered} onEnter={() => setHasEntered(true)} />
+
+      {/* Main Page Content - Animations start after welcome button click */}
+      <motion.div
+        initial={false}
+        animate={hasEntered ? { opacity: 1 } : { opacity: 0 }}
+        transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
+        className="w-full flex flex-col min-h-screen"
+      >
+          <Navbar className="selah-rnav">
+            <NavBody>
           <a
             className="brand relative z-20 flex items-center gap-2.5 transition-all duration-300 group-data-[shrunk=true]:gap-0"
             href="#top"
@@ -491,7 +502,14 @@ function App() {
             <div className="glow glow-coral" />
             <div className="glow glow-gold" />
             <div className="glow glow-cyan" />
-            <AnimatedContent distance={60} duration={2.8} ease="power3.out" threshold={0.1} className="w-full flex justify-center items-center">
+            <AnimatedContent
+              key={hasEntered ? "hero-entered" : "hero-initial"}
+              distance={60}
+              duration={2.6}
+              ease="power3.out"
+              threshold={0.1}
+              className="w-full flex justify-center items-center"
+            >
               <div className="hero-inner flex flex-col items-center justify-center text-center mx-auto">
                 <h1 className="text-center w-full flex flex-col items-center justify-center">
                   <MorphingText texts={["SELAH", "सेलाह", "സേലാ", "סֶלָה", "SELAH"]} />
@@ -1107,9 +1125,7 @@ function App() {
       <AnimatedContent distance={40} duration={0.8} ease="power3.out" threshold={0.1}>
         <Footer />
       </AnimatedContent>
-
-      {/* Floating FIFA Theme Music Player with Speaker Mute Control */}
-      <ThemeMusicPlayer />
+      </motion.div>
     </div>
   );
 }
@@ -1151,9 +1167,9 @@ function EventCardView({ card }: { card: EventCard }) {
   return (
     <>
       {/* Clickable Overlay Link to Rules */}
-      <a 
+      <Link 
         href={ruleUrl} 
-        className="absolute inset-0 z-30 cursor-pointer" 
+        className="absolute inset-0 z-30 cursor-pointer block" 
         aria-label={`View rules for ${card.title}`} 
       />
 

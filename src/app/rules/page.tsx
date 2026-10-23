@@ -43,7 +43,17 @@ import {
 } from "lucide-react";
 
 export default function RulesPage() {
-  const [selectedCategory, setSelectedCategory] = useState<"all" | EventCategory | "guidelines">("guidelines");
+  // Initialize category based on URL hash if arriving with a specific event target (e.g. /rules#football)
+  const [selectedCategory, setSelectedCategory] = useState<"all" | EventCategory | "guidelines">(() => {
+    if (typeof window !== "undefined" && window.location.hash) {
+      const hash = window.location.hash.replace("#", "").toLowerCase();
+      const targetEvent = EVENT_RULES.find((e) => e.id.toLowerCase() === hash);
+      if (targetEvent) {
+        return targetEvent.category;
+      }
+    }
+    return "guidelines";
+  });
   const [searchQuery, setSearchQuery] = useState("");
   const [expandedEvents, setExpandedEvents] = useState<Record<string, boolean>>({});
   const [activeEventHash, setActiveEventHash] = useState<string>("");
@@ -58,27 +68,52 @@ export default function RulesPage() {
     setExpandedEvents(initial);
   }, []);
 
-  // Handle URL hash navigation (e.g. /rules#football)
+  // Smoothly scroll to the target event with retries until rendered
+  const scrollToEventRule = (hash: string) => {
+    if (!hash) return;
+    const cleanHash = hash.replace("#", "").toLowerCase();
+    const targetEvent = EVENT_RULES.find((e) => e.id.toLowerCase() === cleanHash);
+    if (targetEvent) {
+      setSelectedCategory(targetEvent.category);
+      setExpandedEvents((prev) => ({ ...prev, [targetEvent.id]: true }));
+      setActiveEventHash(targetEvent.id);
+    } else {
+      setActiveEventHash(cleanHash);
+    }
+
+    let attempts = 0;
+    const maxAttempts = 25;
+    const interval = setInterval(() => {
+      attempts++;
+      const element = document.getElementById(cleanHash) || (targetEvent ? document.getElementById(targetEvent.id) : null);
+      if (element) {
+        clearInterval(interval);
+        // Calculate offset so sticky navbar does not overlap the card title
+        const headerOffset = 110;
+        const elementPosition = element.getBoundingClientRect().top;
+        const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+        window.scrollTo({
+          top: Math.max(0, offsetPosition),
+          behavior: "smooth",
+        });
+      } else if (attempts >= maxAttempts) {
+        clearInterval(interval);
+      }
+    }, 50);
+  };
+
+  // Handle URL hash navigation on mount and hashchange
   useEffect(() => {
     const handleHash = () => {
-      const hash = window.location.hash.replace("#", "");
-      if (hash) {
-        setActiveEventHash(hash);
-        setExpandedEvents((prev) => ({ ...prev, [hash]: true }));
-        const targetEvent = EVENT_RULES.find((e) => e.id === hash);
-        if (targetEvent) {
-          setSelectedCategory(targetEvent.category);
-        }
-        const element = document.getElementById(hash);
-        if (element) {
-          setTimeout(() => {
-            element.scrollIntoView({ behavior: "smooth", block: "start" });
-          }, 200);
-        }
+      if (typeof window !== "undefined" && window.location.hash) {
+        scrollToEventRule(window.location.hash);
       }
     };
 
+    // Run on initial page load / client navigation
     handleHash();
+
     window.addEventListener("hashchange", handleHash);
     return () => window.removeEventListener("hashchange", handleHash);
   }, []);
@@ -384,7 +419,11 @@ export default function RulesPage() {
                   <a
                     key={e.id}
                     href={`#${e.id}`}
-                    onClick={() => setActiveEventHash(e.id)}
+                    onClick={(evt) => {
+                      evt.preventDefault();
+                      window.history.pushState(null, "", `#${e.id}`);
+                      scrollToEventRule(e.id);
+                    }}
                     style={{ color: activeEventHash === e.id ? '#fff1cb' : '#611e3c' }}
                     className={`px-3 py-1.5 rounded-full transition-all border shrink-0 font-bold ${
                       activeEventHash === e.id
