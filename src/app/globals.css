@@ -1875,23 +1875,6 @@ h3 {
   background: var(--selah-nav-text) !important;
 }
 
-.selah-smenu .sm-panel-item {
-  font-size: clamp(1.4rem, 4.5vw, 2rem) !important;
-  line-height: 1.25 !important;
-  letter-spacing: -0.01em !important;
-  font-weight: 700 !important;
-  padding-right: 2.2em !important;
-  position: relative !important;
-}
-
-.selah-smenu .sm-panel-list[data-numbering] .sm-panel-item::after {
-  top: 0.12em !important;
-  right: 0.2em !important;
-  font-size: 0.85rem !important;
-  color: var(--selah-nav-accent) !important;
-  line-height: 1 !important;
-}
-
 /* Custom subtle scrollbar for horizontally scrollable schedule calendar */
 .schedule-scrollbar {
   scrollbar-width: thin;
