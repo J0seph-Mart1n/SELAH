@@ -769,7 +769,7 @@ function App() {
                   </div>
                   
                   <h3 className="text-2xl md:text-[28px] font-extrabold text-[#611e3c] mb-5 leading-[1.3] tracking-tight">
-                    I am delighted to welcome you to SELAH 2026. This festival is a celebration of our youth's talent, energy, and dedication.
+                    I am delighted to welcome you to SELAH 2026. This Event is a celebration of our youth's talent, energy, and dedication.
                   </h3>
                   
                   <p className="text-[#611e3c]/90 text-base md:text-lg leading-relaxed mb-8 font-medium">

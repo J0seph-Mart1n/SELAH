@@ -1767,7 +1767,8 @@ h3 {
    ========================================================================== */
 
 :root {
-  --selah-nav-bg: #fff1cb;
+  --selah-nav-bg: rgba(255, 241, 203, 0.72);
+  --selah-nav-bg-shrunk: rgba(255, 241, 203, 0.82);
   --selah-nav-border: rgba(99, 117, 46, 0.35);
   --selah-nav-text: #611e3c;
   --selah-nav-accent: #63752e;
@@ -1775,21 +1776,33 @@ h3 {
 
 .selah-rnav [data-shrunk] {
   background: var(--selah-nav-bg) !important;
-  backdrop-filter: blur(14px) !important;
-  -webkit-backdrop-filter: blur(14px) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
   border: 1px solid var(--selah-nav-border) !important;
   box-shadow:
-    0 10px 30px rgba(0, 0, 0, 0.25),
-    0 1px 0 rgba(255, 255, 255, 0.4) inset !important;
+    0 10px 30px rgba(0, 0, 0, 0.18),
+    0 1px 0 rgba(255, 255, 255, 0.5) inset !important;
   transition:
     background-color 0.3s ease,
     border-color 0.3s ease,
     box-shadow 0.3s ease;
 }
 
+.selah-rnav [data-shrunk="true"] {
+  background: var(--selah-nav-bg-shrunk) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  box-shadow:
+    0 12px 36px rgba(0, 0, 0, 0.22),
+    0 1px 0 rgba(255, 255, 255, 0.55) inset !important;
+}
+
 /* Full-sized navbar spacing on left and right */
 .selah-rnav [data-shrunk="false"],
 .selah-rnav [data-shrunk]:not([data-shrunk="true"]) {
+  background: var(--selah-nav-bg) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
   padding-left: 1.5rem !important;
   padding-right: 1.5rem !important;
 }
@@ -1822,12 +1835,29 @@ h3 {
   background: var(--selah-nav-accent) !important;
 }
 
-/* Mobile Header for Homepage and Rules Page */
+/* Mobile Header for SELAH pages */
 .selah-smenu .staggered-menu-header {
   background: var(--selah-nav-bg) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
   border-bottom: 1px solid var(--selah-nav-border) !important;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12) !important;
   transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.selah-smenu .staggered-menu-header.scrolled {
+  background: var(--selah-nav-bg-shrunk) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.18) !important;
+}
+
+.selah-smenu .staggered-menu-panel {
+  background: rgba(97, 30, 60, 0.82) !important;
+  backdrop-filter: blur(24px) !important;
+  -webkit-backdrop-filter: blur(24px) !important;
+  border-left: 1px solid rgba(255, 241, 203, 0.18) !important;
+  box-shadow: -10px 0 35px rgba(0, 0, 0, 0.35) !important;
 }
 
 .selah-smenu .brand strong {
@@ -1843,6 +1873,23 @@ h3 {
 
 .selah-smenu .sm-icon-line {
   background: var(--selah-nav-text) !important;
+}
+
+.selah-smenu .sm-panel-item {
+  font-size: clamp(1.4rem, 4.5vw, 2rem) !important;
+  line-height: 1.25 !important;
+  letter-spacing: -0.01em !important;
+  font-weight: 700 !important;
+  padding-right: 2.2em !important;
+  position: relative !important;
+}
+
+.selah-smenu .sm-panel-list[data-numbering] .sm-panel-item::after {
+  top: 0.12em !important;
+  right: 0.2em !important;
+  font-size: 0.85rem !important;
+  color: var(--selah-nav-accent) !important;
+  line-height: 1 !important;
 }
 
 /* Custom subtle scrollbar for horizontally scrollable schedule calendar */

@@ -120,7 +120,12 @@ export default function Navbar({
           isFixed={true}
           logo={<MobileBrandLogo />}
           items={staggeredItems as any}
-          colors={["#611e3c", "#63752e", "#fff1cb", "#611e3c"]}
+          colors={[
+            "rgba(97, 30, 60, 0.75)",
+            "rgba(99, 117, 46, 0.75)",
+            "rgba(255, 241, 203, 0.8)",
+            "rgba(97, 30, 60, 0.85)",
+          ]}
           accentColor="#63752e"
           menuButtonColor="#fff1cb"
           openMenuButtonColor="#fff1cb"

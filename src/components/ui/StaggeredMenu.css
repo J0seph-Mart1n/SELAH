@@ -280,17 +280,17 @@
   position: relative;
   color: #fff1cb;
   font-weight: 600;
-  font-size: 3.5rem;
+  font-size: clamp(1.5rem, 5vw, 2.25rem);
   cursor: pointer;
-  line-height: 1;
-  letter-spacing: -2px;
+  line-height: 1.2;
+  letter-spacing: -0.5px;
   text-transform: uppercase;
   transition:
     background 0.25s,
     color 0.25s;
   display: inline-block;
   text-decoration: none;
-  padding-right: 1.4em;
+  padding-right: 2.2em;
 }
 
 .staggered-menu-panel .sm-socials-list .sm-socials-link {
@@ -329,12 +329,13 @@
   counter-increment: smItem;
   content: counter(smItem, decimal-leading-zero);
   position: absolute;
-  top: 0.1em;
-  right: 2.8em;
-  font-size: 18px;
-  font-weight: 400;
+  top: 0.15em;
+  right: 0.2em;
+  font-size: 0.85rem;
+  font-weight: 500;
   color: var(--sm-accent, #5227ff);
   letter-spacing: 0;
+  line-height: 1;
   pointer-events: none;
   user-select: none;
   opacity: var(--sm-num-opacity, 0);
