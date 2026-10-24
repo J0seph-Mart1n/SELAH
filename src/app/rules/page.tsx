@@ -4,13 +4,8 @@ import { useEffect, useMemo, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import {
-  Navbar,
-  NavBody,
-  NavItems,
-} from "@/components/ui/resizable-navbar";
-import StaggeredMenu from "@/components/StaggeredMenu";
-import Footer from "@/components/Footer";
+import Navbar from "@/components/web/Navbar";
+import Footer from "@/components/web/Footer";
 import {
   EVENT_RULES,
   CULTURAL_RULES,
@@ -187,77 +182,7 @@ export default function RulesPage() {
         <div className="absolute bottom-10 left-10 w-[500px] h-[500px] bg-[#611e3c] rounded-full blur-[150px]" />
       </div>
 
-      {/* Main Desktop Navbar */}
-      <div className="relative z-50">
-        <Navbar className="selah-rnav">
-          <NavBody>
-            <Link
-              className="brand relative z-20 flex items-center gap-2.5 transition-all duration-300 group-data-[shrunk=true]:gap-0"
-              href="/"
-              aria-label="SELAH 2026 home"
-              style={{ textDecoration: "none" }}
-            >
-              <Image
-                src="/top_page/Selah_Logo.png"
-                alt="SELAH 2026 Logo"
-                width={40}
-                height={40}
-                priority
-                className="w-9 h-9 md:w-10 md:h-10 rounded-full object-contain shrink-0 transition-transform duration-200 hover:scale-105"
-              />
-              <div className="transition-all duration-300 group-data-[shrunk=true]:w-0 group-data-[shrunk=true]:opacity-0 overflow-hidden whitespace-nowrap">
-                <strong className="text-2xl text-[#fff1cb]">
-                  SELAH <span className="text-[#63752e]">2026</span>
-                </strong>
-              </div>
-            </Link>
-            <NavItems
-              items={[
-                { name: "Home", link: "/" },
-                { name: "Register", link: "/register" },
-                { name: "Rules", link: "/rules" },
-                { name: "Core Team", link: "/about-cya" },
-                { name: "Gallery", link: "/gallery" },
-              ]}
-            />
-          </NavBody>
-        </Navbar>
-
-        {/* Mobile Navigation */}
-        <div className="relative z-50 lg:hidden selah-smenu">
-          <StaggeredMenu
-            isFixed={true}
-            logo={
-              <div className="brand relative z-20 flex items-center">
-                <Link href="/" aria-label="SELAH 2026 home" className="flex items-center gap-2.5" style={{ textDecoration: "none" }}>
-                  <Image
-                    src="/top_page/Selah_Logo.png"
-                    alt="SELAH 2026 Logo"
-                    width={34}
-                    height={34}
-                    priority
-                    className="w-8 h-8 md:w-9 md:h-9 rounded-full object-contain shrink-0"
-                  />
-                  <strong className="text-2xl text-[#fff1cb]">
-                    SELAH <span className="text-[#63752e]">2026</span>
-                  </strong>
-                </Link>
-              </div>
-            }
-            items={[
-              { label: "Home", link: "/" },
-              { label: "Register", link: "/register" },
-              { label: "Rules", link: "/rules" },
-              { label: "Core Team", link: "/about-cya" },
-              { label: "Gallery", link: "/gallery" },
-            ] as any}
-            colors={["#611e3c", "#63752e", "#fff1cb", "#611e3c"]}
-            accentColor="#63752e"
-            menuButtonColor="#fff1cb"
-            openMenuButtonColor="#fff1cb"
-          />
-        </div>
-      </div>
+      <Navbar />
 
       <main className="relative z-10 flex-1 pt-28 md:pt-36 pb-24">
         {/* Header Hero Section */}

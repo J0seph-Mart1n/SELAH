@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import type { TeamMember } from "../data/content";
-import ProfileCard from "@/components/ProfileCard";
+import ProfileCard from "@/components/ui/ProfileCard";
 
 function initialsOf(name: string): string {
   const words = name.split(/\s+/).filter((w) => w.length > 1 || /[A-Za-z]/.test(w));

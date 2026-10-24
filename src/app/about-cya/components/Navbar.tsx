@@ -7,7 +7,7 @@ import {
   NavBody,
   NavItems,
 } from "@/components/ui/resizable-navbar";
-import StaggeredMenu from "@/components/StaggeredMenu";
+import StaggeredMenu from "@/components/ui/StaggeredMenu";
 
 // Same links as the SELAH home navbar; hash links point back to the home page.
 const NAV_LINKS = [

@@ -38,7 +38,8 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
           dangerouslySetInnerHTML={{
             __html: `
               try {
-                if (sessionStorage.getItem('selah_has_entered') === 'true' || document.cookie.indexOf('selah_has_entered=1') !== -1) {
+                document.cookie = 'selah_has_entered=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT; SameSite=Lax';
+                if (sessionStorage.getItem('selah_has_entered') === 'true') {
                   document.documentElement.classList.add('selah-entered');
                 }
               } catch (e) {}

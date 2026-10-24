@@ -4,7 +4,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { Sparkles } from "lucide-react";
 import { SiInstagram } from "react-icons/si";
-import ParticleText from "./ParticleText";
+import ParticleText from "@/components/ui/ParticleText";
 
 interface QuickLink {
   label: string;

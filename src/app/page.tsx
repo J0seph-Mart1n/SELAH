@@ -5,22 +5,17 @@ import React from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import { SparklesText } from "@/components/ui/sparkles-text"
-import {
-  Navbar,
-  NavBody,
-  NavItems,
-} from "@/components/ui/resizable-navbar";
-import StaggeredMenu from "@/components/StaggeredMenu";
-import Silk from "@/components/Silk";
+import { SparklesText } from "@/components/ui/sparkles-text";
+import Navbar from "@/components/web/Navbar";
+import Silk from "@/components/ui/Silk";
 import { MorphingText } from "@/components/ui/morphing-text";
-import BorderGlow from "@/components/BorderGlow";
-import ScrollVelocity from "@/components/ScrollVelocity";
-import MagicBento from "@/components/MagicBento";
-import AnimatedContent from "@/components/AnimatedContent";
-import Counter from "@/components/Counter";
-import ThemeMusicPlayer from "@/components/ThemeMusicPlayer";
-import Footer from "@/components/Footer";
+import BorderGlow from "@/components/ui/BorderGlow";
+import ScrollVelocity from "@/components/ui/ScrollVelocity";
+import MagicBento from "@/components/ui/MagicBento";
+import AnimatedContent from "@/components/ui/AnimatedContent";
+import Counter from "@/components/ui/Counter";
+import ThemeMusicPlayer from "@/components/web/ThemeMusicPlayer";
+import Footer from "@/components/web/Footer";
 import {
   ArrowRight,
   Check,
@@ -351,7 +346,6 @@ function App() {
       hasEnteredSession ||
       (typeof window !== "undefined" &&
         (sessionStorage.getItem("selah_has_entered") === "true" ||
-          document.cookie.indexOf("selah_has_entered=1") !== -1 ||
           document.documentElement.classList.contains("selah-entered")))
     ) {
       setHasEntered(true);
@@ -364,7 +358,6 @@ function App() {
     hasEnteredSession = true;
     if (typeof window !== "undefined") {
       sessionStorage.setItem("selah_has_entered", "true");
-      document.cookie = "selah_has_entered=1; path=/; SameSite=Lax";
       document.documentElement.classList.add("selah-entered");
     }
   };
@@ -443,71 +436,7 @@ function App() {
         transition={{ duration: 0.9, ease: [0.16, 1, 0.3, 1] }}
         className="w-full flex flex-col min-h-screen"
       >
-          <Navbar className="selah-rnav">
-            <NavBody>
-          <a
-            className="brand relative z-20 flex items-center gap-2.5 transition-all duration-300 group-data-[shrunk=true]:gap-0"
-            href="#top"
-            aria-label="SELAH 2026 home"
-            style={{ textDecoration: "none" }}
-          >
-            <Image
-              src="/top_page/Selah_Logo.png"
-              alt="SELAH 2026 Logo"
-              width={40}
-              height={40}
-              priority
-              className="w-9 h-9 md:w-10 md:h-10 rounded-full object-contain shrink-0 transition-transform duration-200 hover:scale-105"
-            />
-            <div className="transition-all duration-300 group-data-[shrunk=true]:w-0 group-data-[shrunk=true]:opacity-0 overflow-hidden whitespace-nowrap">
-              <strong className="text-2xl text-[#fff1cb]">
-                SELAH <span className="text-[#63752e]">2026</span>
-              </strong>
-            </div>
-          </a>
-          <NavItems
-            items={[
-              { name: "Register", link: "/register" },
-              { name: "Rules", link: "/rules" },
-              { name: "Core Team", link: "/about-cya" },
-              { name: "Gallery", link: "/gallery" },
-            ]}
-          />
-        </NavBody>
-      </Navbar>
-
-      <div className="relative z-50 lg:hidden selah-smenu">
-        <StaggeredMenu
-          isFixed={true}
-          logo={
-            <div className="brand relative z-20 flex items-center">
-              <a href="#top" aria-label="SELAH 2026 home" className="flex items-center gap-2.5" style={{ textDecoration: 'none' }}>
-                <Image
-                  src="/top_page/Selah_Logo.png"
-                  alt="SELAH 2026 Logo"
-                  width={34}
-                  height={34}
-                  priority
-                  className="w-8 h-8 md:w-9 md:h-9 rounded-full object-contain shrink-0"
-                />
-                <strong className="text-2xl text-[#fff1cb]">
-                  SELAH <span className="text-[#63752e]">2026</span>
-                </strong>
-              </a>
-            </div>
-          }
-          items={[
-            { label: "Register", link: "/register" },
-            { label: "Rules", link: "/rules" },
-            { label: "Core Team", link: "/about-cya" },
-            { label: "Gallery", link: "/gallery" },
-          ] as any}
-          colors={['#611e3c', '#63752e', '#fff1cb', '#611e3c']}
-          accentColor="#63752e"
-          menuButtonColor="#fff1cb"
-          openMenuButtonColor="#fff1cb"
-        />
-      </div>
+        <Navbar hideHome />
 
       <main id="top" className="!pt-0">
         <div className="relative w-full overflow-hidden">

@@ -55,7 +55,6 @@ export default function ThemeMusicPlayer({
   const handleEnter = (withSound: boolean = true) => {
     if (typeof window !== "undefined") {
       sessionStorage.setItem("selah_has_entered", "true");
-      document.cookie = "selah_has_entered=1; path=/; SameSite=Lax";
       document.documentElement.classList.add("selah-entered");
     }
 
