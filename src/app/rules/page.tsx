@@ -518,9 +518,6 @@ export default function RulesPage() {
                                               style={{ width: `${crit.weight}%` }}
                                             />
                                           </div>
-                                          <p className="text-[11px] text-[#611e3c]/75 leading-normal">
-                                            {crit.description}
-                                          </p>
                                         </div>
                                       ))}
                                     </div>

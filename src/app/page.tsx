@@ -728,12 +728,18 @@ function App() {
               )}
 
               <div className="mt-16 text-center">
-                <button className="relative inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-[#fff1cb]/40">
+                <a
+                  href="https://forms.gle/7W1qgAMWSL1w7K3o8"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="relative inline-flex h-12 overflow-hidden rounded-full p-[1px] focus:outline-none focus:ring-2 focus:ring-[#fff1cb]/40 group"
+                  aria-label="Become a Sponsor (Opens in a new tab)"
+                >
                   <span className="absolute inset-[-1000%] animate-[spin_2s_linear_infinite] bg-[conic-gradient(from_90deg_at_50%_50%,#fff1cb_0%,#63752e_50%,#fff1cb_100%)]" />
-                  <span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-[#611e3c] px-5 py-1 text-sm font-bold text-[#fff1cb] backdrop-blur-3xl hover:bg-[#63752e] transition-colors">
+                  <span className="inline-flex h-full w-full cursor-pointer items-center justify-center rounded-full bg-[#611e3c] px-5 py-1 text-sm font-bold text-[#fff1cb] backdrop-blur-3xl group-hover:bg-[#63752e] transition-colors">
                     Become a Sponsor
                   </span>
-                </button>
+                </a>
               </div>
             </div>
           </AnimatedContent>
