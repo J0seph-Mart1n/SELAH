@@ -280,7 +280,7 @@
   position: relative;
   color: #fff1cb;
   font-weight: 600;
-  font-size: 3.5rem;
+  font-size: 3rem;
   cursor: pointer;
   line-height: 1;
   letter-spacing: -2px;
@@ -290,7 +290,7 @@
     color 0.25s;
   display: inline-block;
   text-decoration: none;
-  padding-right: 1.4em;
+  padding-right: 1.7em;
 }
 
 .staggered-menu-panel .sm-socials-list .sm-socials-link {

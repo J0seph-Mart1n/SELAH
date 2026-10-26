@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
@@ -40,6 +40,9 @@ import {
   ChevronDown,
   Upload,
   Info,
+  HelpCircle,
+  Building2,
+  ExternalLink,
 } from "lucide-react";
 
 interface ParishDetails {
@@ -84,6 +87,7 @@ export default function RegisterPage() {
   const [isSubmitting, setIsSubmitting] = useState<boolean>(false);
   const [submissionError, setSubmissionError] = useState<string | null>(null);
   const [submissionSuccess, setSubmissionSuccess] = useState<any | null>(null);
+  const [showConfirmModal, setShowConfirmModal] = useState<boolean>(false);
 
   // Toggle an event participation
   const toggleEvent = (event: RegistrationEventConfig) => {
@@ -374,10 +378,35 @@ export default function RegisterPage() {
     return { valid: true };
   };
 
+  // Smooth scroll helper to bring the error banner into clear view
+  const scrollToError = () => {
+    setTimeout(() => {
+      const errorEl = document.getElementById("registration-error-banner");
+      if (errorEl) {
+        errorEl.scrollIntoView({ behavior: "smooth", block: "center" });
+      } else {
+        const stepperEl = document.getElementById("registration-stepper-container");
+        if (stepperEl) {
+          stepperEl.scrollIntoView({ behavior: "smooth", block: "start" });
+        } else {
+          window.scrollTo({ top: 320, behavior: "smooth" });
+        }
+      }
+    }, 60);
+  };
+
+  // Automatically scroll up whenever a submission error message is set
+  useEffect(() => {
+    if (submissionError) {
+      scrollToError();
+    }
+  }, [submissionError]);
+
   const handleNextStep = () => {
     const result = validateStep(currentStep);
     if (!result.valid) {
       setSubmissionError(result.error || "Please resolve validation errors before continuing.");
+      scrollToError();
       return;
     }
     setSubmissionError(null);
@@ -402,6 +431,7 @@ export default function RegisterPage() {
       const check = validateStep(s);
       if (!check.valid) {
         setSubmissionError(check.error || `Please complete Step ${s} before continuing.`);
+        scrollToError();
         return;
       }
     }
@@ -410,8 +440,19 @@ export default function RegisterPage() {
     window.scrollTo({ top: 320, behavior: "smooth" });
   };
 
-  // Submit form handler
-  const handleSubmitRegistration = async (e: React.FormEvent) => {
+  // Close confirmation modal on Escape key
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && showConfirmModal && !isSubmitting) {
+        setShowConfirmModal(false);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [showConfirmModal, isSubmitting]);
+
+  // Submit form handler: validates all steps and prompts confirmation overlay
+  const handleSubmitRegistration = (e: React.FormEvent) => {
     e.preventDefault();
     setSubmissionError(null);
 
@@ -419,6 +460,7 @@ export default function RegisterPage() {
     if (!step1Check.valid) {
       setCurrentStep(1);
       setSubmissionError(step1Check.error || "Please check Parish details.");
+      scrollToError();
       return;
     }
 
@@ -426,6 +468,7 @@ export default function RegisterPage() {
     if (!step2Check.valid) {
       setCurrentStep(2);
       setSubmissionError(step2Check.error || "Please check Sports participants.");
+      scrollToError();
       return;
     }
 
@@ -433,16 +476,25 @@ export default function RegisterPage() {
     if (!step3Check.valid) {
       setCurrentStep(3);
       setSubmissionError(step3Check.error || "Please check Cultural participants.");
+      scrollToError();
       return;
     }
 
     const step4Check = validateStep(4);
     if (!step4Check.valid) {
       setSubmissionError(step4Check.error || "Please check payment information.");
+      scrollToError();
       return;
     }
 
+    // All validation passed: display confirmation modal
+    setShowConfirmModal(true);
+  };
+
+  // Called when user clicks "Ok" in the confirmation overlay
+  const handleConfirmSubmit = async () => {
     setIsSubmitting(true);
+    setSubmissionError(null);
 
     try {
       // Build clean payload with only enabled events
@@ -494,11 +546,14 @@ export default function RegisterPage() {
         ...data,
         detailedRegistrations: cleanRegistrations,
       });
+      setShowConfirmModal(false);
       setCurrentStep(5); // Confirmation screen
       window.scrollTo({ top: 0, behavior: "smooth" });
     } catch (err: any) {
       console.error(err);
+      setShowConfirmModal(false);
       setSubmissionError(err.message || "An unexpected error occurred. Please try again.");
+      scrollToError();
     } finally {
       setIsSubmitting(false);
     }
@@ -530,72 +585,76 @@ export default function RegisterPage() {
     <div className="min-h-screen flex flex-col bg-[#611e3c] text-[#fff1cb] relative overflow-x-hidden selection:bg-[#63752e] selection:text-[#fff1cb]">
 
       {/* Ambient background glows */}
-      <div className="fixed top-1/4 left-1/4 w-96 h-96 bg-[#63752e]/20 rounded-full blur-[140px] pointer-events-none z-0" />
-      <div className="fixed bottom-1/3 right-1/4 w-96 h-96 bg-[#fff1cb]/10 rounded-full blur-[150px] pointer-events-none z-0" />
+      <div className="fixed top-1/4 left-1/4 w-96 h-96 bg-[#63752e]/20 rounded-full blur-[140px] pointer-events-none z-0 print:hidden" />
+      <div className="fixed bottom-1/3 right-1/4 w-96 h-96 bg-[#fff1cb]/10 rounded-full blur-[150px] pointer-events-none z-0 print:hidden" />
 
-      <Navbar />
-
+      {/* Navbar (hidden on print) */}
+      <div className="print:hidden">
+        <Navbar />
+      </div>
 
       {/* Main Content Area */}
-      <main className="relative z-10 flex-1 flex flex-col items-center px-3 sm:px-4 pt-24 sm:pt-28 pb-32 sm:pb-24 max-w-6xl mx-auto w-full">
-        {/* Header Hero Section */}
-        <div className="w-full text-center mb-10 pt-6 sm:pt-10">
-          <h1 className="text-3xl md:text-5xl font-bold tracking-tight text-[#fff1cb] mb-8 pb-5 sm:mb-10">
-            Registration Form
-          </h1>
+      <main className="relative z-10 flex-1 flex flex-col items-center px-3 sm:px-4 pt-24 sm:pt-28 pb-32 sm:pb-24 max-w-6xl mx-auto w-full print:p-4 print:pt-4 print:pb-4 print:max-w-none print:w-full print:bg-[#611e3c]">
+        {/* Header Hero Section (hidden on Step 5 and during print) */}
+        {currentStep < 5 && (
+          <div className="w-full text-center mb-10 pt-6 sm:pt-10 print:hidden">
+            <h1 className="text-3xl md:text-5xl font-bold tracking-tight text-[#fff1cb] mb-8 pb-5 sm:mb-10">
+              Registration Form
+            </h1>
 
-          {/* Event Quick Meta Card */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 max-w-4xl mx-auto text-left mb-6">
-            <div className="flex items-center gap-3 p-4 rounded-2xl bg-[#4a162d]/60 border border-[#fff1cb]/15 backdrop-blur-md shadow-md">
-              <Calendar className="w-5 h-5 text-[#63752e] shrink-0" />
-              <div>
-                <div className="text-xs text-[#fff1cb]/60 font-medium">Event Date</div>
-                <div className="text-sm font-semibold text-[#fff1cb]">5th December, 2026</div>
+            {/* Event Quick Meta Card */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 max-w-4xl mx-auto text-left mb-6">
+              <div className="flex items-center gap-3 p-4 rounded-2xl bg-[#4a162d]/60 border border-[#fff1cb]/15 backdrop-blur-md shadow-md">
+                <Calendar className="w-5 h-5 text-[#63752e] shrink-0" />
+                <div>
+                  <div className="text-xs text-[#fff1cb]/60 font-medium">Event Date</div>
+                  <div className="text-sm font-semibold text-[#fff1cb]">5th December, 2026</div>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-3 p-4 rounded-2xl bg-[#4a162d]/60 border border-[#fff1cb]/15 backdrop-blur-md shadow-md">
+                <Clock className="w-5 h-5 text-[#63752e] shrink-0" />
+                <div>
+                  <div className="text-xs text-[#fff1cb]/60 font-medium">Event Timing</div>
+                  <div className="text-sm font-semibold text-[#fff1cb]">8:00 AM – 9:00 PM</div>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-3 p-4 rounded-2xl bg-[#4a162d]/60 border border-[#fff1cb]/15 backdrop-blur-md sm:col-span-2 lg:col-span-1 shadow-md">
+                <MapPin className="w-5 h-5 text-[#63752e] shrink-0" />
+                <div>
+                  <div className="text-xs text-[#fff1cb]/60 font-medium">Venue Address</div>
+                  <div className="text-sm font-semibold text-[#fff1cb] truncate">Carmel Parish, Wadgaonsheri</div>
+                </div>
               </div>
             </div>
 
-            <div className="flex items-center gap-3 p-4 rounded-2xl bg-[#4a162d]/60 border border-[#fff1cb]/15 backdrop-blur-md shadow-md">
-              <Clock className="w-5 h-5 text-[#63752e] shrink-0" />
-              <div>
-                <div className="text-xs text-[#fff1cb]/60 font-medium">Event Timing</div>
-                <div className="text-sm font-semibold text-[#fff1cb]">8:00 AM – 9:00 PM</div>
+            {/* Incharge Hotline Accordion / Badges */}
+            <div className="p-4 rounded-2xl bg-[#2d0c1b]/70 border border-[#63752e]/30 backdrop-blur-md max-w-4xl mx-auto shadow-md">
+              <div className="text-xs uppercase tracking-wider text-[#fff1cb]/70 font-semibold mb-2.5 flex items-center justify-center gap-2">
+                <Phone className="w-3.5 h-3.5 text-[#63752e]" />
+                For Any Queries, Contact Event Incharges:
               </div>
-            </div>
-
-            <div className="flex items-center gap-3 p-4 rounded-2xl bg-[#4a162d]/60 border border-[#fff1cb]/15 backdrop-blur-md sm:col-span-2 lg:col-span-1 shadow-md">
-              <MapPin className="w-5 h-5 text-[#63752e] shrink-0" />
-              <div>
-                <div className="text-xs text-[#fff1cb]/60 font-medium">Venue Address</div>
-                <div className="text-sm font-semibold text-[#fff1cb] truncate">Carmel Parish, Wadgaonsheri</div>
+              <div className="flex flex-wrap justify-center gap-2 md:gap-3 text-xs md:text-sm">
+                {CONTACT_INCHARGES.map((contact, idx) => (
+                  <a
+                    key={idx}
+                    href={`tel:${contact.rawPhone}`}
+                    className="px-3.5 py-1.5 rounded-xl bg-[#4a162d] hover:bg-[#63752e]/40 border border-[#fff1cb]/10 transition-colors flex items-center gap-1.5 text-[#fff1cb]/90 shadow-sm"
+                  >
+                    <span className="text-[#fff1cb]/60 font-medium">{contact.role}:</span>
+                    <span className="font-semibold text-[#fff1cb]">{contact.name}</span>
+                    <span className="text-[#fff1cb]/80">({contact.phone.replace("+91 ", "")})</span>
+                  </a>
+                ))}
               </div>
             </div>
           </div>
-
-          {/* Incharge Hotline Accordion / Badges */}
-          <div className="p-4 rounded-2xl bg-[#2d0c1b]/70 border border-[#63752e]/30 backdrop-blur-md max-w-4xl mx-auto shadow-md">
-            <div className="text-xs uppercase tracking-wider text-[#fff1cb]/70 font-semibold mb-2.5 flex items-center justify-center gap-2">
-              <Phone className="w-3.5 h-3.5 text-[#63752e]" />
-              For Any Queries, Contact Event Incharges:
-            </div>
-            <div className="flex flex-wrap justify-center gap-2 md:gap-3 text-xs md:text-sm">
-              {CONTACT_INCHARGES.map((contact, idx) => (
-                <a
-                  key={idx}
-                  href={`tel:${contact.rawPhone}`}
-                  className="px-3.5 py-1.5 rounded-xl bg-[#4a162d] hover:bg-[#63752e]/40 border border-[#fff1cb]/10 transition-colors flex items-center gap-1.5 text-[#fff1cb]/90 shadow-sm"
-                >
-                  <span className="text-[#fff1cb]/60 font-medium">{contact.role}:</span>
-                  <span className="font-semibold text-[#fff1cb]">{contact.name}</span>
-                  <span className="text-[#fff1cb]/80">({contact.phone.replace("+91 ", "")})</span>
-                </a>
-              ))}
-            </div>
-          </div>
-        </div>
+        )}
 
         {/* Step Progression Bar (only show if not confirmed) */}
         {currentStep < 5 && (
-          <div className="w-full max-w-4xl mb-8 flex justify-center">
+          <div id="registration-stepper-container" className="w-full max-w-4xl mb-8 flex justify-center scroll-mt-28">
             <Stepper
               step={currentStep}
               onStepChange={handleStepProgression}
@@ -635,10 +694,12 @@ export default function RegisterPage() {
         <AnimatePresence>
           {submissionError && (
             <motion.div
+              id="registration-error-banner"
+              tabIndex={-1}
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: -10 }}
-              className="w-full max-w-4xl mb-6 p-4 rounded-2xl bg-red-950/80 border border-red-500/50 text-red-200 text-sm flex items-start gap-3 backdrop-blur-md shadow-lg"
+              className="w-full max-w-4xl mb-6 p-4 rounded-2xl bg-red-950/80 border border-red-500/50 text-red-200 text-sm flex items-start gap-3 backdrop-blur-md shadow-lg scroll-mt-28 outline-none"
             >
               <AlertCircle className="w-5 h-5 text-red-400 shrink-0 mt-0.5" />
               <div className="flex-1">
@@ -1155,144 +1216,321 @@ export default function RegisterPage() {
           </motion.div>
         )}
 
-        {/* Step 5: Submission Success Confirmation & Printable Receipt */}
+        {/* Step 5: Submission Success Confirmation & Printable Official Registration Slip */}
         {currentStep === 5 && submissionSuccess && (
           <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
+            initial={{ opacity: 0, scale: 0.98 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="w-full max-w-4xl"
+            className="w-full max-w-4xl print:max-w-none print:w-full"
           >
-            <div className="p-8 md:p-10 rounded-3xl bg-[#4a162d]/90 border border-[#63752e] backdrop-blur-2xl shadow-2xl space-y-8 print:bg-white print:text-black">
-              {/* Top Banner */}
-              <div className="text-center space-y-3 pb-6 border-b border-[#fff1cb]/15">
-                <div className="w-16 h-16 rounded-full bg-[#63752e]/30 border-2 border-[#63752e] text-[#fff1cb] flex items-center justify-center mx-auto shadow-lg">
-                  <CheckCircle2 className="w-10 h-10 text-green-400" />
+            {/* Screen Success Notice (Screen Only) */}
+            <div className="mb-6 mt-4 p-4 sm:p-5 rounded-2xl bg-[#63752e]/25 border border-[#63752e]/50 backdrop-blur-md flex flex-col sm:flex-row items-center justify-between gap-4 print:hidden shadow-lg">
+              <div className="flex items-center gap-3.5">
+                <div className="w-11 h-11 rounded-2xl bg-[#63752e] text-[#fff1cb] flex items-center justify-center shrink-0 shadow-md">
+                  <CheckCircle2 className="w-6 h-6" />
                 </div>
-                <h2 className="text-2xl md:text-4xl font-extrabold text-[#fff1cb]">
-                  Registration Successfully Submitted!
-                </h2>
+                <div>
+                  <h2 className="text-base sm:text-lg font-bold text-[#fff1cb]">
+                    Registration Successfully Confirmed & Locked!
+                  </h2>
+                  <p className="text-xs text-[#fff1cb]/80">
+                    Your official registration slip has been generated. Please print or save a copy for event day verification.
+                  </p>
+                </div>
               </div>
+              <button
+                type="button"
+                onClick={() => window.print()}
+                className="w-full sm:w-auto px-5 py-2.5 rounded-xl bg-[#fff1cb] hover:bg-white text-[#2d0c1b] font-bold text-xs sm:text-sm flex items-center justify-center gap-2 transition-all shadow-md shrink-0 cursor-pointer"
+              >
+                <Printer className="w-4 h-4 text-[#63752e]" />
+                <span>Print / Save PDF</span>
+              </button>
+            </div>
 
-              {/* Receipt Details Grid */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 text-xs md:text-sm">
-                <div className="p-4 rounded-2xl bg-[#2d0c1b]/70 border border-[#fff1cb]/10 shadow-sm">
-                  <div className="text-[#fff1cb]/50 text-[11px] uppercase">Parish Name</div>
-                  <div className="font-semibold text-[#fff1cb] text-sm">{parishDetails.parishName}</div>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-[#2d0c1b]/70 border border-[#fff1cb]/10 shadow-sm">
-                  <div className="text-[#fff1cb]/50 text-[11px] uppercase">Representative</div>
-                  <div className="font-semibold text-[#fff1cb] text-sm">{parishDetails.representativeName}</div>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-[#2d0c1b]/70 border border-[#fff1cb]/10 shadow-sm">
-                  <div className="text-[#fff1cb]/50 text-[11px] uppercase">Contact Phone</div>
-                  <div className="font-semibold text-[#fff1cb] text-sm">{parishDetails.contactNumber}</div>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-[#2d0c1b]/70 border border-[#fff1cb]/10 shadow-sm">
-                  <div className="text-[#fff1cb]/50 text-[11px] uppercase">Registered Email</div>
-                  <div className="font-semibold text-[#fff1cb] text-sm">{parishDetails.email}</div>
-                </div>
-
-                <div className="p-4 rounded-2xl bg-[#2d0c1b]/70 border border-[#fff1cb]/10 shadow-sm">
-                  <div className="text-[#fff1cb]/50 text-[11px] uppercase">Events Registered</div>
-                  <div className="font-semibold text-[#fff1cb] text-sm">
-                    {feeSummary.totalEvents} {feeSummary.totalEvents === 1 ? "Event" : "Events"}
+            {/* Official Registration Slip Document */}
+            <div
+              id="registration-slip-document"
+              className="print-slip-container p-6 sm:p-10 rounded-3xl bg-[#361021] border-2 border-[#63752e] backdrop-blur-2xl shadow-2xl text-[#fff1cb] space-y-8 print:p-6 sm:print:p-8 print:border-2 print:border-[#63752e] print:bg-[#361021] print:text-[#fff1cb] print:shadow-none"
+            >
+              {/* Slip Official Header */}
+              <div className="pb-6 border-b-2 border-[#fff1cb]/15 flex flex-col md:flex-row items-center md:items-start justify-between gap-6 text-center md:text-left">
+                <div className="flex flex-col sm:flex-row items-center gap-4">
+                  <div className="relative w-16 h-16 sm:w-20 sm:h-20 shrink-0 rounded-2xl bg-[#200612]/60 p-1.5 border border-[#fff1cb]/20">
+                    <Image
+                      src="/top_page/Selah_Logo_BG.png"
+                      alt="SELAH 2026 Logo"
+                      width={80}
+                      height={80}
+                      className="object-contain w-full h-full"
+                    />
+                  </div>
+                  <div>
+                    <h1 className="text-2xl sm:text-3xl font-extrabold tracking-tight text-[#fff1cb]">
+                      SELAH 2026
+                    </h1>
+                    <p className="text-xs sm:text-sm font-medium text-[#fff1cb]/80">
+                      Inter-Church Youth Cultural & Sports Festival
+                    </p>
+                    <p className="text-[11px] text-[#fff1cb]/60">
+                      Carmel Parish, Wadgaonsheri, Pune • Organised by Carmel Youth Association (CYA)
+                    </p>
                   </div>
                 </div>
 
-                <div className="p-4 rounded-2xl bg-[#2d0c1b]/70 border border-[#fff1cb]/10 shadow-sm">
-                  <div className="text-[#fff1cb]/50 text-[11px] uppercase">Total Fee Paid</div>
-                  <div className="font-mono font-bold text-base text-[#63752e] bg-[#fff1cb] px-2.5 py-0.5 rounded-xl inline-block mt-0.5">
-                    ₹{feeSummary.grandTotal}
+                {/* Slip Meta Box (ID, Date, Status) */}
+                <div className="flex flex-col items-center md:items-end justify-center shrink-0">
+                  <div className="text-[11px] uppercase tracking-wider text-[#fff1cb]/60 mb-0.5 font-semibold">
+                    Registration ID / Pass #
+                  </div>
+                  <div className="font-mono font-bold text-sm sm:text-base px-3.5 py-1.5 rounded-xl bg-[#200612] text-[#fff1cb] border border-[#63752e]/60 shadow-inner">
+                    {submissionSuccess.registrationId || "SELAH26-CONFIRMED"}
+                  </div>
+                  <div className="mt-2 text-[11px] text-[#fff1cb]/70">
+                    Issued: <span className="font-semibold text-[#fff1cb]">{
+                      submissionSuccess.timestamp
+                        ? new Date(submissionSuccess.timestamp).toLocaleDateString("en-IN", {
+                            day: "numeric",
+                            month: "short",
+                            year: "numeric",
+                          }) + " • " +
+                          new Date(submissionSuccess.timestamp).toLocaleTimeString("en-IN", {
+                            hour: "2-digit",
+                            minute: "2-digit",
+                            hour12: true,
+                          })
+                        : new Date().toLocaleDateString("en-IN", {
+                            day: "numeric",
+                            month: "short",
+                            year: "numeric",
+                          })
+                    }</span>
+                  </div>
+
+                </div>
+              </div>
+
+              {/* Section 1: Parish & Delegate Information */}
+              <div className="print-avoid-break">
+                <div className="flex items-center gap-2 mb-3 text-xs sm:text-sm font-bold uppercase tracking-wider text-[#fff1cb]/80 border-b border-[#fff1cb]/10 pb-1.5">
+                  <Building2 className="w-4 h-4 text-[#63752e]" />
+                  <span>Section 1: Parish & Delegate Particulars</span>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3">
+                  <div className="p-3.5 rounded-2xl bg-[#200612]/70 border border-[#fff1cb]/15 shadow-sm">
+                    <div className="text-[11px] uppercase font-semibold text-[#fff1cb]/60 mb-0.5">Parish Name</div>
+                    <div className="font-bold text-sm text-[#fff1cb] break-words">{parishDetails.parishName || "—"}</div>
+                  </div>
+                  <div className="p-3.5 rounded-2xl bg-[#200612]/70 border border-[#fff1cb]/15 shadow-sm">
+                    <div className="text-[11px] uppercase font-semibold text-[#fff1cb]/60 mb-0.5">Authorized Representative</div>
+                    <div className="font-bold text-sm text-[#fff1cb] break-words">{parishDetails.representativeName || "—"}</div>
+                  </div>
+                  <div className="p-3.5 rounded-2xl bg-[#200612]/70 border border-[#fff1cb]/15 shadow-sm">
+                    <div className="text-[11px] uppercase font-semibold text-[#fff1cb]/60 mb-0.5">Contact Phone</div>
+                    <div className="font-bold text-sm text-[#fff1cb]">{parishDetails.contactNumber || "—"}</div>
+                  </div>
+                  <div className="p-3.5 rounded-2xl bg-[#200612]/70 border border-[#fff1cb]/15 shadow-sm">
+                    <div className="text-[11px] uppercase font-semibold text-[#fff1cb]/60 mb-0.5">Registered Email</div>
+                    <div className="font-bold text-sm text-[#fff1cb] truncate" title={parishDetails.email}>{parishDetails.email || "—"}</div>
                   </div>
                 </div>
               </div>
 
-              {/* Squads Registered Breakdown Table */}
+              {/* Section 2: Participation & Financial Summary */}
+              <div className="print-avoid-break">
+                <div className="flex items-center gap-2 mb-3 text-xs sm:text-sm font-bold uppercase tracking-wider text-[#fff1cb]/80 border-b border-[#fff1cb]/10 pb-1.5">
+                  <CreditCard className="w-4 h-4 text-[#63752e]" />
+                  <span>Section 2: Participation & Fee Acknowledgement</span>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                  <div className="p-3.5 rounded-2xl bg-[#200612]/70 border border-[#fff1cb]/15 shadow-sm flex items-center justify-between">
+                    <div>
+                      <div className="text-[11px] uppercase font-semibold text-[#fff1cb]/60">Events Registered</div>
+                      <div className="text-sm sm:text-base font-extrabold text-[#fff1cb]">
+                        {feeSummary.totalEvents} {feeSummary.totalEvents === 1 ? "Event" : "Events"}
+                      </div>
+                      <div className="text-[10px] text-[#fff1cb]/60">
+                        {feeSummary.groupCount} Group, {feeSummary.individualParticipantsCount} Individual
+                      </div>
+                    </div>
+                    <div className="w-9 h-9 rounded-xl bg-[#63752e]/30 flex items-center justify-center text-[#fff1cb]">
+                      <Trophy className="w-4 h-4" />
+                    </div>
+                  </div>
+
+                  <div className="p-3.5 rounded-2xl bg-[#200612]/70 border border-[#fff1cb]/15 shadow-sm flex items-center justify-between">
+                    <div>
+                      <div className="text-[11px] uppercase font-semibold text-[#fff1cb]/60">Total Squad Members</div>
+                      <div className="text-sm sm:text-base font-extrabold text-[#fff1cb]">
+                        {Object.values(submissionSuccess.detailedRegistrations || {}).reduce(
+                          (acc: number, item: any) => acc + (item.participants?.length || 0),
+                          0
+                        )} Member(s)
+                      </div>
+                      <div className="text-[10px] text-[#fff1cb]/60">
+                        Across all sports & cultural squads
+                      </div>
+                    </div>
+                    <div className="w-9 h-9 rounded-xl bg-[#63752e]/30 flex items-center justify-center text-[#fff1cb]">
+                      <Users className="w-4 h-4" />
+                    </div>
+                  </div>
+
+                  <div className="p-3.5 rounded-2xl bg-[#200612]/70 border border-[#63752e]/50 shadow-sm flex items-center justify-between">
+                    <div>
+                      <div className="text-[11px] uppercase font-semibold text-[#fff1cb]/60">Total Registration Fee</div>
+                      <div className="font-mono text-base sm:text-lg font-black text-[#fff1cb]">
+                        ₹{feeSummary.grandTotal}
+                      </div>
+                    </div>
+                    <div className="px-2.5 py-1 rounded-xl bg-[#63752e] text-[#fff1cb] font-mono text-xs font-bold shadow-sm">
+                      RECEIPTED
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Section 3: Registered Events & Squad Rosters */}
               <div>
-                <h3 className="text-base font-bold text-[#fff1cb] mb-3 flex items-center gap-2">
+                <div className="flex items-center gap-2 mb-3 text-xs sm:text-sm font-bold uppercase tracking-wider text-[#fff1cb]/80 border-b border-[#fff1cb]/10 pb-1.5">
                   <Users className="w-4 h-4 text-[#63752e]" />
-                  Registered Events & Squad Rosters
-                </h3>
+                  <span>Section 3: Events & Squad Rosters</span>
+                </div>
+
                 <div className="space-y-4">
-                  {Object.entries(submissionSuccess.detailedRegistrations || {}).map(([eventId, data]: [string, any]) => (
+                  {Object.entries(submissionSuccess.detailedRegistrations || {}).map(([eventId, data]: [string, any], eIdx: number) => (
                     <div
                       key={eventId}
-                      className="p-5 rounded-2xl bg-[#2d0c1b]/80 border border-[#fff1cb]/15 overflow-x-auto shadow-md"
+                      className="print-avoid-break rounded-2xl bg-[#200612]/70 border border-[#fff1cb]/15 overflow-hidden shadow-sm"
                     >
-                      <div className="flex items-center justify-between mb-2.5">
-                        <span className="font-bold text-sm text-[#fff1cb]">{data.title}</span>
-                        <span className="text-xs font-mono text-[#fff1cb] bg-[#fff1cb]/10 px-2 py-0.5 rounded-lg">₹{data.fee}</span>
+                      {/* Event Header Banner */}
+                      <div className="p-3 sm:p-4 bg-[#2d0c1b] border-b border-[#fff1cb]/15 flex flex-wrap items-center justify-between gap-2">
+                        <div className="flex items-center gap-2 flex-wrap">
+                          <span className="w-6 h-6 rounded-lg bg-[#63752e] text-[#fff1cb] font-bold text-xs flex items-center justify-center shrink-0">
+                            {eIdx + 1}
+                          </span>
+                          <span className="font-bold text-sm sm:text-base text-[#fff1cb]">
+                            {data.title}
+                          </span>
+                          <span className="px-2 py-0.5 rounded-full text-[10px] font-semibold bg-[#fff1cb]/10 text-[#fff1cb]/80 border border-[#fff1cb]/15">
+                            {data.category === "sports" ? "Sports" : "Cultural"}
+                          </span>
+                          <span className="hidden sm:inline px-2 py-0.5 rounded-full text-[10px] font-semibold bg-[#fff1cb]/10 text-[#fff1cb]/80 border border-[#fff1cb]/15">
+                            {data.type === "group" ? "Group Event" : "Individual Entry"}
+                          </span>
+                        </div>
+                        <div className="font-mono font-bold text-xs sm:text-sm text-[#fff1cb] bg-[#63752e]/30 px-2.5 py-0.5 rounded-lg border border-[#63752e]/40">
+                          Fee: ₹{data.fee}
+                        </div>
                       </div>
-                      <table className="w-full text-xs text-left">
-                        <thead>
-                          <tr className="border-b border-[#fff1cb]/15 text-[#fff1cb]/60">
-                            <th className="py-1 px-2">#</th>
-                            <th className="py-1 px-2">Participant Name</th>
-                            <th className="py-1 px-2">Gender</th>
-                            <th className="py-1 px-2">Role</th>
-                            {data.participants.some((p: any) => p.notes) && (
-                              <th className="py-1 px-2">Notes</th>
-                            )}
-                          </tr>
-                        </thead>
-                        <tbody>
-                          {data.participants.map((p: Participant, pIdx: number) => (
-                            <tr key={p.id} className="border-b border-[#fff1cb]/5">
-                              <td className="py-1.5 px-2 text-[#fff1cb]/50">{pIdx + 1}</td>
-                              <td className="py-1.5 px-2 font-semibold text-[#fff1cb]">{p.name}</td>
-                              <td className="py-1.5 px-2 text-[#fff1cb]/80">{p.gender || "—"}</td>
-                              <td className="py-1.5 px-2 text-[#fff1cb]/80">
-                                <span
-                                  className={`px-2 py-0.5 rounded-full text-[10px] ${
-                                    p.role === "Captain"
-                                      ? "bg-amber-500/30 text-amber-300 font-bold"
-                                      : "bg-[#4a162d] text-[#fff1cb]/70"
-                                  }`}
-                                >
-                                  {p.role}
-                                </span>
-                              </td>
-                              {data.participants.some((pItem: any) => pItem.notes) && (
-                                <td className="py-1.5 px-2 text-[#fff1cb]/60">{p.notes || "—"}</td>
+
+                      {/* Squad Table */}
+                      <div className="overflow-x-auto">
+                        <table className="w-full text-xs text-left">
+                          <thead>
+                            <tr className="bg-[#18040d]/60 border-b border-[#fff1cb]/10 text-[#fff1cb]/70">
+                              <th className="py-2 px-3 w-10 text-center font-bold">#</th>
+                              <th className="py-2 px-3 font-bold">Participant Full Name</th>
+                              <th className="py-2 px-3 font-bold">Gender</th>
+                              <th className="py-2 px-3 font-bold">Squad Designation</th>
+                              {data.participants.some((p: any) => p.notes) && (
+                                <th className="py-2 px-3 font-bold">Specific Notes</th>
                               )}
                             </tr>
-                          ))}
-                        </tbody>
-                      </table>
+                          </thead>
+                          <tbody className="divide-y divide-[#fff1cb]/5">
+                            {data.participants.map((p: Participant, pIdx: number) => (
+                              <tr
+                                key={p.id || pIdx}
+                                className="hover:bg-[#fff1cb]/5 text-[#fff1cb] transition-colors"
+                              >
+                                <td className="py-2 px-3 text-center text-[#fff1cb]/50 font-medium">
+                                  {pIdx + 1}
+                                </td>
+                                <td className="py-2 px-3 font-semibold text-[#fff1cb]">
+                                  {p.name}
+                                </td>
+                                <td className="py-2 px-3 text-[#fff1cb]/80">
+                                  {p.gender || "—"}
+                                </td>
+                                <td className="py-2 px-3">
+                                  <span
+                                    className={`px-2 py-0.5 rounded-md text-[10px] font-semibold tracking-wide ${
+                                      p.role === "Captain"
+                                        ? "bg-amber-500/25 text-amber-200 border border-amber-500/40"
+                                        : p.role === "Vice-Captain"
+                                        ? "bg-blue-500/25 text-blue-200 border border-blue-500/40"
+                                        : "bg-[#fff1cb]/10 text-[#fff1cb]/80 border border-[#fff1cb]/10"
+                                    }`}
+                                  >
+                                    {p.role || "Squad Member"}
+                                  </span>
+                                </td>
+                                {data.participants.some((pItem: any) => pItem.notes) && (
+                                  <td className="py-2 px-3 text-[#fff1cb]/60">
+                                    {p.notes || "—"}
+                                  </td>
+                                )}
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
+                      </div>
                     </div>
                   ))}
                 </div>
               </div>
 
-              {/* Actions: Print & Back */}
+              {/* Section 4: Event Day Reporting & Festival Guidelines */}
+              <div className="print-avoid-break p-4 sm:p-5 rounded-2xl bg-[#200612]/70 border border-[#fff1cb]/15 text-xs text-[#fff1cb]/85 space-y-2">
+                <div className="font-bold text-xs sm:text-sm uppercase tracking-wider text-[#fff1cb] flex items-center gap-2 mb-2">
+                  <ShieldAlert className="w-4 h-4 text-[#63752e]" />
+                  <span>Section 4: Important Festival Day Guidelines & Reporting Instructions</span>
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-2 sm:gap-3 text-xs leading-relaxed">
+                  <div className="flex items-start gap-2">
+                    <span className="font-bold text-[#63752e] shrink-0">•</span>
+                    <div>
+                      <strong className="text-[#fff1cb]">Reporting Time:</strong> All squads must report at <strong>8:00 AM sharp on Saturday, 5th December, 2026</strong> at the registration desk for verification and badge collection.
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <span className="font-bold text-[#63752e] shrink-0">•</span>
+                    <div>
+                      <strong className="text-[#fff1cb]">Venue Location:</strong> Carmel Parish Grounds & Hall, Wadgaonsheri, Pune - 411014.
+                    </div>
+                  </div>
+                  <div className="flex items-start gap-2">
+                    <span className="font-bold text-[#63752e] shrink-0">•</span>
+                    <div>
+                      <strong className="text-[#fff1cb]">Entry Verification:</strong> Present either a printed physical copy or saved digital PDF of this slip at the entry checkpoint.
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+              
+
+              {/* Actions: Print & Rules (Screen Only) */}
               <div className="flex flex-wrap items-center justify-between gap-4 pt-6 border-t border-[#fff1cb]/15 print:hidden">
                 <button
                   type="button"
                   onClick={() => window.print()}
-                  className="px-6 py-2.5 rounded-2xl bg-[#2d0c1b] hover:bg-[#1d0711] border border-[#fff1cb]/20 text-[#fff1cb] font-semibold text-sm flex items-center gap-2 transition-colors shadow-sm"
+                  className="px-6 sm:px-8 py-3 rounded-2xl bg-[#63752e] hover:bg-[#839c3d] text-[#fff1cb] font-bold text-sm sm:text-base flex items-center gap-2.5 transition-all shadow-xl hover:shadow-[#63752e]/50 cursor-pointer"
                 >
-                  <Printer className="w-4 h-4" />
-                  Print / Save Registration Slip
+                  <Printer className="w-5 h-5" />
+                  Print / Save Registration Slip (PDF)
                 </button>
 
                 <div className="flex items-center gap-3">
                   <Link
                     href="/rules"
-                    className="px-6 py-2.5 rounded-2xl bg-[#4a162d] hover:bg-[#63752e]/40 border border-[#fff1cb]/20 text-[#fff1cb] font-semibold text-sm transition-colors shadow-sm"
+                    className="px-6 py-2.5 rounded-2xl bg-[#2d0c1b] hover:bg-[#1d0711] border border-[#fff1cb]/20 text-[#fff1cb] font-semibold text-sm transition-colors shadow-sm flex items-center gap-1.5"
                   >
-                    Review Event Rules
+                    <span>Review Event Rules</span>
+                    <ExternalLink className="w-3.5 h-3.5 text-[#fff1cb]/60" />
                   </Link>
-
-                  <button
-                    type="button"
-                    onClick={handleResetForm}
-                    className="px-6 py-2.5 rounded-2xl bg-[#63752e] hover:bg-[#839c3d] text-[#fff1cb] font-bold text-sm transition-colors shadow-lg"
-                  >
-                    Register Another Parish
-                  </button>
                 </div>
               </div>
             </div>
@@ -1300,8 +1538,8 @@ export default function RegisterPage() {
         )}
       </main>
 
-      {/* Floating Summary Bar when configuring events (Step 2 & 3) */}
-      {(currentStep === 2 || currentStep === 3) && feeSummary.totalEvents > 0 && (
+      {/* Floating Summary Bar with Proceed to Pay button (only on Cultural Section - Step 3) */}
+      {currentStep === 3 && feeSummary.totalEvents > 0 && (
         <div className="fixed bottom-0 left-0 right-0 z-40 p-2.5 sm:p-3.5 bg-[#2d0c1b]/95 backdrop-blur-xl border-t border-[#63752e]/40 shadow-2xl">
           <div className="max-w-4xl mx-auto flex items-center justify-between gap-2 sm:gap-4">
             <div className="flex items-center gap-2 sm:gap-3 min-w-0">
@@ -1332,7 +1570,7 @@ export default function RegisterPage() {
                     if (!check.valid) {
                       setCurrentStep(s);
                       setSubmissionError(check.error || "Please check participants before proceeding.");
-                      window.scrollTo({ top: 320, behavior: "smooth" });
+                      scrollToError();
                       return;
                     }
                   }
@@ -1350,8 +1588,106 @@ export default function RegisterPage() {
         </div>
       )}
 
-      {/* Footer */}
-      <Footer />
+      {/* Submit Confirmation Overlay Modal */}
+      <AnimatePresence>
+        {showConfirmModal && (
+          <div
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/75 backdrop-blur-md"
+            onClick={(e) => {
+              if (e.target === e.currentTarget && !isSubmitting) {
+                setShowConfirmModal(false);
+              }
+            }}
+          >
+            <motion.div
+              role="dialog"
+              aria-modal="true"
+              aria-labelledby="confirm-modal-title"
+              initial={{ opacity: 0, scale: 0.95, y: 10 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 10 }}
+              transition={{ duration: 0.2 }}
+              className="w-full max-w-md p-6 sm:p-7 rounded-3xl bg-[#361021] border border-[#fff1cb]/20 text-[#fff1cb] shadow-2xl relative overflow-hidden"
+            >
+              {/* Decorative background glow */}
+              <div className="absolute -top-16 -right-16 w-36 h-36 bg-[#63752e]/30 rounded-full blur-2xl pointer-events-none" />
+              <div className="absolute -bottom-16 -left-16 w-36 h-36 bg-[#4a162d]/50 rounded-full blur-2xl pointer-events-none" />
+
+              <div className="relative z-10 flex flex-col items-center text-center">
+                <div className="w-14 h-14 rounded-2xl bg-[#63752e]/30 border border-[#63752e]/40 flex items-center justify-center text-[#fff1cb] mb-4 shadow-inner">
+                  <HelpCircle className="w-8 h-8 text-[#fff1cb]" />
+                </div>
+
+                <h3 id="confirm-modal-title" className="text-xl sm:text-2xl font-bold tracking-tight mb-2 text-[#fff1cb]">
+                  Are you sure to submit?
+                </h3>
+
+
+                {/* Brief summary breakdown inside modal */}
+                <div className="w-full p-4 rounded-2xl bg-[#200612]/70 border border-[#fff1cb]/10 text-left mt-4 mb-6 space-y-2 text-xs sm:text-sm">
+                  <div className="flex justify-between items-center">
+                    <span className="text-[#fff1cb]/60">Parish:</span>
+                    <span className="font-semibold text-[#fff1cb] truncate max-w-[200px]">
+                      {parishDetails.parishName}
+                    </span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-[#fff1cb]/60">Representative:</span>
+                    <span className="font-semibold text-[#fff1cb] truncate max-w-[200px]">
+                      {parishDetails.representativeName}
+                    </span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-[#fff1cb]/60">Total Events:</span>
+                    <span className="font-semibold text-[#fff1cb]">
+                      {feeSummary.totalEvents} Event{feeSummary.totalEvents !== 1 ? "s" : ""}
+                    </span>
+                  </div>
+                  <div className="flex justify-between items-center pt-2 border-t border-[#fff1cb]/15">
+                    <span className="text-[#fff1cb]/60 font-medium">Total Registration Fee:</span>
+                    <span className="font-mono font-bold text-sm text-[#63752e] bg-[#fff1cb] px-2 py-0.5 rounded-lg">
+                      ₹{feeSummary.grandTotal}
+                    </span>
+                  </div>
+                </div>
+
+                {/* Ok or Cancel Buttons */}
+                <div className="flex items-center justify-center gap-3 w-full">
+                  <button
+                    type="button"
+                    onClick={() => setShowConfirmModal(false)}
+                    disabled={isSubmitting}
+                    className="flex-1 py-3 px-4 rounded-xl sm:rounded-2xl bg-[#2d0c1b] hover:bg-[#1d0711] text-[#fff1cb]/80 hover:text-[#fff1cb] border border-[#fff1cb]/20 font-semibold text-sm transition-all shadow-sm disabled:opacity-50"
+                  >
+                    Cancel
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={handleConfirmSubmit}
+                    disabled={isSubmitting}
+                    className="flex-1 py-3 px-4 rounded-xl sm:rounded-2xl bg-[#63752e] hover:bg-[#839c3d] text-[#fff1cb] font-bold text-sm flex items-center justify-center gap-2 transition-all shadow-lg hover:shadow-[#63752e]/40 disabled:opacity-50"
+                  >
+                    {isSubmitting ? (
+                      <>
+                        <div className="w-4 h-4 border-2 border-[#fff1cb] border-t-transparent rounded-full animate-spin" />
+                        <span>Submitting...</span>
+                      </>
+                    ) : (
+                      <span>Ok</span>
+                    )}
+                  </button>
+                </div>
+              </div>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+
+      {/* Footer (hidden on print) */}
+      <div className="print:hidden">
+        <Footer />
+      </div>
     </div>
   );
 }
