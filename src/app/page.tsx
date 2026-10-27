@@ -30,7 +30,6 @@ import {
   ShieldCheck,
   Sparkles,
   Trophy,
-  UserRound,
   Users,
 } from "lucide-react";
 
@@ -325,7 +324,7 @@ const getEventTheme = (column: "cultural" | "sports" | "both") => {
 let hasEnteredSession = false;
 
 function App() {
-  const isChiefGuestFinalized = false;
+  const isChiefGuestFinalized = true;
   const showSponsors = false;
   const [track, setTrack] = useState<Track>("sports");
 
@@ -625,68 +624,65 @@ function App() {
           <AnimatedContent distance={60} duration={0.8} ease="power3.out" threshold={0.1}>
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="section-heading flex flex-col items-center text-center max-w-2xl mx-auto mb-16 px-4">
-                <h2 className="text-4xl md:text-5xl lg:text-6xl font-black mb-6 text-[#fff1cb] leading-tight">
+                <h2 className="text-4xl md:text-5xl font-black mb-6 text-[#fff1cb] leading-tight">
                   Special Chief Guest
                 </h2>
               </div>
 
-              {/* Chief Guest Feature Card */}
-              <div className="max-w-5xl mx-auto p-8 sm:p-12 rounded-[32px] bg-[#fff1cb] text-[#611e3c] border border-[#63752e]/30 shadow-2xl relative overflow-hidden backdrop-blur-sm">
+              {/* Chief Guest Feature Card (Matching Father Vicar's Card Layout) */}
+              <div className="max-w-5xl mx-auto bg-[#fff1cb] text-[#611e3c] rounded-[32px] shadow-[0_20px_50px_rgba(0,0,0,0.35)] border border-[#63752e]/30 relative overflow-hidden flex flex-col md:flex-row group">
+                {isChiefGuestFinalized ? (
+                  <>
+                    {/* Left Side - Full Height Image */}
+                    <div className="w-full md:w-5/12 aspect-[1461/2192] max-h-[520px] md:max-h-none md:aspect-auto md:h-auto min-h-[350px] relative flex-shrink-0 bg-[#161a23] flex items-center justify-center overflow-hidden">
+                      <img 
+                        src="/top_page/Sijoy_Varghese.jpg"
+                        alt="Mr. Sijoy Varghese" 
+                        className="w-full h-full object-contain object-center"
+                      />
+                    </div>
 
-                <div className="relative grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+                    {/* Right Side - Dignitary Details & Name Title */}
+                    <div className="w-full md:w-7/12 p-8 md:p-14 lg:p-16 flex flex-col justify-center relative">
+                      
 
-                  {isChiefGuestFinalized ? (
-                    <>
-                      {/* Avatar / Dignitary Portrait Placeholder */}
-                      <div className="lg:col-span-4 flex flex-col items-center text-center">
-                        <div className="relative">
-                          <div className="w-44 h-44 sm:w-52 sm:h-52 rounded-2xl bg-[#611e3c] p-1 shadow-[0_0_40px_rgba(99,117,46,0.25)]">
-                            <div className="w-full h-full rounded-2xl bg-[#611e3c] flex flex-col items-center justify-center p-4 text-center overflow-hidden relative">
-                              <UserRound className="text-[#fff1cb] mb-3" size={64} strokeWidth={1.5} />
-                              <span className="text-[10px] sm:text-xs font-bold text-[#fff1cb] uppercase tracking-widest">Metropolitan &amp; Archbishop</span>
-                            </div>
-                          </div>
-                        </div>
+                      <h3 className="text-2xl sm:text-3xl md:text-[34px] font-black text-[#611e3c] mb-2 leading-[1.25] tracking-tight">
+                        Mr. Sijoy Varghese
+                      </h3>
+
+                      <p className="text-xs sm:text-[18px] font-bold text-[#63752e] uppercase tracking-wider mb-10">
+                        Actor &amp; Director
+                      </p>
+
+                      <p className="text-[#611e3c]/90 text-base md:text-[21px] leading-relaxed mb-8 font-medium">
+                        From commanding the director’s chair behind iconic commercials to matching screen presence with South India’s biggest superstars, he is the definition of modern cinematic sophistication. Whether he is laying down the law as a no-nonsense police commissioner, mentoring hearts as the unforgettable Coach Zach in Bangalore Days, or adding gravitas to massive blockbusters like Lucifer and Thunivu, he brings an unmatched aura of elegance, authority, and artistic excellence to everything he touches.
+                      </p>
+                    </div>
+                  </>
+                ) : (
+                  <>
+                    {/* Left Side - To Be Revealed */}
+                    <div className="w-full md:w-5/12 h-[350px] sm:h-[400px] md:h-auto min-h-[350px] relative flex-shrink-0 bg-[#611e3c]/5 border-b md:border-b-0 md:border-r border-[#63752e]/20 flex flex-col items-center justify-center p-8 text-center">
+                      <div className="w-32 h-32 sm:w-36 sm:h-36 rounded-2xl border-2 border-dashed border-[#63752e]/40 flex flex-col items-center justify-center p-4">
+                        <ShieldCheck className="text-[#63752e] mb-3" size={56} strokeWidth={1.5} />
+                        <span className="text-[10px] sm:text-xs font-bold text-[#611e3c]/70 uppercase tracking-widest">To Be Revealed</span>
                       </div>
+                    </div>
 
-                      {/* Dignitary Bio & Keynote Details */}
-                      <div className="lg:col-span-8 flex flex-col">
-
-                        <h3 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#611e3c] mb-2 leading-tight text-center lg:text-left">
-                          Most Rev. Dr. Alexander Mor Baselios
-                        </h3>
-                        <div className="flex flex-wrap items-center justify-center lg:justify-start gap-3 mb-6">
-                          <span className="px-3 py-1 rounded-md bg-[#63752e] text-[#fff1cb] text-[10px] sm:text-xs font-bold uppercase tracking-widest">Chief Guest of Honor</span>
-                          <span className="px-3 py-1 rounded-md bg-[#611e3c] text-[#fff1cb] text-[10px] sm:text-xs font-bold uppercase tracking-widest">Olympic Ambassador</span>
-                        </div>
-
-                        <p className="text-[#611e3c]/85 text-sm md:text-base leading-relaxed mb-8 text-center lg:text-left font-medium">
-                          Dr. Alexander Mor Baselios has spearheaded ecumenical youth movements across four continents, championing character-driven athletics and liturgical renewal. Joining him on the dais is former Olympic sprinter and Christian Youth Ambassador <span className="text-[#611e3c] font-black">Marcus Vance</span>, leading the Opening Ceremony Dedication and Oath of Sportsmanship.
-                        </p>
-
+                    {/* Right Side - Revealing Soon Content */}
+                    <div className="w-full md:w-7/12 p-8 md:p-14 lg:p-16 flex flex-col justify-center relative">
+                      <div className="inline-block px-3 py-1 rounded-md bg-[#63752e]/20 text-[#63752e] text-xs font-bold uppercase tracking-widest mb-4 w-fit">
+                        Official Announcement
                       </div>
-                    </>
-                  ) : (
-                    <>
-                      <div className="lg:col-span-4 flex flex-col items-center text-center">
-                        <div className="relative">
-                          <div className="w-44 h-44 sm:w-52 sm:h-52 rounded-2xl bg-[#611e3c]/5 border-2 border-dashed border-[#63752e]/40 p-1 flex items-center justify-center shadow-lg">
-                            <div className="w-full h-full rounded-2xl bg-gradient-to-br from-[#63752e]/10 to-transparent flex flex-col items-center justify-center p-4 text-center">
-                              <ShieldCheck className="text-[#63752e] mb-3" size={64} strokeWidth={1.5} />
-                              <span className="text-[10px] sm:text-xs font-bold text-[#611e3c]/70 uppercase tracking-widest">To Be Revealed</span>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-
-                      <div className="lg:col-span-8 flex flex-col items-center lg:items-start text-center lg:text-left py-6">
-                        <h3 className="text-3xl sm:text-4xl lg:text-5xl font-black text-[#611e3c] mb-4 leading-tight">
-                          <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#611e3c] to-[#63752e]">Revealing Soon</span>
-                        </h3>
-                      </div>
-                    </>
-                  )}
-                </div>
+                      <h3 className="text-3xl sm:text-4xl font-black text-[#611e3c] mb-4 leading-tight">
+                        <span className="text-transparent bg-clip-text bg-gradient-to-r from-[#611e3c] to-[#63752e]">Special Chief Guest Revealing Soon</span>
+                      </h3>
+                      <p className="text-[#611e3c]/85 text-base md:text-lg leading-relaxed font-medium">
+                        The Chief Guest of Honor for SELAH 2026 will be revealed soon. Stay tuned for our official keynote dignitary announcement.
+                      </p>
+                    </div>
+                  </>
+                )}
               </div>
             </div>
           </AnimatedContent>
@@ -759,11 +755,11 @@ function App() {
               
               <div className="max-w-5xl mx-auto bg-[#fff1cb] text-[#611e3c] rounded-[32px] shadow-[0_20px_50px_rgba(0,0,0,0.35)] border border-[#63752e]/30 relative overflow-hidden flex flex-col md:flex-row group">
                 {/* Left Side - Full Height Image */}
-                <div className="w-full md:w-5/12 h-[400px] sm:h-[400px] md:h-auto min-h-[350px] relative flex-shrink-0">
+                <div className="w-full md:w-5/12 aspect-[1142/1600] max-h-[520px] md:max-h-none md:aspect-auto md:h-auto min-h-[350px] relative flex-shrink-0 bg-[#4e4841] flex items-center justify-center overflow-hidden">
                   <img 
                     src="/cya/Fr._Joy_New.jpeg"
                     alt="Father Vicar" 
-                    className="absolute inset-0 w-full h-full object-cover object-top md:object-center"
+                    className="w-full h-full object-contain object-center"
                   />
                 </div>
 

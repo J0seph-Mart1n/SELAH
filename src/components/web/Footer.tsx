@@ -35,7 +35,7 @@ export default function Footer() {
                           priority
                           className="w-9 h-9 md:w-10 md:h-10 rounded-full object-contain shrink-0 transition-transform duration-200 hover:scale-105"
               />
-            <div className="text-xl font-bold tracking-wide">
+            <div className="text-[22px] font-bold tracking-wide">
               SELAH <span className="text-[#fff1cb]">2026</span>
             </div>
           </Link>
