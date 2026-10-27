@@ -27,6 +27,17 @@ export default function ThemeMusicPlayer({
   const hasEntered = isControlled ? controlledHasEntered : internalHasEntered;
 
   useEffect(() => {
+    if (typeof window !== "undefined") {
+      if (
+        sessionStorage.getItem("selah_has_entered") === "true" ||
+        document.documentElement.classList.contains("selah-entered")
+      ) {
+        setInternalHasEntered(true);
+      }
+    }
+  }, []);
+
+  useEffect(() => {
     // Only run on the homepage
     if (!isHomepage) {
       if (audioRef.current) {
@@ -55,7 +66,9 @@ export default function ThemeMusicPlayer({
   const handleEnter = (withSound: boolean = true) => {
     if (typeof window !== "undefined") {
       sessionStorage.setItem("selah_has_entered", "true");
-      document.documentElement.classList.add("selah-entered");
+      setTimeout(() => {
+        document.documentElement.classList.add("selah-entered");
+      }, 2500);
     }
 
     if (isControlled) {

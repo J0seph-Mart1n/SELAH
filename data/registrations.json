@@ -546,5 +546,52 @@
         ]
       }
     }
+  },
+  {
+    "registrationId": "SELAH26-CARMEL-9T1RL",
+    "timestamp": "2026-10-27T16:19:42.611Z",
+    "parishDetails": {
+      "parishName": "Carmel Parish",
+      "representativeName": "Joseph Martin",
+      "contactNumber": "9172232178",
+      "email": "jmkl0987@gmail.com"
+    },
+    "totalFee": 500,
+    "eventsCount": 2,
+    "totalParticipants": 2,
+    "events": {
+      "100m-race": {
+        "eventId": "100m-race",
+        "title": "100 M Race",
+        "category": "sports",
+        "type": "individual",
+        "fee": 250,
+        "participants": [
+          {
+            "id": "100m-race-p-1793117937254-0",
+            "name": "George Mathew",
+            "gender": "Male",
+            "role": "Participant",
+            "notes": ""
+          }
+        ]
+      },
+      "blitz-chess": {
+        "eventId": "blitz-chess",
+        "title": "Blitz Chess",
+        "category": "sports",
+        "type": "individual",
+        "fee": 250,
+        "participants": [
+          {
+            "id": "blitz-chess-p-1793117947004-0",
+            "name": "Amal Binu",
+            "gender": "Male",
+            "role": "Player",
+            "notes": ""
+          }
+        ]
+      }
+    }
   }
 ]

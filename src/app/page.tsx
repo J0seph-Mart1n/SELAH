@@ -358,7 +358,9 @@ function App() {
     hasEnteredSession = true;
     if (typeof window !== "undefined") {
       sessionStorage.setItem("selah_has_entered", "true");
-      document.documentElement.classList.add("selah-entered");
+      setTimeout(() => {
+        document.documentElement.classList.add("selah-entered");
+      }, 2500);
     }
   };
 
@@ -757,7 +759,7 @@ function App() {
               
               <div className="max-w-5xl mx-auto bg-[#fff1cb] text-[#611e3c] rounded-[32px] shadow-[0_20px_50px_rgba(0,0,0,0.35)] border border-[#63752e]/30 relative overflow-hidden flex flex-col md:flex-row group">
                 {/* Left Side - Full Height Image */}
-                <div className="w-full md:w-5/12 h-[400px] sm:h-[460px] md:h-auto min-h-[350px] relative flex-shrink-0">
+                <div className="w-full md:w-5/12 h-[400px] sm:h-[400px] md:h-auto min-h-[350px] relative flex-shrink-0">
                   <img 
                     src="/cya/Fr._Joy_New.jpeg"
                     alt="Father Vicar" 
