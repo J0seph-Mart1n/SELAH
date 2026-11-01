@@ -18,6 +18,7 @@ import ThemeMusicPlayer from "@/components/web/ThemeMusicPlayer";
 import Footer from "@/components/web/Footer";
 import {
   ArrowRight,
+  Calendar,
   Check,
   ChevronDown,
   Crown,
@@ -472,10 +473,13 @@ function App() {
                   <MorphingText texts={["SELAH", "सेलाह", "സേലാ", "סֶלָה", "SELAH"]} />
                   <span>2026</span>
                 </h1>
-                <p className="hero-subtitle text-center mx-auto" >
+                <p className="hero-subtitle text-center mx-auto">
                   Pause. Explore. Renew
-                  <br className="desktop-only" />{" "}
                 </p>
+                <div className="mt-3.5 inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#fff1cb]/10 border border-[#fff1cb]/20 text-[#fff1cb] text-sm sm:text-base font-semibold tracking-wide backdrop-blur-sm shadow-[0_0_15px_rgba(255,241,203,0.1)]">
+                  <Calendar className="w-4 h-4 text-[#fff1cb]/90" />
+                  <span>5th December, Saturday</span>
+                </div>
                 <div className="text-[#fff1cb] font-semibold tracking-widest text-sm mt-8 uppercase text-center w-full">
                   Starting In
                 </div>
