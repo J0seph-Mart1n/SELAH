@@ -6,6 +6,8 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import Navbar from "@/components/web/Navbar";
 import Footer from "@/components/web/Footer";
+import ScrollProgressIndicator from "@/components/web/ScrollProgressIndicator";
+import BackToTop from "@/components/web/BackToTop";
 import {
   EVENT_RULES,
   CULTURAL_RULES,
@@ -175,6 +177,9 @@ export default function RulesPage() {
 
   return (
     <div className="min-h-screen bg-[#611e3c] text-[#fff1cb] flex flex-col font-sans selection:bg-[#63752e]/30 selection:text-[#fff1cb]">
+      {/* Top Scroll Indicator */}
+      <ScrollProgressIndicator />
+
       {/* Background glow effects */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden z-0">
         <div className="absolute -top-40 left-1/4 w-[600px] h-[600px] bg-[#63752e]/15 rounded-full blur-[140px]" />
@@ -208,7 +213,7 @@ export default function RulesPage() {
           {/* Interactive Search & Filter Controls */}
           <div className="max-w-5xl mx-auto mb-10 flex flex-col md:flex-row gap-4 items-center justify-between">
             {/* Category Filter Pills */}
-            <div className="flex items-center p-1.5 bg-[#fff1cb] border border-[#63752e]/30 rounded-full shadow-xl overflow-x-auto max-w-full">
+            <div className="flex items-center p-1.5 bg-[#fff1cb] border border-[#63752e]/30 rounded-full shadow-xl overflow-x-auto max-w-full hide-scrollbar">
               {[
                 { key: "guidelines", label: "General Guidelines", icon: <ShieldAlert size={15} /> },
                 { key: "sports", label: `Sports (${sportsCount})`, icon: <Medal size={15} /> },
@@ -539,6 +544,9 @@ export default function RulesPage() {
 
         </div>
       </main>
+
+      {/* Floating Back to Top Button */}
+      <BackToTop />
 
       {/* Common Shared Footer */}
       <Footer />

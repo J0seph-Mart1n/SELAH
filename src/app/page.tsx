@@ -56,7 +56,7 @@ const eventCards: Record<Track, EventCard[]> = {
       description:
         "One set of 20 points with Knockout format.",
       image:
-        "events/Throwball.jpg",
+        "/events/Throwball.jpg",
     },
     {
       title: "Futsal",
@@ -98,7 +98,7 @@ const eventCards: Record<Track, EventCard[]> = {
     {
       title: "Frame By Frame",
       description:
-        "Make a Short Flim with no political and offensive theme.",
+        "Make a Short Film with no political or offensive theme.",
       image:
         "/events/ShortFilm.jpg",
     },
@@ -128,7 +128,7 @@ const eventCards: Record<Track, EventCard[]> = {
       description:
         "Street Play with the theme as Faith.",
       image:
-        "events/StreetPlay.jpg",
+        "/events/StreetPlay.jpg",
     },
     {
       title: "Alter Ego",
@@ -181,8 +181,8 @@ const timelineEvents: {
 
     // Common Events
     { title: "Opening Ceremony", start: 8, duration: 0.5, column: "both", color: "#63752e", description: "Flag march & sportsmanship oath" },
-    { title: "Short Film & Photography Glimpes", start: 19, duration: 0.5, column: "both", color: "#63752e", description: "Flag march & sportsmanship oath" },
-    { title: "Prize Distribution & Conclusion", start: 19.5, duration: 1.5, column: "both", color: "#63752e", description: "Flag march & sportsmanship oath" },
+    { title: "Short Film & Photography Glimpses", start: 19, duration: 0.5, column: "both", color: "#63752e", description: "Short film screenings & curated photography gallery" },
+    { title: "Prize Distribution & Conclusion", start: 19.5, duration: 1.5, column: "both", color: "#63752e", description: "Grand mega cash honours, trophies & celebration" },
   ];
 
 type TimelineEvent = typeof timelineEvents[0];
@@ -659,7 +659,7 @@ function App() {
                       </p>
 
                       <p className="text-[#611e3c]/90 text-base md:text-[21px] leading-relaxed mb-8 font-medium">
-                        From commanding the director’s chair behind iconic commercials to matching screen presence with South India’s biggest superstars, he is the definition of modern cinematic sophistication. Whether he is laying down the law as a no-nonsense police commissioner, mentoring hearts as the unforgettable Coach Zach in Bangalore Days, or adding gravitas to massive blockbusters like Lucifer and Thunivu, he brings an unmatched aura of elegance, authority, and artistic excellence to everything he touches.
+                        From commanding the director&apos;s chair behind iconic commercials to matching screen presence with South India&apos;s biggest superstars, he is the definition of modern cinematic sophistication. Whether he is laying down the law as a no-nonsense police commissioner, mentoring hearts as the unforgettable Coach Zach in Bangalore Days, or adding gravitas to massive blockbusters like Lucifer and Thunivu, he brings an unmatched aura of elegance, authority, and artistic excellence to everything he touches.
                       </p>
                     </div>
                   </>
@@ -753,7 +753,7 @@ function App() {
             <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
               <div className="section-heading flex flex-col items-center text-center max-w-2xl mx-auto mb-16 px-4">
                 <h2 className="text-4xl md:text-5xl font-black mb-6 text-[#fff1cb] leading-tight">
-                  Father Vicar's Message
+                  Father Vicar&apos;s Message
                 </h2>
               </div>
               
@@ -776,7 +776,7 @@ function App() {
                   </div>
                   
                   <h3 className="text-2xl md:text-[28px] font-extrabold text-[#611e3c] mb-5 leading-[1.3] tracking-tight">
-                    I am delighted to welcome you to SELAH 2026. This Event is a celebration of our youth's talent, energy, and dedication.
+                    I am delighted to welcome you to SELAH 2026. This Event is a celebration of our youth&apos;s talent, energy, and dedication.
                   </h3>
                   
                   <p className="text-[#611e3c]/90 text-base md:text-lg leading-relaxed mb-8 font-medium">

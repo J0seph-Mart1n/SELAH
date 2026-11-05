@@ -1,5 +1,6 @@
 "use client";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
 import { Menu, X } from "lucide-react";
 import {
@@ -119,6 +120,7 @@ export const NavBody = ({ children, className, visible }: NavBodyProps) => {
 
 export const NavItems = ({ items, className, onItemClick }: NavItemsProps) => {
   const [hovered, setHovered] = useState<number | null>(null);
+  const pathname = usePathname();
 
   return (
     <motion.div
@@ -130,18 +132,27 @@ export const NavItems = ({ items, className, onItemClick }: NavItemsProps) => {
     >
       {items.map((item, idx) => {
         const isInternal = item.link?.startsWith("/") || item.link?.startsWith("#");
+        const isActive =
+          pathname === item.link ||
+          (item.link !== "/" && !item.link?.startsWith("#") && pathname?.startsWith(item.link));
+
         const linkContent = (
           <>
-            {hovered === idx && (
+            {hovered === idx ? (
               <motion.div
                 layoutId="hovered"
                 className="absolute inset-0 h-full w-full rounded-full bg-[#63752e]"
+                transition={{ type: "spring", stiffness: 350, damping: 30 }}
               />
-            )}
+            ) : isActive ? (
+              <div
+                className="absolute inset-0 h-full w-full rounded-full bg-[#63752e]/30 border border-[#63752e]/50"
+              />
+            ) : null}
             <span
               className={cn(
                 "relative z-20 transition-colors duration-200",
-                hovered === idx ? "text-[#fff1cb] font-semibold" : "text-[#fff1cb]/80"
+                hovered === idx || isActive ? "text-[#fff1cb] font-bold" : "text-[#fff1cb]/80"
               )}
             >
               {item.name}

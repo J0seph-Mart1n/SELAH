@@ -167,12 +167,15 @@ button {
   border-radius: 8px;
   font: 700 11px/1 "Plus Jakarta Sans";
   transition:
-    transform 0.2s,
+    transform 0.16s ease-out,
     background 0.2s,
     box-shadow 0.2s;
 }
 .button:hover {
   transform: translateY(-2px);
+}
+.button:active {
+  transform: scale(0.97) translateY(0);
 }
 .button-primary {
   color: #fff1cb;

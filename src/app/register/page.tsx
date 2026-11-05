@@ -6,6 +6,8 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import Navbar from "@/components/web/Navbar";
 import Footer from "@/components/web/Footer";
+import ScrollProgressIndicator from "@/components/web/ScrollProgressIndicator";
+import BackToTop from "@/components/web/BackToTop";
 import Silk from "@/components/ui/Silk";
 import Stepper, { Step } from "@/components/ui/Stepper";
 import {
@@ -583,6 +585,10 @@ export default function RegisterPage() {
 
   return (
     <div className="min-h-screen flex flex-col bg-[#611e3c] text-[#fff1cb] relative overflow-x-hidden selection:bg-[#63752e] selection:text-[#fff1cb]">
+      {/* Top Scroll Indicator */}
+      <div className="print:hidden">
+        <ScrollProgressIndicator />
+      </div>
 
       {/* Ambient background glows */}
       <div className="fixed top-1/4 left-1/4 w-96 h-96 bg-[#63752e]/20 rounded-full blur-[140px] pointer-events-none z-0 print:hidden" />
@@ -1683,6 +1689,11 @@ export default function RegisterPage() {
           </div>
         )}
       </AnimatePresence>
+
+      {/* Floating Back to Top Button */}
+      <div className="print:hidden">
+        <BackToTop />
+      </div>
 
       {/* Footer (hidden on print) */}
       <div className="print:hidden">
