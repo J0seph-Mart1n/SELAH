@@ -217,7 +217,7 @@ export const EVENT_RULES: EventRule[] = [
     ],
     rules: [
       "A team consists of 6 active pullers on the rope (4 boys and 2 girls) plus up to 3 registered substitutes.",
-      "There is no weigh-in required to participant.",
+      "There is a weight limit of 450kg for each team.",
       "Matches are contested as Best of 3 pulls. Teams change sides after each pull with a 2-minute breather in between.",
       "Victory is achieved when the center cloth of the rope crosses the marking on the opposing side.",
       "Grip: Rope must be gripped with bare hands using an underhand or standard palm grip.",
