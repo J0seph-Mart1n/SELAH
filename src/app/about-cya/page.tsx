@@ -1,6 +1,7 @@
 "use client";
 
 import { Cormorant_Garamond, Outfit } from "next/font/google";
+import Silk from "@/components/ui/Silk";
 import Navbar from "./components/Navbar";
 import Hero from "./components/Hero";
 import Team from "./components/Team";
@@ -27,6 +28,20 @@ const outfit = Outfit({
 export default function AboutCYA() {
   return (
     <div className={`cya-page ${serif.variable} ${outfit.variable}`}>
+      <div className="cya-live-wallpaper" aria-hidden="true">
+        <Silk
+          color="#611e3c"
+          sheenColor="#fff1cb"
+          speed={2.5}
+          scale={1}
+          noiseIntensity={1.5}
+          rotation={0}
+          sheen={0.8}
+          depth={0.6}
+          glow={0.3}
+          wave={1.5}
+        />
+      </div>
       <Navbar />
       <main className="cya-main" id="content">
         <Hero />

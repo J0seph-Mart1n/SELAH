@@ -5,10 +5,21 @@ import Link from 'next/link';
 import { gsap } from 'gsap';
 import './StaggeredMenu.css';
 
+/**
+ * @typedef {{
+ *   label: string,
+ *   link?: string,
+ *   target?: string,
+ *   rel?: string,
+ *   ariaLabel?: string,
+ *   onClick?: (event: React.MouseEvent) => void
+ * }} MenuItem
+ */
+
 export const StaggeredMenu = ({
   position = 'right',
   colors = ['#B497CF', '#5227FF'],
-  items = [],
+  items = /** @type {MenuItem[]} */ ([]),
   socialItems = [],
   displaySocials = true,
   displayItemNumbering = true,

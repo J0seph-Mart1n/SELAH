@@ -1,8 +1,10 @@
 import type { Metadata } from "next";
+import "./gallery.css";
 
 export const metadata: Metadata = {
   title: "Gallery | SELAH 2026",
-  description: "Official media and photo gallery of SELAH 2026. High-definition highlights, cultural performances, and sports photography",
+  description:
+    "The SELAH 2026 lookbook: official event artwork, the Carmel Youth Association team, and a cinematic archive for one day in Pune.",
 };
 
 export default function GalleryLayout({
