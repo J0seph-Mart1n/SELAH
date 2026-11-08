@@ -8,15 +8,15 @@
 /* ── TOKENS ─────────────────────────────────────── */
 .cya-page {
   /* colour */
-  --bg: #faf7f2;
-  --sand: #e8e1d3;
-  --sage: #c9d3c2;
-  --ink: #1f1d1b;
-  --text: #6b655e;
-  --accent: #2f4a3a;
-  --accent-deep: #1f3328;
-  --paper: #fffdf9;
-  --line: rgba(31, 29, 27, 0.1);
+  --bg: #611e3c;
+  --sand: #4a162d;
+  --sage: #63752e;
+  --ink: #fff1cb;
+  --text: rgba(255, 241, 203, 0.82);
+  --accent: #63752e;
+  --accent-deep: #2d0c1b;
+  --paper: #4a162d;
+  --line: rgba(255, 241, 203, 0.16);
 
   /* shape — radius scale (shape lock): 8 inputs, 16 containers,
      24 media, 32 double-bezel shells, 999 pills/badges.
@@ -28,14 +28,14 @@
   --r-pill: 999px;
 
   /* off-white for text/icons on dark-green surfaces (no pure #fff) */
-  --on-deep: #f7f5f0;
+  --on-deep: #fff1cb;
 
   /* inner bezel highlight (top hairline on inset surfaces) */
-  --inset-hi: rgba(255, 255, 255, 0.6);
+  --inset-hi: rgba(255, 241, 203, 0.12);
 
   /* elevation — tinted, diffused; never harsh black */
-  --shadow-soft: 0 10px 30px rgba(31, 29, 27, 0.06);
-  --shadow-lift: 0 18px 44px rgba(31, 29, 27, 0.1);
+  --shadow-soft: 0 10px 30px rgba(45, 12, 27, 0.32);
+  --shadow-lift: 0 18px 44px rgba(45, 12, 27, 0.5);
 
   /* motion */
   --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
@@ -49,19 +49,19 @@
 /* dark mode: one token swap, whole page follows */
 @media (prefers-color-scheme: dark) {
   .cya-page {
-    --bg: #1c1a15;
-    --sand: #3b372e;
-    --sage: #3d4a3a;
-    --ink: #ece7dc;
-    --text: #a9a294;
-    --accent: #a3c4a9;
-    --accent-deep: #101a12;
-    --paper: #23211b;
-    --line: rgba(236, 231, 220, 0.14);
-    --shadow-soft: 0 12px 34px color-mix(in srgb, var(--accent-deep) 65%, transparent);
-    --shadow-lift: 0 20px 52px color-mix(in srgb, var(--accent-deep) 75%, transparent);
-    --inset-hi: rgba(255, 255, 255, 0.07);
-    --on-deep: #f2eee4;
+    --bg: #611e3c;
+    --sand: #4a162d;
+    --sage: #63752e;
+    --ink: #fff1cb;
+    --text: rgba(255, 241, 203, 0.82);
+    --accent: #63752e;
+    --accent-deep: #2d0c1b;
+    --paper: #4a162d;
+    --line: rgba(255, 241, 203, 0.16);
+    --shadow-soft: 0 12px 34px rgba(45, 12, 27, 0.38);
+    --shadow-lift: 0 20px 52px rgba(45, 12, 27, 0.55);
+    --inset-hi: rgba(255, 241, 203, 0.12);
+    --on-deep: #fff1cb;
   }
 
   .cya-page ::selection {
@@ -73,12 +73,30 @@
 .cya-page {
   font-family: var(--font-sans);
   color: var(--text);
-  background: var(--bg);
+  background:
+    radial-gradient(circle at 12% 0%, rgba(99, 117, 46, 0.2), transparent 32rem),
+    radial-gradient(circle at 88% 28%, rgba(255, 241, 203, 0.08), transparent 28rem),
+    var(--bg);
   font-size: 17px;
   line-height: 1.6;
   min-height: 100dvh;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+}
+
+.cya-live-wallpaper {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.58;
+}
+
+.cya-live-wallpaper::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(45, 12, 27, 0.2), rgba(97, 30, 60, 0.58));
 }
 
 /* film grain — systemic overlay layer: grain 50 < nav 60 < modal 100 (reserved) */
@@ -94,7 +112,7 @@
 
 .cya-page ::selection {
   background: var(--accent);
-  color: #fff;
+  color: var(--on-deep);
 }
 
 .cya-page :focus-visible {
@@ -296,11 +314,7 @@
   text-align: center;
   /* hero top-padding cap: 96px (pt-24); bottom band → 96px (macro whitespace) */
   padding: clamp(56px, 9vh, 96px) 0 clamp(56px, 8vh, 96px);
-  background: radial-gradient(
-    70% 78% at 50% 0%,
-    color-mix(in srgb, var(--sage) 28%, var(--bg)) 0%,
-    transparent 72%
-  );
+  background: radial-gradient(70% 78% at 50% 0%, rgba(99, 117, 46, 0.22), transparent 72%);
 }
 
 /* thin closing rule — echoes the sprig, grounds the section */
@@ -349,7 +363,8 @@
   max-width: 46ch;
   font-size: clamp(16.5px, 1.7vw, 19px);
   line-height: 1.65;
-  color: var(--text);
+  color: var(--on-deep);
+  opacity: 0.82;
 }
 
 /* ── TEAM (signature) ───────────────────────────── */
@@ -422,6 +437,29 @@
   height: auto;
   max-height: none;
   aspect-ratio: 0.718;
+}
+
+/* Keep the existing interactive ProfileCard, but bring its surfaces into
+   the SELAH maroon/cream/olive palette. */
+.cya-page .pc-card {
+  --behind-glow-color: rgba(99, 117, 46, 0.7);
+  --sunpillar-1: #63752e;
+  --sunpillar-2: #fff1cb;
+  --sunpillar-3: #63752e;
+  --sunpillar-4: #4a162d;
+  --sunpillar-5: #fff1cb;
+  --sunpillar-6: #63752e;
+  background: #4a162d;
+  box-shadow: 0 18px 40px rgba(45, 12, 27, 0.48);
+}
+
+.cya-page .pc-inside {
+  background-color: #2d0c1b;
+}
+
+.cya-page .pc-details h3,
+.cya-page .pc-details p {
+  background-image: linear-gradient(to bottom, #fff1cb, #63752e);
 }
 
 @media (max-width: 768px) {

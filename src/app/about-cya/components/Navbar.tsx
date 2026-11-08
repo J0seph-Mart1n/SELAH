@@ -66,9 +66,7 @@ export default function Navbar() {
           isFixed={true}
           className="cya-smenu"
           logo={<Brand />}
-          items={
-            NAV_LINKS.map(({ name, link }) => ({ label: name, link })) as any
-          }
+          items={NAV_LINKS.map(({ name, link }) => ({ label: name, link }))}
           // CYA page tokens (resolve from .cya-page, so dark mode follows)
           colors={["var(--sand)", "var(--sage)", "var(--accent)"]}
           accentColor="var(--accent)"

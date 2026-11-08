@@ -119,7 +119,7 @@ export default function Navbar({
         <StaggeredMenu
           isFixed={true}
           logo={<MobileBrandLogo />}
-          items={staggeredItems as any}
+          items={staggeredItems}
           colors={[
             "rgba(97, 30, 60, 0.75)",
             "rgba(99, 117, 46, 0.75)",
