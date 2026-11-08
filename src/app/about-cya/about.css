@@ -188,124 +188,106 @@
   filter: none;
 }
 
-/* ── NAVBAR — shared resizable-navbar + StaggeredMenu, re-skinned ──
-   The components hard-code the SELAH palette (Tailwind classes +
-   framer-motion/gsap inline styles), so overrides here are scoped to
-   .cya-rnav / .cya-smenu and use !important where they must win. */
-
-/* brand (desktop + mobile) */
-.cya-nav__brand {
-  font-family: var(--font-serif);
-  font-weight: 600;
-  font-size: 25px;
-  line-height: 1;
-  color: var(--ink);
-  letter-spacing: -0.01em;
-}
-
-.cya-nav__brand span {
-  color: var(--accent);
-}
-
-/* desktop: resizable navbar */
-.cya-rnav {
-  font-family: var(--font-sans);
+/* ── NAVBAR — matches common navbar styling while keeping CYA brand ── */
+.cya-nav-shell {
+  font-family: "Plus Jakarta Sans", sans-serif;
+  font-size: 16px;
+  line-height: 1.5;
 }
 
 .cya-rnav [data-shrunk] {
+  background: var(--selah-nav-bg, rgba(255, 241, 203, 0.72)) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border: 1px solid var(--selah-nav-border, rgba(99, 117, 46, 0.35)) !important;
+  box-shadow:
+    0 10px 30px rgba(0, 0, 0, 0.18),
+    0 1px 0 rgba(255, 255, 255, 0.5) inset !important;
   transition:
-    background-color 0.3s var(--ease),
-    border-color 0.3s var(--ease);
-}
-
-.cya-rnav__links a {
-  display: flex;
-  align-items: center;
+    background-color 0.3s ease,
+    border-color 0.3s ease,
+    box-shadow 0.3s ease;
 }
 
 .cya-rnav [data-shrunk="true"] {
-  background: color-mix(in srgb, var(--paper) 84%, transparent) !important;
-  border-color: var(--line) !important;
+  background: var(--selah-nav-bg-shrunk, rgba(255, 241, 203, 0.82)) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
   box-shadow:
-    var(--shadow-soft),
-    inset 0 1px 0 var(--inset-hi) !important;
+    0 12px 36px rgba(0, 0, 0, 0.22),
+    0 1px 0 rgba(255, 255, 255, 0.55) inset !important;
 }
 
-/* links */
-.cya-rnav__links a > span {
-  color: var(--text) !important;
-  font-size: 18px;
-  font-weight: 500;
-  letter-spacing: 0.01em;
+.cya-rnav [data-shrunk="false"],
+.cya-rnav [data-shrunk]:not([data-shrunk="true"]) {
+  background: var(--selah-nav-bg, rgba(255, 241, 203, 0.72)) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  padding-left: 1.5rem !important;
+  padding-right: 1.5rem !important;
 }
 
-.cya-rnav__links a:hover > span,
-.cya-rnav__links a:focus-visible > span {
-  color: var(--on-deep) !important;
+.cya-rnav .brand strong {
+  color: var(--selah-nav-text, #611e3c) !important;
+}
+.cya-rnav .brand strong span {
+  color: var(--selah-nav-accent, #63752e) !important;
+}
+.cya-rnav .brand div {
+  background: transparent !important;
 }
 
-/* hover pill */
-.cya-rnav__links a > div {
-  background: var(--accent-deep) !important;
+.cya-rnav a:not(.brand) > span {
+  color: var(--selah-nav-text, #611e3c) !important;
+  font-weight: 600 !important;
 }
 
-@media (prefers-color-scheme: dark) {
-  .cya-rnav__links a > div {
-    background: var(--accent) !important;
-  }
-
-  .cya-rnav__links a:hover > span,
-  .cya-rnav__links a:focus-visible > span {
-    color: var(--bg) !important;
-  }
+.cya-rnav a:not(.brand):hover > span,
+.cya-rnav a:not(.brand):focus-visible > span {
+  color: #fff1cb !important;
 }
 
-/* mobile: staggered menu */
-.cya-smenu {
-  font-family: var(--font-sans);
+.cya-rnav a:not(.brand) > div {
+  background: var(--selah-nav-accent, #63752e) !important;
+}
+
+.cya-smenu .staggered-menu-header {
+  background: var(--selah-nav-bg, rgba(255, 241, 203, 0.72)) !important;
+  backdrop-filter: blur(16px) !important;
+  -webkit-backdrop-filter: blur(16px) !important;
+  border-bottom: 1px solid var(--selah-nav-border, rgba(99, 117, 46, 0.35)) !important;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12) !important;
+  transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .cya-smenu .staggered-menu-header.scrolled {
-  background: color-mix(in srgb, var(--bg) 84%, transparent);
-  border-bottom: 1px solid var(--line);
-  box-shadow: var(--shadow-soft);
-}
-
-.cya-smenu .sm-toggle {
-  color: var(--ink) !important;
-  font-family: var(--font-sans);
-  font-weight: 500;
-  letter-spacing: 0.02em;
+  background: var(--selah-nav-bg-shrunk, rgba(255, 241, 203, 0.82)) !important;
+  backdrop-filter: blur(20px) !important;
+  -webkit-backdrop-filter: blur(20px) !important;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.18) !important;
 }
 
 .cya-smenu .staggered-menu-panel {
-  background: color-mix(in srgb, var(--paper) 96%, transparent);
+  background: rgba(97, 30, 60, 0.82) !important;
+  backdrop-filter: blur(24px) !important;
+  -webkit-backdrop-filter: blur(24px) !important;
+  border-left: 1px solid rgba(255, 241, 203, 0.18) !important;
+  box-shadow: -10px 0 35px rgba(0, 0, 0, 0.35) !important;
 }
 
-.cya-smenu .sm-panel-item {
-  color: var(--ink);
-  font-family: var(--font-serif);
-  font-weight: 500;
-  font-size: clamp(40px, 11vw, 56px);
-  letter-spacing: -0.02em;
-  text-transform: none;
+.cya-smenu .brand strong {
+  color: var(--selah-nav-text, #611e3c) !important;
+}
+.cya-smenu .brand strong span {
+  color: var(--selah-nav-accent, #63752e) !important;
 }
 
-.cya-smenu .sm-panel-item:hover {
-  color: var(--accent);
+.cya-smenu .sm-toggle {
+  color: var(--selah-nav-text, #611e3c) !important;
 }
 
-.cya-smenu .sm-panel-list[data-numbering] .sm-panel-item::after {
-  font-family: var(--font-sans);
-  color: var(--text);
-}
-
-.cya-smenu .sm-socials-title {
-  color: var(--accent);
-}
-
-.cya-smenu .sm-socials-link {
-  color: var(--ink);
+.cya-smenu .sm-icon-line {
+  background: var(--selah-nav-text, #611e3c) !important;
 }
 
 /* ── HERO — "Meet the team" ─────────────────────── */
@@ -343,7 +325,7 @@
   font: 600 18px/1.2 var(--font-sans);
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--accent);
+  color: var(--text);
 
 }
 
@@ -354,7 +336,7 @@
 .cya-hero__title em {
   font-style: italic;
   font-weight: 400;
-  color: var(--accent);
+  color: var(--text);
   letter-spacing: -0.005em;
   padding-inline: 0.03em;
 }
@@ -390,10 +372,10 @@
   align-items: center;
   justify-content: center;
   gap: 18px;
-  font: 600 12px/1 var(--font-sans);
+  font: 700 12px/1 var(--font-sans);
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--accent);
+  color: #ffffff !important;
   /* specificity 0-2-0: beats the .cya-page p {margin:0} reset.
      Air above (48–80) keeps group rhythm; below sits tighter to its cards. */
   margin-top: clamp(48px, 6vw, 80px);
@@ -408,7 +390,8 @@
 .cteam__group-label span {
   width: clamp(40px, 8vw, 120px);
   height: 1px;
-  background: color-mix(in srgb, var(--accent) 32%, transparent);
+  background: rgb(255, 255, 255) !important;
+  color: #ffffff !important;
 }
 
 .cteam__row {
