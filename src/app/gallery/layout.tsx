@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import { ApertureTransitionProvider } from "./components/ApertureTransition";
 import "./gallery.css";
 
 export const metadata: Metadata = {
@@ -12,5 +13,5 @@ export default function GalleryLayout({
 }: {
   children: React.ReactNode;
 }) {
-  return <>{children}</>;
+  return <ApertureTransitionProvider>{children}</ApertureTransitionProvider>;
 }

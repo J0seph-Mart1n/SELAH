@@ -1,34 +1,34 @@
 [
   {
+    "eventsCount": 1,
+    "registrationId": "SELAH26-STMARY-XA4FR",
+    "parishDetails": {
+      "parishName": "St Mary’s Malankara Catholic Cathedral",
+      "contactNumber": "+918087286826",
+      "email": "alvin.joseph03@gmail.com",
+      "representativeName": "Alvin Joseph"
+    },
+    "timestamp": "2026-11-04T17:26:53.841Z",
+    "totalFee": 250,
+    "totalParticipants": 1,
     "events": {
       "blitz-chess": {
-        "title": "Blitz Chess",
+        "category": "sports",
         "eventId": "blitz-chess",
+        "fee": 250,
+        "title": "Blitz Chess",
+        "type": "individual",
         "participants": [
           {
-            "notes": "",
             "gender": "Male",
             "role": "Player",
+            "id": "blitz-chess-p-1793813176851-0",
             "name": "Alvin Joseph",
-            "id": "blitz-chess-p-1793813176851-0"
+            "notes": ""
           }
-        ],
-        "fee": 250,
-        "type": "individual",
-        "category": "sports"
+        ]
       }
     },
-    "parishDetails": {
-      "contactNumber": "+918087286826",
-      "representativeName": "Alvin Joseph",
-      "parishName": "St Mary’s Malankara Catholic Cathedral",
-      "email": "alvin.joseph03@gmail.com"
-    },
-    "totalParticipants": 1,
-    "eventsCount": 1,
-    "timestamp": "2026-11-04T17:26:53.841Z",
-    "registrationId": "SELAH26-STMARY-XA4FR",
-    "totalFee": 250,
     "id": "SELAH26-STMARY-XA4FR"
   }
 ]

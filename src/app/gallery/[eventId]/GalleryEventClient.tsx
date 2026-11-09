@@ -2,12 +2,14 @@
 
 import Link from "next/link";
 import { useCallback, useEffect, useRef, useState, type CSSProperties } from "react";
+import { useApertureTransition } from "../components/ApertureTransition";
 import type { GalleryAsset, GalleryItem } from "../data/galleryItems";
 
 export default function GalleryEventClient({ item, next }: { item: GalleryItem; next: GalleryItem }) {
   const [lightboxIndex, setLightboxIndex] = useState<number | null>(null);
   const touchStart = useRef(0);
   const activeAsset = lightboxIndex === null ? null : item.gallery[lightboxIndex];
+  const { triggerTransition } = useApertureTransition();
 
   const close = useCallback(() => setLightboxIndex(null), []);
   const move = useCallback((direction: number) => {
@@ -31,10 +33,18 @@ export default function GalleryEventClient({ item, next }: { item: GalleryItem; 
 
   return (
     <article className="selah-gallery gallery-event-page">
-      <div className="gallery-event-veil" aria-hidden="true" />
       <main>
         <header className="gallery-event-header">
-          <Link href="/gallery" className="gallery-event-back">← Back to Selah</Link>
+          <Link
+            href="/gallery"
+            className="gallery-event-back"
+            onClick={(event) => {
+              event.preventDefault();
+              triggerTransition("/gallery");
+            }}
+          >
+            ← Back to Selah
+          </Link>
           <p className="gallery-kicker">{item.type === "sport" ? "Sports" : "Cultural Events"} / SELAH 2026</p>
           <h1>{item.title}</h1>
         </header>
@@ -52,7 +62,15 @@ export default function GalleryEventClient({ item, next }: { item: GalleryItem; 
         </section>
 
         <footer className="gallery-event-footer">
-          <Link href={`/gallery/${next.id}`}>Next event <span>→</span><strong>{next.title}</strong></Link>
+          <Link
+            href={`/gallery/${next.id}`}
+            onClick={(event) => {
+              event.preventDefault();
+              triggerTransition(`/gallery/${next.id}`);
+            }}
+          >
+            Next event <span>→</span><strong>{next.title}</strong>
+          </Link>
           <small>© Selah Gallery · Pune</small>
         </footer>
       </main>
