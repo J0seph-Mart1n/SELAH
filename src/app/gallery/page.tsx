@@ -4,7 +4,7 @@ import Navbar from "@/components/web/Navbar";
 import GalleryBackground from "./GalleryBackground";
 
 export default function GalleryPage() {
-  const isGalleryRevealed = true;
+  const isGalleryRevealed = false;
 
   return (
     <div className="gallery-route-shell">
