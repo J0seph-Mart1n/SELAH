@@ -97,9 +97,23 @@ export default function RegisterAdminPage() {
       const url = isManualRefresh
         ? "/api/admin/registrations?refresh=true"
         : "/api/admin/registrations";
-      const res = await fetch(url);
+
+      const token = typeof window !== "undefined" ? sessionStorage.getItem("selah_admin_token") : null;
+      const headers: Record<string, string> = {};
+      if (token) {
+        headers["Authorization"] = `Bearer ${token}`;
+      }
+
+      const res = await fetch(url, {
+        headers,
+        credentials: "include",
+      });
+
       if (res.status === 401) {
         setIsAuthenticated(false);
+        if (typeof window !== "undefined") {
+          sessionStorage.removeItem("selah_admin_token");
+        }
         setRegistrations([]);
         return;
       }
@@ -133,6 +147,7 @@ export default function RegisterAdminPage() {
       const res = await fetch("/api/admin/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
+        credentials: "include",
         body: JSON.stringify({
           username: usernameInput,
           password: passwordInput,
@@ -141,6 +156,9 @@ export default function RegisterAdminPage() {
 
       const data = await res.json();
       if (res.ok && data.success) {
+        if (data.token && typeof window !== "undefined") {
+          sessionStorage.setItem("selah_admin_token", data.token);
+        }
         setIsAuthenticated(true);
         setPasswordInput("");
         await fetchRegistrations();
@@ -156,8 +174,11 @@ export default function RegisterAdminPage() {
 
   // Handle Logout
   const handleLogout = async () => {
+    if (typeof window !== "undefined") {
+      sessionStorage.removeItem("selah_admin_token");
+    }
     try {
-      await fetch("/api/admin/logout", { method: "POST" });
+      await fetch("/api/admin/logout", { method: "POST", credentials: "include" });
     } catch (err) {
       console.error("Logout error:", err);
     }
@@ -197,9 +218,16 @@ export default function RegisterAdminPage() {
     setIsDeleting(true);
     setDeleteError(null);
     try {
+      const token = typeof window !== "undefined" ? sessionStorage.getItem("selah_admin_token") : null;
+      const headers: Record<string, string> = { "Content-Type": "application/json" };
+      if (token) {
+        headers["Authorization"] = `Bearer ${token}`;
+      }
+
       const res = await fetch("/api/admin/registrations", {
         method: "DELETE",
-        headers: { "Content-Type": "application/json" },
+        headers,
+        credentials: "include",
         body: JSON.stringify({
           registrationId: deleteCandidate.registrationId,
           id: (deleteCandidate as any).id,

@@ -6,6 +6,8 @@ import {
   verifyAdminCredentials,
 } from "@/lib/adminAuth";
 
+export const dynamic = "force-dynamic";
+
 export async function POST(request: Request) {
   try {
     const body = await request.json();
@@ -26,22 +28,36 @@ export async function POST(request: Request) {
     }
 
     const token = generateSessionToken();
-    const cookieStore = await cookies();
 
-    cookieStore.set({
+    const response = NextResponse.json({
+      success: true,
+      message: "Admin authentication successful.",
+      token,
+    });
+
+    const isProduction = process.env.NODE_ENV === "production";
+    const cookieOptions = {
       name: ADMIN_COOKIE_NAME,
       value: token,
       httpOnly: true,
-      secure: process.env.NODE_ENV === "production",
+      secure: isProduction,
       path: "/",
-      sameSite: "lax",
+      sameSite: "lax" as const,
       maxAge: 60 * 60 * 24 * 7, // 7 days
-    });
+    };
 
-    return NextResponse.json({
-      success: true,
-      message: "Admin authentication successful.",
-    });
+    // 1. Set on outgoing NextResponse directly to guarantee Set-Cookie header
+    response.cookies.set(cookieOptions);
+
+    // 2. Also set on cookieStore for Next.js internal context
+    try {
+      const cookieStore = await cookies();
+      cookieStore.set(cookieOptions);
+    } catch (cookieErr) {
+      console.warn("[Admin Login] cookieStore.set warning:", cookieErr);
+    }
+
+    return response;
   } catch (error: any) {
     console.error("[Admin Login Error]:", error);
     return NextResponse.json(

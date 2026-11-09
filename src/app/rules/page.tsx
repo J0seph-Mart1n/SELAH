@@ -435,7 +435,7 @@ export default function RulesPage() {
                             <div className="text-[11px] font-bold text-[#63752e] uppercase tracking-wider flex items-center gap-1.5 mb-1">
                               <MapPin size={13} className="text-[#63752e]" /> Venue
                             </div>
-                            <div className="font-extrabold text-[#611e3c] text-xs sm:text-sm truncate" title={event.venue}>
+                            <div className="font-extrabold text-[#611e3c] text-xs sm:text-sm break-even" title={event.venue}>
                               {event.venue}
                             </div>
                           </div>

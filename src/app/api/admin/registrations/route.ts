@@ -3,9 +3,11 @@ import fs from "fs/promises";
 import path from "path";
 import { isAuthenticatedAdmin } from "@/lib/adminAuth";
 
-export async function GET() {
+export const dynamic = "force-dynamic";
+
+export async function GET(request: Request) {
   try {
-    const isAuth = await isAuthenticatedAdmin();
+    const isAuth = await isAuthenticatedAdmin(request);
     if (!isAuth) {
       return NextResponse.json(
         { success: false, error: "Unauthorized access. Please log in as admin." },
@@ -92,7 +94,7 @@ export async function GET() {
 
 export async function DELETE(request: Request) {
   try {
-    const isAuth = await isAuthenticatedAdmin();
+    const isAuth = await isAuthenticatedAdmin(request);
     if (!isAuth) {
       return NextResponse.json(
         { success: false, error: "Unauthorized access. Please log in as admin." },
