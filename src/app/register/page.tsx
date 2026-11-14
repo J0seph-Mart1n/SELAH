@@ -839,7 +839,7 @@ export default function RegisterPage() {
                 </div>
 
                 <div className="px-3 py-1.5 rounded-xl bg-[#2d0c1b] border border-[#63752e]/40 text-xs text-[#fff1cb]/90 shrink-0 shadow-sm w-fit self-start sm:self-auto">
-                  <span className="font-semibold text-[#63752e]">Sports Fee:</span> Group ₹800 • Individual ₹250/participant
+                  <span className="font-semibold text-[#63752e]">Sports Fee:</span> Group ₹500 • Individual ₹200/participant
                 </div>
               </div>
 
@@ -921,7 +921,7 @@ export default function RegisterPage() {
                 </div>
 
                 <div className="px-3 py-1.5 rounded-xl bg-[#2d0c1b] border border-[#63752e]/40 text-xs text-[#fff1cb]/90 shrink-0 shadow-sm w-fit self-start sm:self-auto">
-                  <span className="font-semibold text-[#63752e]">Cultural Fee:</span> Group ₹800 • Individual ₹250/participant
+                  <span className="font-semibold text-[#63752e]">Cultural Fee:</span> Group ₹500 • Individual ₹200/participant
                 </div>
               </div>
 
@@ -1044,7 +1044,7 @@ export default function RegisterPage() {
                               </div>
                               <span className="text-[#fff1cb]/60 text-[11px] sm:text-xs">
                                 ({participants.length} participant{participants.length !== 1 ? "s" : ""}
-                                {event.type === "individual" ? " × ₹250" : ""})
+                                {event.type === "individual" ? " × ₹200" : ""})
                               </span>
                             </div>
                             <div className="font-mono font-bold text-[#fff1cb] text-xs sm:text-sm shrink-0">
@@ -1057,12 +1057,12 @@ export default function RegisterPage() {
                       {/* Subtotals */}
                       <div className="pt-3 border-t border-[#fff1cb]/15 space-y-1.5 text-xs sm:text-sm text-[#fff1cb]/80">
                         <div className="flex justify-between items-center">
-                          <span>Group Events ({feeSummary.groupCount} × ₹800):</span>
+                          <span>Group Events ({feeSummary.groupCount} × ₹500):</span>
                           <span className="font-mono font-semibold text-[#fff1cb]">₹{feeSummary.groupTotal}</span>
                         </div>
                         <div className="flex justify-between items-center">
                           <span>
-                            Individual Entries ({feeSummary.individualParticipantsCount} participant{feeSummary.individualParticipantsCount !== 1 ? "s" : ""} × ₹250):
+                            Individual Entries ({feeSummary.individualParticipantsCount} participant{feeSummary.individualParticipantsCount !== 1 ? "s" : ""} × ₹200):
                           </span>
                           <span className="font-mono font-semibold text-[#fff1cb]">₹{feeSummary.individualTotal}</span>
                         </div>
@@ -1826,10 +1826,10 @@ function EventTableCard({
             {event.type === "group"
               ? `Group Event • ₹${event.fee}`
               : state.enabled && state.participants.length > 1
-              ? `Individual • ₹${state.participants.length * PAYMENT_DETAILS.individualFee} (${state.participants.length} × ₹250)`
+              ? `Individual • ₹${state.participants.length * PAYMENT_DETAILS.individualFee} (${state.participants.length} × ₹200)`
               : state.enabled && state.participants.length === 1
-              ? `Individual • ₹250`
-              : `Individual • ₹250 / participant`}
+              ? `Individual • ₹200`
+              : `Individual • ₹200 / participant`}
           </span>
 
           <button
