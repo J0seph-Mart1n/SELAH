@@ -1,0 +1,54 @@
+[
+  {
+    "registrationId": "SELAH26-SEC-NHHFN",
+    "timestamp": "2026-11-14T19:21:25.799Z",
+    "parishDetails": {
+      "parishName": "sec",
+      "representativeName": "sec",
+      "contactNumber": "1212121212",
+      "email": "wefd@gmail.com"
+    },
+    "totalFee": 500,
+    "eventsCount": 1,
+    "totalParticipants": 4,
+    "events": {
+      "mixed-relay": {
+        "eventId": "mixed-relay",
+        "title": "Mixed Relay",
+        "category": "sports",
+        "type": "group",
+        "fee": 500,
+        "participants": [
+          {
+            "id": "mixed-relay-p-1794684070833-0",
+            "name": "sdec",
+            "gender": "Male",
+            "role": "Captain",
+            "notes": ""
+          },
+          {
+            "id": "mixed-relay-p-1794684070833-1",
+            "name": "aerc",
+            "gender": "Male",
+            "role": "Runner",
+            "notes": ""
+          },
+          {
+            "id": "mixed-relay-p-1794684070833-2",
+            "name": "asdcr",
+            "gender": "Female",
+            "role": "Runner",
+            "notes": ""
+          },
+          {
+            "id": "mixed-relay-p-1794684070833-3",
+            "name": "asr",
+            "gender": "Female",
+            "role": "Runner",
+            "notes": ""
+          }
+        ]
+      }
+    }
+  }
+]
