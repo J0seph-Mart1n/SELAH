@@ -97,30 +97,52 @@ export async function POST(request: Request) {
       console.error(`[Firebase] Failed to save registration ${registrationId} to Firestore:`, fbErr);
     }
 
-    // 2. Save record to local JSON database file (as fallback / local backup)
-    const dataDir = path.join(process.cwd(), "data");
-    await fs.mkdir(dataDir, { recursive: true });
-    const filePath = path.join(dataDir, "registrations.json");
-
-    let currentRegistrations: any[] = [];
+    // 2. Save record to local JSON database file (as fallback / local backup in non-serverless environments)
+    let savedToLocal = false;
     try {
-      const fileData = await fs.readFile(filePath, "utf-8");
-      currentRegistrations = JSON.parse(fileData);
-      if (!Array.isArray(currentRegistrations)) {
+      const dataDir = path.join(process.cwd(), "data");
+      await fs.mkdir(dataDir, { recursive: true });
+      const filePath = path.join(dataDir, "registrations.json");
+
+      let currentRegistrations: any[] = [];
+      try {
+        const fileData = await fs.readFile(filePath, "utf-8");
+        currentRegistrations = JSON.parse(fileData);
+        if (!Array.isArray(currentRegistrations)) {
+          currentRegistrations = [];
+        }
+      } catch {
         currentRegistrations = [];
       }
-    } catch {
-      currentRegistrations = [];
+
+      currentRegistrations.push(record);
+      await fs.writeFile(filePath, JSON.stringify(currentRegistrations, null, 2), "utf-8");
+      savedToLocal = true;
+    } catch (fsErr: any) {
+      console.warn(
+        "[Local Backup] Could not write to local registrations.json (expected on read-only serverless filesystems like Vercel):",
+        fsErr?.message || fsErr
+      );
     }
 
-    currentRegistrations.push(record);
-    await fs.writeFile(filePath, JSON.stringify(currentRegistrations, null, 2), "utf-8");
+    if (!savedToFirestore && !savedToLocal) {
+      return NextResponse.json(
+        {
+          success: false,
+          error: firestoreError
+            ? `Failed to save registration to Firebase: ${firestoreError}`
+            : "Database is not configured. Please ensure Firebase environment variables (such as FIREBASE_PROJECT_ID) are added in Vercel Project Settings.",
+        },
+        { status: 500 }
+      );
+    }
 
     return NextResponse.json({
       success: true,
       registrationId,
       timestamp,
       savedToFirestore,
+      savedToLocal,
       firestoreError: firestoreError || null,
       message: "Registration submitted successfully!",
       summary: {
