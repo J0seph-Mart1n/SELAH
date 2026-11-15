@@ -91,15 +91,19 @@ export default function Footer() {
       {/* Massive Background Interactive Particle Text */}
       <div className="w-full h-[20vw] min-h-[220px] flex justify-center items-end mt-auto select-none relative z-0 translate-y-[22%] overflow-hidden pointer-events-none">
         <ParticleText
-          style={{}}
           text="SELAH"
           particleSize={2.2}
           density={5}
           color="#fff1cb"
           highlightColor="#63752e"
+          highlightMode="motion"
+          shape="circle"
+          intro="gather"
           scatter={190}
           gatherDuration={1600}
           stagger={420}
+          clickBurst={true}
+          burstStrength={1}
           pointerRepel={42}
           repelRadius={120}
           idleDrift={0.8}

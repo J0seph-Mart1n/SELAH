@@ -15,6 +15,7 @@ import MagicBento from "@/components/ui/MagicBento";
 import AnimatedContent from "@/components/ui/AnimatedContent";
 import Counter from "@/components/ui/Counter";
 import ThemeMusicPlayer from "@/components/web/ThemeMusicPlayer";
+import PriceUpdatePopup from "@/components/web/PriceUpdatePopup";
 import Footer from "@/components/web/Footer";
 import {
   ArrowRight,
@@ -431,6 +432,9 @@ function App() {
       {/* Floating FIFA Theme Music Player with Welcome Overlay rendered first */}
       <ThemeMusicPlayer hasEntered={hasEntered} onEnter={handleSiteEnter} />
 
+      {/* Bottom-right notification showing updated registration fees */}
+      <PriceUpdatePopup visible={hasEntered} />
+
       {/* Main Page Content - Animations start after welcome button click */}
       <motion.div
         initial={false}
@@ -712,7 +716,7 @@ function App() {
                         <img
                           src="/Sponsors/Ezra_Logo.png"
                           alt="Ezra's Couture"
-                          className="inline-block h-10 md:h-14 w-auto object-contain align-middle mr-3 -mt-1"
+                          className="inline-block h-8 md:h-11 w-auto object-contain align-middle mr-3 -mt-1"
                         />
                         {"Ezra's Couture • St. George Kerala Store • Joseph Thomas CJ • Simson Devassy • Robin Paul • Aswathy Joseph •"}
                       </>,
@@ -726,7 +730,7 @@ function App() {
                     pauseOnHover
                     fadeEdges
                     draggable
-                    className="text-4xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#fff1cb]/60 via-[#fff1cb] to-[#fff1cb]/60 tracking-[0.2em] uppercase inline-block py-2 mb-4 drop-shadow-[0_0_15px_rgba(255,241,203,0.2)]"
+                    className="text-xl md:text-2xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#fff1cb]/60 via-[#fff1cb] to-[#fff1cb]/60 tracking-[0.2em] uppercase inline-block py-2 mb-4 drop-shadow-[0_0_15px_rgba(255,241,203,0.2)]"
                   />
                 </div>
               ) : (
