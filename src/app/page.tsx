@@ -326,7 +326,7 @@ let hasEnteredSession = false;
 
 function App() {
   const isChiefGuestFinalized = true;
-  const showSponsors = false;
+  const showSponsors = true;
   const [track, setTrack] = useState<Track>("sports");
 
   const culturalEventsWithLayout = useMemo(
@@ -707,17 +707,25 @@ function App() {
               {showSponsors ? (
                 <div className="w-[100vw] relative left-1/2 -translate-x-1/2 overflow-hidden py-4">
                   <ScrollVelocity
-                    scrollContainerRef={undefined}
-                    parallaxStyle={undefined}
-                    scrollerStyle={undefined}
+                    texts={[
+                      <>
+                        <img
+                          src="/Sponsors/Ezra_Logo.png"
+                          alt="Ezra's Couture"
+                          className="inline-block h-10 md:h-14 w-auto object-contain align-middle mr-3 -mt-1"
+                        />
+                        {"Ezra's Couture • St. George Kerala Store • Joseph Thomas CJ • Simson Devassy • Robin Paul • Aswathy Joseph •"}
+                      </>,
+                      "Rhea Thomas • Johnson Peter • Rijin Rappai • Joy George • Revin Varghese • Femin Antony •",
+                      "Raphy CJ • Jinu Joy • Sumit Joseph • Jensen Vembil • Abhilash Mathew • Jimmy Joseph •"
+                    ]}
                     velocity={100}
                     numCopies={6}
                     damping={50}
                     stiffness={400}
-                    texts={[
-                      "Sponsor 1 • Sponsor 2 •",
-                      "Sponsor 3 • Sponsor 4 •"
-                    ] as any}
+                    pauseOnHover
+                    fadeEdges
+                    draggable
                     className="text-4xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-[#fff1cb]/60 via-[#fff1cb] to-[#fff1cb]/60 tracking-[0.2em] uppercase inline-block py-2 mb-4 drop-shadow-[0_0_15px_rgba(255,241,203,0.2)]"
                   />
                 </div>
