@@ -723,7 +723,7 @@ function App() {
                       "Rhea Thomas • Johnson Peter • Rijin Rappai • Joy George • Revin Varghese • Femin Antony •",
                       "Raphy CJ • Jinu Joy • Sumit Joseph • Jensen Vembil • Abhilash Mathew • Jimmy Joseph •"
                     ]}
-                    velocity={100}
+                    velocity={70}
                     numCopies={6}
                     damping={50}
                     stiffness={400}

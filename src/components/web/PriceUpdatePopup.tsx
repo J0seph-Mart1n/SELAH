@@ -39,7 +39,7 @@ export default function PriceUpdatePopup({ visible = true }: PriceUpdatePopupPro
               <div className="flex items-start justify-between gap-3 mb-3.5">
                 <div>
                   <h3 className="text-base sm:text-lg font-extrabold tracking-tight text-[#fff1cb]">
-                    Updated Event Prices!
+                    Event Updates
                   </h3>
                 </div>
 
@@ -104,6 +104,10 @@ export default function PriceUpdatePopup({ visible = true }: PriceUpdatePopupPro
                 </div>
               </div>
 
+              {/* Youth Eligibility & Authorisation Note */}
+              <div className="px-3.5 py-2.5 rounded-2xl bg-[#4a162d]/50 border border-[#63752e]/40 text-[11px] sm:text-xs leading-relaxed text-[#fff1cb]/85">
+                Married youth members under 35 are eligible to participate. Please submit an official parish authorisation letter signed by your Parish Priest listing all participating youth members for verification.
+              </div>
             </div>
           </div>
         </motion.aside>
