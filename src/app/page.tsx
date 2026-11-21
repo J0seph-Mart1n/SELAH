@@ -455,7 +455,7 @@ function App() {
         }
 
         if (active && typeof data?.views === "number") {
-          setViewerCount(data.views + 600);
+          setViewerCount(data.views + 1000);
         }
       } catch {
         // Ignore transient network errors
