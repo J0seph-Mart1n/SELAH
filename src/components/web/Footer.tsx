@@ -40,8 +40,8 @@ export default function Footer() {
             </div>
           </Link>
           <p className="text-[#fff1cb]/80 text-sm leading-relaxed max-w-sm">
-            The official inter-church youth cultural & sports festival
-            uniting congregations in athletics, creative expressions.
+            The official youth cultural & sports festival
+            uniting Christian communities in athletics, creative expressions.
           </p>
         </div>
 

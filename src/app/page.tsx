@@ -11,12 +11,13 @@ import Silk from "@/components/ui/Silk";
 import { MorphingText } from "@/components/ui/morphing-text";
 import BorderGlow from "@/components/ui/BorderGlow";
 import ScrollVelocity from "@/components/ui/ScrollVelocity";
+import TextLoop from "@/components/ui/TextLoop";
 import MagicBento from "@/components/ui/MagicBento";
 import AnimatedContent from "@/components/ui/AnimatedContent";
 import Counter from "@/components/ui/Counter";
 import ThemeMusicPlayer from "@/components/web/ThemeMusicPlayer";
-import PriceUpdatePopup from "@/components/web/PriceUpdatePopup";
 import Footer from "@/components/web/Footer";
+import { track as trackEvent } from "@vercel/analytics";
 import {
   ArrowRight,
   Calendar,
@@ -24,6 +25,7 @@ import {
   ChevronDown,
   Crown,
   Download,
+  Eye,
   Headphones,
   HeartHandshake,
   Medal,
@@ -425,15 +427,53 @@ function App() {
     return () => window.clearTimeout(timer);
   }, [anthemPlaying]);
 
+  const [viewerCount, setViewerCount] = useState<number>(0);
+
+  useEffect(() => {
+    let active = true;
+
+    const syncViewerCount = async () => {
+      try {
+        const alreadyCounted =
+          typeof window !== "undefined" &&
+          sessionStorage.getItem("selah_viewer_counted") === "true";
+
+        if (!alreadyCounted) {
+          trackEvent("site_viewer");
+        }
+
+        const res = await fetch("/api/views", {
+          method: alreadyCounted ? "GET" : "POST",
+          cache: "no-store",
+        });
+
+        if (!res.ok) return;
+        const data = await res.json();
+
+        if (!alreadyCounted && typeof window !== "undefined") {
+          sessionStorage.setItem("selah_viewer_counted", "true");
+        }
+
+        if (active && typeof data?.views === "number") {
+          setViewerCount(data.views + 600);
+        }
+      } catch {
+        // Ignore transient network errors
+      }
+    };
+
+    syncViewerCount();
+    return () => {
+      active = false;
+    };
+  }, []);
+
   const visibleEvents = eventCards[track];
 
   return (
     <div className="app-shell bg-transparent">
       {/* Floating FIFA Theme Music Player with Welcome Overlay rendered first */}
       <ThemeMusicPlayer hasEntered={hasEntered} onEnter={handleSiteEnter} />
-
-      {/* Bottom-right notification showing updated registration fees */}
-      <PriceUpdatePopup visible={hasEntered} />
 
       {/* Main Page Content - Animations start after welcome button click */}
       <motion.div
@@ -535,6 +575,246 @@ function App() {
             </AnimatedContent>
           </section>
         </div>
+
+        {/* Text Loop Banner below Hero Section */}
+        <div className="w-full bg-[#611e3c] p-0 m-0 leading-none overflow-hidden">
+          <TextLoop
+            text="new announcements"
+            ribbonColor="#63752e"
+            ribbonWidth={44}
+            color="#fff1cb"
+            separator="✦"
+            shape="line"
+            speed={90}
+            curviness={70}
+            pauseOnHover
+            draggable
+            fontSize={20}
+          />
+        </div>
+
+        {/* ANNOUNCEMENTS SECTION */}
+        <section className="section relative py-20 md:py-24 overflow-hidden" id="announcements">
+          <div className="absolute inset-0 bg-[#611e3c] z-[-1]" />
+          <div className="glow glow-gold opacity-35" />
+          <div className="glow glow-coral opacity-20" />
+
+          <AnimatedContent distance={60} duration={0.8} ease="power3.out" threshold={0.1}>
+            <div className="section-heading flex flex-col items-center text-center max-w-3xl mx-auto mb-10 md:mb-12 px-4 gap-3.5">
+
+              <SparklesText
+                className="text-4xl md:text-6xl font-black text-[#fff1cb] leading-tight"
+                colors={{ first: "#fff1cb", second: "#63752e" }}
+                sparklesCount={10}
+              >
+                Major Announcements
+              </SparklesText>
+
+              <p className="text-sm sm:text-base md:text-lg text-[#fff1cb]/85 font-medium leading-relaxed">
+                Crucial updates on reduced entry fees, expanded community eligibility, and married youth guidelines.
+              </p>
+            </div>
+
+            {/* Top Highlight Alert Banner */}
+            <div className="max-w-6xl mx-auto px-4 lg:px-8 mb-8 md:mb-10 relative z-10">
+              <div className="rounded-2xl bg-[#2d0c1b]/90 border border-[#63752e]/60 px-4 py-3.5 md:px-6 md:py-4 backdrop-blur-xl shadow-[0_12px_35px_rgba(0,0,0,0.45),0_0_25px_rgba(99,117,46,0.25)] flex flex-wrap items-center justify-center gap-x-6 gap-y-2.5 text-xs sm:text-sm font-bold text-[#fff1cb]">
+                <span className="inline-flex items-center gap-2">
+                  <Sparkles className="w-4 h-4 text-[#a3c14a] shrink-0" />
+                  <span>Registration Fees Updated</span>
+                </span>
+                <span className="hidden md:inline text-[#fff1cb]/30">•</span>
+                <span className="inline-flex items-center gap-2">
+                  <Users className="w-4 h-4 text-[#a3c14a] shrink-0" />
+                  <span>Open to All Christian Communities</span>
+                </span>
+                <span className="hidden md:inline text-[#fff1cb]/30">•</span>
+                <span className="inline-flex items-center gap-2">
+                  <HeartHandshake className="w-4 h-4 text-[#a3c14a] shrink-0" />
+                  <span>Married Couples Under 35 Welcome</span>
+                </span>
+              </div>
+            </div>
+
+            {/* Three Animated BorderGlow Announcement Cards */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-7 lg:gap-8 max-w-6xl mx-auto px-4 lg:px-8 relative z-10 pb-4">
+              {/* Card 1: Registration Fees Slashed! */}
+              <div className="w-full hover:-translate-y-3 transition-transform duration-500">
+                <BorderGlow
+                  glowColor="99 117 46"
+                  backgroundColor="#fff1cb"
+                  colors={["#63752e", "#611e3c", "#63752e"]}
+                  animated={true}
+                  glowIntensity={1.5}
+                  className="w-full h-full shadow-[0_0_40px_rgba(99,117,46,0.3)]"
+                >
+                  <div className="relative rounded-[28px] p-7 md:p-9 flex flex-col justify-between gap-6 overflow-hidden h-full bg-[#fff1cb] border-2 border-[#63752e] text-[#611e3c]">
+                    <div className="absolute -right-6 -bottom-6 opacity-[0.07] pointer-events-none select-none">
+                      <Sparkles className="w-44 h-44 text-[#611e3c]" strokeWidth={1.5} />
+                    </div>
+
+                    <div className="relative z-10 flex flex-col gap-5">
+                      <div className="flex items-center justify-between gap-3">
+                        <div className="w-12 h-12 rounded-2xl bg-[#63752e] text-[#fff1cb] flex items-center justify-center shadow-md shrink-0">
+                          <Sparkles className="w-6 h-6" />
+                        </div>
+                        <span className="px-3 py-1 rounded-full bg-[#611e3c] text-[#fff1cb] text-[11px] font-black uppercase tracking-wider shadow-sm">
+                          Price Drop
+                        </span>
+                      </div>
+
+                      <h3 className="text-2xl font-black text-[#611e3c] leading-snug">
+                        Registration Fees Slashed!
+                      </h3>
+                      <p className="text-sm text-[#611e3c]/80 font-medium leading-relaxed">
+                        Enjoy newly reduced entry rates across both individual and group competitions.
+                      </p>
+
+                      <div className="flex flex-col gap-3.5">
+                        <div className="flex items-center justify-between gap-2 px-4 py-3.5 rounded-2xl bg-[#611e3c]/8 border border-[#611e3c]/15">
+                          <div>
+                            <div className="flex items-center gap-1.5 flex-wrap">
+                              <span className="text-xs font-extrabold text-[#611e3c]">Individual Event</span>
+                              <span className="px-2 py-0.5 rounded-full bg-[#63752e]/15 text-[#63752e] text-[10px] font-black uppercase">
+                                Save 20%
+                              </span>
+                            </div>
+                            <div className="text-[11px] text-[#611e3c]/65 mt-0.5">Per participant</div>
+                          </div>
+                          <div className="flex items-baseline gap-2 font-mono shrink-0">
+                            <span className="text-xs text-[#611e3c]/45 line-through">₹250</span>
+                            <span className="text-lg font-black text-[#fff1cb] bg-[#63752e] px-2.5 py-0.5 rounded-xl shadow-sm">
+                              ₹200
+                            </span>
+                          </div>
+                        </div>
+
+                        <div className="flex items-center justify-between gap-2 px-4 py-3.5 rounded-2xl bg-[#611e3c]/8 border border-[#611e3c]/15">
+                          <div>
+                            <div className="flex items-center gap-1.5 flex-wrap">
+                              <span className="text-xs font-extrabold text-[#611e3c]">Group Event</span>
+                              <span className="px-2 py-0.5 rounded-full bg-[#63752e]/15 text-[#63752e] text-[10px] font-black uppercase">
+                                Save ₹300
+                              </span>
+                            </div>
+                            <div className="text-[11px] text-[#611e3c]/65 mt-0.5">Per team</div>
+                          </div>
+                          <div className="flex items-baseline gap-2 font-mono shrink-0">
+                            <span className="text-xs text-[#611e3c]/45 line-through">₹800</span>
+                            <span className="text-lg font-black text-[#fff1cb] bg-[#63752e] px-2.5 py-0.5 rounded-xl shadow-sm">
+                              ₹500
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+
+                    <Link
+                      href="/register"
+                      className="relative z-10 inline-flex items-center justify-center gap-2 w-full py-3 px-4 rounded-2xl bg-[#611e3c] hover:bg-[#4a162d] !text-[#fff1cb] font-extrabold text-sm transition-all shadow-lg hover:shadow-[#611e3c]/40 group"
+                    >
+                      <span className="text-[#fff1cb]">Register at New Rates</span>
+                      <ArrowRight className="w-4 h-4 text-[#fff1cb] transition-transform group-hover:translate-x-1" />
+                    </Link>
+                  </div>
+                </BorderGlow>
+              </div>
+
+              {/* Card 2: Now Open to All Christian Communities! */}
+              <div className="w-full hover:-translate-y-3 transition-transform duration-500">
+                <BorderGlow
+                  glowColor="99 117 46"
+                  backgroundColor="#fff1cb"
+                  colors={["#63752e", "#611e3c", "#63752e"]}
+                  animated={true}
+                  glowIntensity={1.5}
+                  className="w-full h-full shadow-[0_0_40px_rgba(99,117,46,0.3)]"
+                >
+                  <div className="relative rounded-[28px] p-7 md:p-9 flex flex-col justify-between gap-6 overflow-hidden h-full bg-[#fff1cb] border-2 border-[#63752e] text-[#611e3c]">
+                    <div className="absolute -right-6 -bottom-6 opacity-[0.07] pointer-events-none select-none">
+                      <Users className="w-44 h-44 text-[#611e3c]" strokeWidth={1.5} />
+                    </div>
+
+                    <div className="relative z-10 flex flex-col gap-5">
+                      <div className="flex items-center justify-between gap-3">
+                        <div className="w-12 h-12 rounded-2xl bg-[#63752e] text-[#fff1cb] flex items-center justify-center shadow-md shrink-0">
+                          <Users className="w-6 h-6" />
+                        </div>
+                        <span className="px-3 py-1 rounded-full bg-[#611e3c] text-[#fff1cb] text-[11px] font-black uppercase tracking-wider shadow-sm">
+                          All Churches
+                        </span>
+                      </div>
+
+                      <h3 className="text-2xl font-black text-[#611e3c] leading-snug">
+                        Now Open to All Christian Communities!
+                      </h3>
+                      <p className="text-sm text-[#611e3c]/85 font-medium leading-relaxed">
+                        Youth teams and individual participants from <strong>all Christian denominations, churches, and fellowships</strong> are now invited to register and compete together at SELAH 2026!
+                      </p>
+
+                      <div className="flex flex-col gap-3.5">
+                        <div className="flex items-center gap-2.5 px-4 py-3.5 rounded-2xl bg-[#611e3c]/8 border border-[#611e3c]/15 text-xs font-bold text-[#611e3c]">
+                          <Check className="w-4 h-4 text-[#63752e] shrink-0" />
+                          <span>Every Christian denomination &amp; church welcome</span>
+                        </div>
+                        <div className="flex items-center gap-2.5 px-4 py-3.5 rounded-2xl bg-[#611e3c]/8 border border-[#611e3c]/15 text-xs font-bold text-[#611e3c]">
+                          <Check className="w-4 h-4 text-[#63752e] shrink-0" />
+                          <span>Compete in all 15 sports &amp; cultural events</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </BorderGlow>
+              </div>
+
+              {/* Card 3: New Rule for Married Youth Couples */}
+              <div className="w-full hover:-translate-y-3 transition-transform duration-500">
+                <BorderGlow
+                  glowColor="99 117 46"
+                  backgroundColor="#fff1cb"
+                  colors={["#63752e", "#611e3c", "#63752e"]}
+                  animated={true}
+                  glowIntensity={1.5}
+                  className="w-full h-full shadow-[0_0_40px_rgba(99,117,46,0.3)]"
+                >
+                  <div className="relative rounded-[28px] p-7 md:p-9 flex flex-col justify-between gap-6 overflow-hidden h-full bg-[#fff1cb] border-2 border-[#63752e] text-[#611e3c]">
+                    <div className="absolute -right-6 -bottom-6 opacity-[0.07] pointer-events-none select-none">
+                      <HeartHandshake className="w-44 h-44 text-[#611e3c]" strokeWidth={1.5} />
+                    </div>
+
+                    <div className="relative z-10 flex flex-col gap-5">
+                      <div className="flex items-center justify-between gap-3">
+                        <div className="w-12 h-12 rounded-2xl bg-[#63752e] text-[#fff1cb] flex items-center justify-center shadow-md shrink-0">
+                          <HeartHandshake className="w-6 h-6" />
+                        </div>
+                        <span className="px-3 py-1 rounded-full bg-[#611e3c] text-[#fff1cb] text-[11px] font-black uppercase tracking-wider shadow-sm">
+                          Eligibility
+                        </span>
+                      </div>
+
+                      <h3 className="text-2xl font-black text-[#611e3c] leading-snug">
+                        Eligibility for Married Youth Couples
+                      </h3>
+                      <p className="text-sm text-[#611e3c]/85 font-medium leading-relaxed">
+                        We now welcome <strong>married youth members under the age of 35</strong>! To verify eligibility, please submit an official authorisation letter from your church.
+                      </p>
+
+                      <div className="flex flex-col gap-3.5">
+                        <div className="flex items-start gap-2.5 px-4 py-3.5 rounded-2xl bg-[#611e3c]/8 border border-[#611e3c]/15 text-xs font-bold text-[#611e3c]">
+                          <Check className="w-4 h-4 text-[#63752e] shrink-0 mt-0.5" />
+                          <span>Under 35 Age Limit for married youth members</span>
+                        </div>
+                        <div className="flex items-start gap-2.5 px-4 py-3.5 rounded-2xl bg-[#611e3c]/8 border border-[#611e3c]/15 text-xs font-bold text-[#611e3c]">
+                          <ShieldCheck className="w-4 h-4 text-[#63752e] shrink-0 mt-0.5" />
+                          <span>Official letter signed by Parish Priest / Pastor listing all participating youth members</span>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </BorderGlow>
+              </div>
+            </div>
+          </AnimatedContent>
+        </section>
 
         <section className="section prize-pool relative py-24" id="prizepool">
           <div className="absolute inset-0 bg-[#611e3c] z-[-1]" />
@@ -1092,6 +1372,54 @@ function App() {
                 </div>
               </div>
               </div>
+            </div>
+          </AnimatedContent>
+        </section>
+
+        {/* WEBSITE VIEWER COUNT SECTION */}
+        <section className="section relative py-16 md:py-20" id="viewer-count">
+          <div className="absolute inset-0 bg-[#611e3c] z-[-1]" />
+          <div className="glow glow-gold opacity-20" />
+
+          <AnimatedContent distance={50} duration={0.8} ease="power3.out" threshold={0.1}>
+            <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+              <BorderGlow
+                glowColor="99 117 46"
+                backgroundColor="#fff1cb"
+                colors={["#63752e", "#611e3c", "#63752e"]}
+                animated={true}
+                glowIntensity={1.5}
+                className="w-full shadow-[0_0_40px_rgba(99,117,46,0.28)]"
+              >
+                <div className="relative rounded-[28px] p-7 sm:p-10 flex flex-col items-center text-center gap-5 overflow-hidden bg-[#fff1cb] border-2 border-[#63752e] text-[#611e3c]">
+
+
+                  <div className="flex flex-col items-center gap-2">
+                    <div className="flex items-center justify-center gap-2.5 text-[#63752e]">
+                      <Eye className="w-6 h-6 shrink-0" />
+                      <h2 className="!text-[#611e3c] text-2xl sm:text-3xl font-black tracking-tight">
+                        Website Viewers
+                      </h2>
+                    </div>
+                    <p className="text-sm sm:text-base text-[#611e3c]/80 font-medium max-w-md leading-relaxed">
+                      Total visitors exploring SELAH 2026 events, rules, and registrations.
+                    </p>
+                  </div>
+
+                  <div className="px-8 py-4 rounded-2xl bg-[#611e3c] text-[#fff1cb] border border-[#63752e]/50 shadow-inner flex items-center justify-center">
+                    <Counter
+                      value={viewerCount}
+                      minDigits={3}
+                      fontSize={44}
+                      fontWeight="800"
+                      textColor="#fff1cb"
+                      gap={4}
+                      fade={0.15}
+                      direction="up"
+                    />
+                  </div>
+                </div>
+              </BorderGlow>
             </div>
           </AnimatedContent>
         </section>

@@ -1,0 +1,41 @@
+.text-loop {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+.text-loop--draggable {
+  cursor: grab;
+  touch-action: pan-y;
+}
+
+.text-loop-svg {
+  display: block;
+  width: 100%;
+  height: auto;
+}
+
+@media (max-width: 639px) {
+  .text-loop-svg {
+    width: 260%;
+    max-width: none;
+    margin-left: -80%;
+  }
+}
+
+@media (min-width: 640px) and (max-width: 1023px) {
+  .text-loop-svg {
+    width: 170%;
+    max-width: none;
+    margin-left: -35%;
+  }
+}
+
+.text-loop-text {
+  user-select: none;
+}
+
+.text-loop-measure {
+  visibility: hidden;
+  pointer-events: none;
+}
