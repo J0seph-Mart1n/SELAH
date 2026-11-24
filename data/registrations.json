@@ -1,54 +1,287 @@
 [
   {
-    "registrationId": "SELAH26-SEC-NHHFN",
-    "timestamp": "2026-11-14T19:21:25.799Z",
-    "parishDetails": {
-      "parishName": "sec",
-      "representativeName": "sec",
-      "contactNumber": "1212121212",
-      "email": "wefd@gmail.com"
-    },
-    "totalFee": 500,
-    "eventsCount": 1,
-    "totalParticipants": 4,
+    "registrationId": "SELAH26-CHRIST-Z9PML",
+    "eventsCount": 3,
+    "totalFee": 1400,
     "events": {
       "mixed-relay": {
-        "eventId": "mixed-relay",
-        "title": "Mixed Relay",
         "category": "sports",
-        "type": "group",
-        "fee": 500,
+        "eventId": "mixed-relay",
         "participants": [
           {
-            "id": "mixed-relay-p-1794684070833-0",
-            "name": "sdec",
-            "gender": "Male",
+            "id": "mixed-relay-p-1795337165909-0",
             "role": "Captain",
-            "notes": ""
+            "name": "Randall",
+            "notes": "",
+            "gender": "Male"
           },
           {
-            "id": "mixed-relay-p-1794684070833-1",
-            "name": "aerc",
+            "id": "mixed-relay-p-1795337165909-1",
+            "role": "Runner",
             "gender": "Male",
-            "role": "Runner",
+            "name": "Aditya",
             "notes": ""
           },
           {
-            "id": "mixed-relay-p-1794684070833-2",
-            "name": "asdcr",
+            "id": "mixed-relay-p-1795337165909-2",
             "gender": "Female",
+            "notes": "",
             "role": "Runner",
+            "name": "-"
+          },
+          {
+            "notes": "",
+            "id": "mixed-relay-p-1795337165909-3",
+            "gender": "Female",
+            "name": "-",
+            "role": "Runner"
+          }
+        ],
+        "type": "group",
+        "fee": 500,
+        "title": "Mixed Relay"
+      },
+      "blitz-chess": {
+        "participants": [
+          {
+            "gender": "Male",
+            "notes": "",
+            "id": "blitz-chess-p-1795337206267-0",
+            "name": "Aditya Marc Minj",
+            "role": "Player"
+          },
+          {
+            "notes": "",
+            "gender": "Male",
+            "role": "Player",
+            "id": "blitz-chess-p-1795337212500-9abh",
+            "name": "Randall"
+          }
+        ],
+        "category": "sports",
+        "eventId": "blitz-chess",
+        "fee": 400,
+        "type": "individual",
+        "title": "Blitz Chess"
+      },
+      "futsal": {
+        "fee": 500,
+        "title": "Futsal",
+        "type": "group",
+        "eventId": "futsal",
+        "participants": [
+          {
+            "name": "Randall",
+            "role": "Captain",
+            "id": "futsal-p-1795337237017-0",
+            "notes": "",
+            "gender": "Male"
+          },
+          {
+            "notes": "",
+            "id": "futsal-p-1795337237017-1",
+            "role": "Goalkeeper",
+            "name": "Lester",
+            "gender": "Male"
+          },
+          {
+            "name": "Christian",
+            "role": "Player",
+            "gender": "Male",
+            "id": "futsal-p-1795337237017-2",
             "notes": ""
           },
           {
-            "id": "mixed-relay-p-1794684070833-3",
-            "name": "asr",
-            "gender": "Female",
-            "role": "Runner",
+            "gender": "Male",
+            "notes": "",
+            "name": "Aditya",
+            "role": "Player",
+            "id": "futsal-p-1795337237017-3"
+          },
+          {
+            "id": "futsal-p-1795337237017-4",
+            "name": "Orion",
+            "role": "Player",
+            "notes": "",
+            "gender": "Male"
+          },
+          {
+            "id": "futsal-p-1795337343551-z4ul",
+            "notes": "",
+            "role": "Substitute",
+            "name": "Elia",
+            "gender": "Male"
+          },
+          {
+            "id": "futsal-p-1795337353535-44k8",
+            "role": "Substitute",
+            "name": "-",
+            "gender": "Male",
+            "notes": ""
+          },
+          {
+            "name": "-",
+            "gender": "Male",
+            "role": "Substitute",
+            "notes": "",
+            "id": "futsal-p-1795337354319-jyll"
+          }
+        ],
+        "category": "sports"
+      }
+    },
+    "totalParticipants": 14,
+    "parishDetails": {
+      "email": "marcminj9565@gmail.com",
+      "parishName": "Christ the King",
+      "contactNumber": "8856933504",
+      "representativeName": "Aditya Marc Minj"
+    },
+    "timestamp": "2026-11-22T08:54:11.764Z",
+    "id": "SELAH26-CHRIST-Z9PML"
+  },
+  {
+    "registrationId": "SELAH26-DONBOS-FGJE7",
+    "totalParticipants": 1,
+    "parishDetails": {
+      "representativeName": "Navin Telgote",
+      "email": "navintelgote3112@gmail.com",
+      "contactNumber": "7020296734",
+      "parishName": "Don Bosc church Yervada"
+    },
+    "timestamp": "2026-11-11T15:57:35.679Z",
+    "events": {
+      "blitz-chess": {
+        "category": "sports",
+        "participants": [
+          {
+            "id": "blitz-chess-p-1794412523266-0",
+            "gender": "Male",
+            "role": "Player",
+            "name": "Navin Telgote ",
             "notes": ""
           }
-        ]
+        ],
+        "eventId": "blitz-chess",
+        "fee": 250,
+        "title": "Blitz Chess",
+        "type": "individual"
       }
-    }
+    },
+    "eventsCount": 1,
+    "totalFee": 250,
+    "id": "SELAH26-DONBOS-FGJE7"
+  },
+  {
+    "events": {
+      "solo-singing": {
+        "participants": [
+          {
+            "gender": "Female",
+            "id": "solo-singing-p-1795286955105-0",
+            "notes": "",
+            "role": "Vocalist",
+            "name": "Angel Saldanha "
+          }
+        ],
+        "eventId": "solo-singing",
+        "category": "cultural",
+        "title": "Pitch Perfect (Solo Singing)",
+        "fee": 200,
+        "type": "individual"
+      }
+    },
+    "totalFee": 200,
+    "eventsCount": 1,
+    "timestamp": "2026-11-21T18:50:19.647Z",
+    "totalParticipants": 1,
+    "registrationId": "SELAH26-OURLAD-849CW",
+    "parishDetails": {
+      "representativeName": "Angel Saldanha",
+      "parishName": "Our lady of lourdes church",
+      "contactNumber": "7796423291",
+      "email": "ollchurchpune@gmail.com"
+    },
+    "id": "SELAH26-OURLAD-849CW"
+  },
+  {
+    "parishDetails": {
+      "parishName": "St. Francis Xavier Church, Chinchwad",
+      "contactNumber": "7058939024",
+      "representativeName": "Alisha Aric Lobo",
+      "email": "alishalobo009@gmail.com"
+    },
+    "events": {
+      "100m-race": {
+        "eventId": "100m-race",
+        "category": "sports",
+        "participants": [
+          {
+            "gender": "Female",
+            "notes": "",
+            "name": "Alisha Lobo",
+            "id": "100m-race-p-1794800374242-0",
+            "role": "Participant"
+          }
+        ],
+        "type": "individual",
+        "title": "100 M Race",
+        "fee": 200
+      },
+      "solo-singing": {
+        "title": "Pitch Perfect (Solo Singing)",
+        "fee": 200,
+        "category": "cultural",
+        "type": "individual",
+        "participants": [
+          {
+            "name": "Alisha Lobo",
+            "role": "Vocalist",
+            "id": "solo-singing-p-1794800442431-0",
+            "notes": "",
+            "gender": "Female"
+          }
+        ],
+        "eventId": "solo-singing"
+      }
+    },
+    "totalParticipants": 2,
+    "eventsCount": 2,
+    "timestamp": "2026-11-16T03:43:59.189Z",
+    "registrationId": "SELAH26-STFRAN-04RKD",
+    "totalFee": 400,
+    "id": "SELAH26-STFRAN-04RKD"
+  },
+  {
+    "totalFee": 250,
+    "totalParticipants": 1,
+    "eventsCount": 1,
+    "parishDetails": {
+      "parishName": "St Mary’s Malankara Catholic Cathedral",
+      "contactNumber": "+918087286826",
+      "email": "alvin.joseph03@gmail.com",
+      "representativeName": "Alvin Joseph"
+    },
+    "registrationId": "SELAH26-STMARY-XA4FR",
+    "events": {
+      "blitz-chess": {
+        "title": "Blitz Chess",
+        "type": "individual",
+        "fee": 250,
+        "participants": [
+          {
+            "notes": "",
+            "id": "blitz-chess-p-1793813176851-0",
+            "role": "Player",
+            "gender": "Male",
+            "name": "Alvin Joseph"
+          }
+        ],
+        "category": "sports",
+        "eventId": "blitz-chess"
+      }
+    },
+    "timestamp": "2026-11-04T17:26:53.841Z",
+    "id": "SELAH26-STMARY-XA4FR"
   }
 ]

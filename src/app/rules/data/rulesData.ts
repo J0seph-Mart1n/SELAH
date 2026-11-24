@@ -511,6 +511,7 @@ export const EVENT_RULES: EventRule[] = [
     rules: [
       "The maximum performance duration is 3 minutes.",
       "The act must be based on a biblical story, character, event or teaching.",
+      "Participants can perform in English, Hindi, or Malayalam.",
       "Participants are encouraged to present their interpretation creatively through characterisation, voice modulation, expressions and movement.",
       "Minimal props are permitted, provided they can be managed by the performer and do not require additional stage setup.",
       "The performance must remain respectful of the biblical subject and appropriate for the event.",

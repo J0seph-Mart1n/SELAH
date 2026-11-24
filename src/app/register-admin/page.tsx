@@ -33,7 +33,15 @@ import {
   X,
   Building,
   Hash,
+  Pencil,
+  Plus,
+  Save,
 } from "lucide-react";
+import {
+  REGISTRATION_EVENTS,
+  PAYMENT_DETAILS,
+  RegistrationEventConfig,
+} from "@/app/register/data/registrationEvents";
 
 interface Participant {
   id: string;
@@ -46,12 +54,14 @@ interface Participant {
 interface EventRegistration {
   eventId: string;
   title: string;
+  category?: string;
   type?: "group" | "individual";
   fee?: number;
   participants: Participant[];
 }
 
 interface RegistrationRecord {
+  id?: string;
   registrationId: string;
   timestamp: string;
   parishDetails: {
@@ -84,6 +94,25 @@ export default function RegisterAdminPage() {
   const [deleteCandidate, setDeleteCandidate] = useState<RegistrationRecord | null>(null);
   const [isDeleting, setIsDeleting] = useState(false);
   const [deleteError, setDeleteError] = useState<string | null>(null);
+
+  // Edit Registration Modal states
+  const [editCandidate, setEditCandidate] = useState<RegistrationRecord | null>(null);
+  const [editParishDetails, setEditParishDetails] = useState({
+    parishName: "",
+    representativeName: "",
+    contactNumber: "",
+    email: "",
+  });
+  const [editEvents, setEditEvents] = useState<Record<string, EventRegistration>>({});
+  const [isSavingEdit, setIsSavingEdit] = useState(false);
+  const [editError, setEditError] = useState<string | null>(null);
+
+  // Add Event Modal states
+  const [addEventRecord, setAddEventRecord] = useState<RegistrationRecord | null>(null);
+  const [selectedAddEventId, setSelectedAddEventId] = useState<string>("");
+  const [addEventParticipants, setAddEventParticipants] = useState<Participant[]>([]);
+  const [isSavingAddEvent, setIsSavingAddEvent] = useState(false);
+  const [addEventError, setAddEventError] = useState<string | null>(null);
 
   // Search & Filter states
   const [searchQuery, setSearchQuery] = useState("");
@@ -256,6 +285,444 @@ export default function RegisterAdminPage() {
       setDeleteError("Error deleting registration: " + (err?.message || "Network error"));
     } finally {
       setIsDeleting(false);
+    }
+  };
+
+  // Helper: Calculate single event fee based on type and participant count
+  const computeEventFee = (type: "group" | "individual" | undefined, participantsCount: number) => {
+    if (type === "individual") {
+      return participantsCount * PAYMENT_DETAILS.individualFee;
+    }
+    return PAYMENT_DETAILS.groupFee;
+  };
+
+  // Helper: Calculate total fee across an events dictionary
+  const computeEventsTotalFee = (eventsMap: Record<string, EventRegistration>) => {
+    return Object.values(eventsMap).reduce((sum, ev) => {
+      const count = ev.participants?.length || 0;
+      const fee =
+        typeof ev.fee === "number" && !isNaN(ev.fee)
+          ? ev.fee
+          : computeEventFee(ev.type, count);
+      return sum + fee;
+    }, 0);
+  };
+
+  // Open Edit Modal for a registration entry
+  const handleOpenEditModal = (record: RegistrationRecord) => {
+    setEditError(null);
+    setEditCandidate(record);
+    setEditParishDetails({
+      parishName: record.parishDetails?.parishName || "",
+      representativeName: record.parishDetails?.representativeName || "",
+      contactNumber: record.parishDetails?.contactNumber || "",
+      email: record.parishDetails?.email || "",
+    });
+    // Deep clone events so local edits don't mutate card state prior to saving
+    const clonedEvents: Record<string, EventRegistration> = {};
+    Object.entries(record.events || {}).forEach(([key, ev]) => {
+      const evConfig = REGISTRATION_EVENTS.find(
+        (c) => c.id === key || c.id === ev.eventId || c.title === ev.title
+      );
+      const evType = ev.type || evConfig?.type || "group";
+      const participants = (ev.participants || []).map((p, idx) => ({
+        id: p.id || `${key}-p-${idx}`,
+        name: p.name || "",
+        gender: p.gender || "",
+        role: p.role || "Participant",
+        notes: p.notes || "",
+      }));
+      clonedEvents[key] = {
+        ...ev,
+        eventId: ev.eventId || key,
+        title: ev.title || evConfig?.title || key,
+        category: ev.category || evConfig?.category,
+        type: evType,
+        fee: computeEventFee(evType, participants.length),
+        participants,
+      };
+    });
+    setEditEvents(clonedEvents);
+  };
+
+  // Edit Modal: Update participant field
+  const handleEditParticipantChange = (
+    eventKey: string,
+    participantId: string,
+    field: keyof Participant,
+    value: string
+  ) => {
+    setEditEvents((prev) => {
+      const currentEv = prev[eventKey];
+      if (!currentEv) return prev;
+      const updatedParticipants = currentEv.participants.map((p) =>
+        p.id === participantId ? { ...p, [field]: value } : p
+      );
+      return {
+        ...prev,
+        [eventKey]: {
+          ...currentEv,
+          participants: updatedParticipants,
+        },
+      };
+    });
+  };
+
+  // Edit Modal: Add participant to an existing event
+  const handleEditAddParticipant = (eventKey: string) => {
+    setEditEvents((prev) => {
+      const currentEv = prev[eventKey];
+      if (!currentEv) return prev;
+      const evConfig = REGISTRATION_EVENTS.find(
+        (c) => c.id === eventKey || c.id === currentEv.eventId || c.title === currentEv.title
+      );
+      const defaultGender =
+        evConfig?.genderRestriction === "boys-only"
+          ? "Male"
+          : evConfig?.genderRestriction === "girls-only"
+          ? "Female"
+          : "";
+      const defaultRole =
+        evConfig &&
+        currentEv.participants.length >= evConfig.minParticipants &&
+        evConfig.defaultRoles.includes("Substitute")
+          ? "Substitute"
+          : evConfig?.defaultRoles[0] || "Participant";
+
+      const newParticipant: Participant = {
+        id: `${eventKey}-p-${Date.now()}-${Math.random().toString(36).substring(2, 6)}`,
+        name: "",
+        gender: defaultGender,
+        role: defaultRole,
+        notes: "",
+      };
+      const updatedParticipants = [...currentEv.participants, newParticipant];
+      return {
+        ...prev,
+        [eventKey]: {
+          ...currentEv,
+          fee: computeEventFee(currentEv.type, updatedParticipants.length),
+          participants: updatedParticipants,
+        },
+      };
+    });
+  };
+
+  // Edit Modal: Remove participant from an existing event
+  const handleEditRemoveParticipant = (eventKey: string, participantId: string) => {
+    setEditEvents((prev) => {
+      const currentEv = prev[eventKey];
+      if (!currentEv) return prev;
+      if (currentEv.participants.length <= 1) {
+        setEditError(`"${currentEv.title}" must have at least 1 participant. Remove the event instead if not needed.`);
+        return prev;
+      }
+      const updatedParticipants = currentEv.participants.filter((p) => p.id !== participantId);
+      return {
+        ...prev,
+        [eventKey]: {
+          ...currentEv,
+          fee: computeEventFee(currentEv.type, updatedParticipants.length),
+          participants: updatedParticipants,
+        },
+      };
+    });
+  };
+
+  // Edit Modal: Remove an entire event from registration
+  const handleEditRemoveEvent = (eventKey: string) => {
+    setEditEvents((prev) => {
+      const keys = Object.keys(prev);
+      if (keys.length <= 1) {
+        setEditError("A registration entry must have at least one registered event.");
+        return prev;
+      }
+      const next = { ...prev };
+      delete next[eventKey];
+      return next;
+    });
+  };
+
+  // Save Edited Registration
+  const handleSaveEdit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!editCandidate) return;
+    setEditError(null);
+
+    if (
+      !editParishDetails.parishName.trim() ||
+      !editParishDetails.representativeName.trim() ||
+      !editParishDetails.contactNumber.trim() ||
+      !editParishDetails.email.trim()
+    ) {
+      setEditError("Please fill in all Parish and Representative details.");
+      return;
+    }
+
+    const eventEntries = Object.entries(editEvents);
+    if (eventEntries.length === 0) {
+      setEditError("At least one event is required in the registration.");
+      return;
+    }
+
+    for (const [, ev] of eventEntries) {
+      if (!ev.participants || ev.participants.length === 0) {
+        setEditError(`Event "${ev.title}" must have at least one participant.`);
+        return;
+      }
+      for (const p of ev.participants) {
+        if (!p.name?.trim()) {
+          setEditError(`Please enter a name for all participants in "${ev.title}".`);
+          return;
+        }
+        if (p.gender !== "Male" && p.gender !== "Female") {
+          setEditError(`Please select gender (Male or Female) for all participants in "${ev.title}".`);
+          return;
+        }
+      }
+    }
+
+    setIsSavingEdit(true);
+    try {
+      const calculatedTotalFee = computeEventsTotalFee(editEvents);
+      const token = typeof window !== "undefined" ? sessionStorage.getItem("selah_admin_token") : null;
+      const headers: Record<string, string> = { "Content-Type": "application/json" };
+      if (token) {
+        headers["Authorization"] = `Bearer ${token}`;
+      }
+
+      const res = await fetch("/api/admin/registrations", {
+        method: "PUT",
+        headers,
+        credentials: "include",
+        body: JSON.stringify({
+          registrationId: editCandidate.registrationId,
+          id: editCandidate.id,
+          timestamp: editCandidate.timestamp,
+          parishDetails: editParishDetails,
+          events: editEvents,
+          totalFee: calculatedTotalFee,
+        }),
+      });
+
+      const data = await res.json();
+      if (res.ok && data.success) {
+        setRegistrations((prev) =>
+          prev.map((item) =>
+            item.registrationId === editCandidate.registrationId
+              ? {
+                  ...item,
+                  parishDetails: {
+                    parishName: editParishDetails.parishName.trim(),
+                    representativeName: editParishDetails.representativeName.trim(),
+                    contactNumber: editParishDetails.contactNumber.trim(),
+                    email: editParishDetails.email.trim(),
+                  },
+                  events: editEvents,
+                  eventsCount: Object.keys(editEvents).length,
+                  totalFee: calculatedTotalFee,
+                }
+              : item
+          )
+        );
+        setEditCandidate(null);
+      } else {
+        setEditError(data.error || "Failed to update registration.");
+      }
+    } catch (err: any) {
+      setEditError("Error updating registration: " + (err?.message || "Network error"));
+    } finally {
+      setIsSavingEdit(false);
+    }
+  };
+
+  // Build default participants list for a chosen event config
+  const buildDefaultParticipantsForEvent = (evConfig: RegistrationEventConfig): Participant[] => {
+    return evConfig.defaultRows.map((row, idx) => ({
+      id: `${evConfig.id}-p-${Date.now()}-${idx}`,
+      name: "",
+      gender: row.gender,
+      role: row.role,
+      notes: row.notes || "",
+    }));
+  };
+
+  // Open Add Event Modal for a registration entry
+  const handleOpenAddEventModal = (record: RegistrationRecord) => {
+    setAddEventError(null);
+    setAddEventRecord(record);
+
+    const existingKeys = new Set(Object.keys(record.events || {}));
+    const existingTitles = new Set(Object.values(record.events || {}).map((e) => e.title));
+
+    const firstUnregistered =
+      REGISTRATION_EVENTS.find((ev) => !existingKeys.has(ev.id) && !existingTitles.has(ev.title)) ||
+      REGISTRATION_EVENTS[0];
+
+    setSelectedAddEventId(firstUnregistered.id);
+    setAddEventParticipants(buildDefaultParticipantsForEvent(firstUnregistered));
+  };
+
+  // When admin changes selected event dropdown in Add Event Modal
+  const handleSelectAddEventChange = (newEventId: string) => {
+    setSelectedAddEventId(newEventId);
+    setAddEventError(null);
+    const evConfig = REGISTRATION_EVENTS.find((e) => e.id === newEventId);
+    if (evConfig) {
+      setAddEventParticipants(buildDefaultParticipantsForEvent(evConfig));
+    }
+  };
+
+  // Add Participant row inside Add Event Modal
+  const handleAddEventAddParticipant = () => {
+    const evConfig = REGISTRATION_EVENTS.find((e) => e.id === selectedAddEventId);
+    if (!evConfig) return;
+
+    const defaultGender =
+      evConfig.genderRestriction === "boys-only"
+        ? "Male"
+        : evConfig.genderRestriction === "girls-only"
+        ? "Female"
+        : "";
+    const defaultRole =
+      addEventParticipants.length >= evConfig.minParticipants &&
+      evConfig.defaultRoles.includes("Substitute")
+        ? "Substitute"
+        : evConfig.defaultRoles[0] || "Participant";
+
+    setAddEventParticipants((prev) => [
+      ...prev,
+      {
+        id: `${evConfig.id}-p-${Date.now()}-${Math.random().toString(36).substring(2, 6)}`,
+        name: "",
+        gender: defaultGender,
+        role: defaultRole,
+        notes: "",
+      },
+    ]);
+  };
+
+  // Remove Participant row inside Add Event Modal
+  const handleAddEventRemoveParticipant = (participantId: string) => {
+    if (addEventParticipants.length <= 1) {
+      setAddEventError("At least 1 participant is required for the event.");
+      return;
+    }
+    setAddEventParticipants((prev) => prev.filter((p) => p.id !== participantId));
+  };
+
+  // Update Participant field inside Add Event Modal
+  const handleAddEventParticipantChange = (
+    participantId: string,
+    field: keyof Participant,
+    value: string
+  ) => {
+    setAddEventParticipants((prev) =>
+      prev.map((p) => (p.id === participantId ? { ...p, [field]: value } : p))
+    );
+  };
+
+  // Save Newly Added Event to the Registration Record
+  const handleSaveAddEvent = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!addEventRecord) return;
+    setAddEventError(null);
+
+    const evConfig = REGISTRATION_EVENTS.find((ev) => ev.id === selectedAddEventId);
+    if (!evConfig) {
+      setAddEventError("Please select a valid event to add.");
+      return;
+    }
+
+    if (addEventParticipants.length === 0) {
+      setAddEventError("Please add at least one participant.");
+      return;
+    }
+
+    for (const p of addEventParticipants) {
+      if (!p.name?.trim()) {
+        setAddEventError(`Please enter a name for all participants in "${evConfig.title}".`);
+        return;
+      }
+      if (p.gender !== "Male" && p.gender !== "Female") {
+        setAddEventError(`Please select gender (Male or Female) for all participants in "${evConfig.title}".`);
+        return;
+      }
+    }
+
+    setIsSavingAddEvent(true);
+    try {
+      const existingEvents = { ...(addEventRecord.events || {}) };
+      const existingEntryForEvent = existingEvents[evConfig.id];
+
+      // If the event is already registered on this record, append the new participants; otherwise add the new event entry
+      const mergedParticipants = existingEntryForEvent
+        ? [...(existingEntryForEvent.participants || []), ...addEventParticipants]
+        : addEventParticipants;
+
+      const eventFee = computeEventFee(evConfig.type, mergedParticipants.length);
+
+      const updatedEvents: Record<string, EventRegistration> = {
+        ...existingEvents,
+        [evConfig.id]: {
+          eventId: evConfig.id,
+          title: evConfig.title,
+          category: evConfig.category,
+          type: evConfig.type,
+          fee: eventFee,
+          participants: mergedParticipants,
+        },
+      };
+
+      const updatedTotalFee = computeEventsTotalFee(updatedEvents);
+
+      const token = typeof window !== "undefined" ? sessionStorage.getItem("selah_admin_token") : null;
+      const headers: Record<string, string> = { "Content-Type": "application/json" };
+      if (token) {
+        headers["Authorization"] = `Bearer ${token}`;
+      }
+
+      const res = await fetch("/api/admin/registrations", {
+        method: "PUT",
+        headers,
+        credentials: "include",
+        body: JSON.stringify({
+          registrationId: addEventRecord.registrationId,
+          id: addEventRecord.id,
+          timestamp: addEventRecord.timestamp,
+          parishDetails: addEventRecord.parishDetails,
+          events: updatedEvents,
+          totalFee: updatedTotalFee,
+        }),
+      });
+
+      const data = await res.json();
+      if (res.ok && data.success) {
+        setRegistrations((prev) =>
+          prev.map((item) =>
+            item.registrationId === addEventRecord.registrationId
+              ? {
+                  ...item,
+                  events: updatedEvents,
+                  eventsCount: Object.keys(updatedEvents).length,
+                  totalFee: updatedTotalFee,
+                }
+              : item
+          )
+        );
+        // Automatically expand the card so the newly added event is visible
+        setExpandedCards((prev) => ({
+          ...prev,
+          [addEventRecord.registrationId]: true,
+        }));
+        setAddEventRecord(null);
+      } else {
+        setAddEventError(data.error || "Failed to add event to registration.");
+      }
+    } catch (err: any) {
+      setAddEventError("Error adding event: " + (err?.message || "Network error"));
+    } finally {
+      setIsSavingAddEvent(false);
     }
   };
 
@@ -891,11 +1358,37 @@ export default function RegisterAdminPage() {
                       </div>
                     </div>
 
-                    {/* Right: Expand/Collapse & Delete */}
-                    <div className="flex items-center gap-2 pt-2 lg:pt-0 border-t lg:border-t-0 border-slate-800/80">
+                    {/* Right: Actions (Add Event, Edit, Expand/Collapse, Delete) */}
+                    <div className="flex flex-wrap items-center gap-2 pt-2 lg:pt-0 border-t lg:border-t-0 border-slate-800/80">
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleOpenAddEventModal(record);
+                        }}
+                        title="Add an event to this registration"
+                        className="px-3 py-2 rounded-xl bg-emerald-500/10 hover:bg-emerald-500/20 text-emerald-300 border border-emerald-500/25 text-xs font-semibold flex items-center gap-1.5 transition-colors cursor-pointer"
+                      >
+                        <Plus className="w-3.5 h-3.5 text-emerald-400" />
+                        <span>Add Event</span>
+                      </button>
+
+                      <button
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          handleOpenEditModal(record);
+                        }}
+                        title="Edit parish details, events, and participants"
+                        className="px-3 py-2 rounded-xl bg-amber-500/10 hover:bg-amber-500/20 text-amber-300 border border-amber-500/25 text-xs font-semibold flex items-center gap-1.5 transition-colors cursor-pointer"
+                      >
+                        <Pencil className="w-3.5 h-3.5 text-amber-400" />
+                        <span>Edit</span>
+                      </button>
+
                       <button
                         onClick={() => toggleExpand(regId)}
-                        className="flex-1 lg:flex-initial px-4 py-2 rounded-xl bg-slate-800/80 hover:bg-slate-800 text-xs font-semibold text-white flex items-center justify-center gap-1.5 transition-colors"
+                        className="flex-1 lg:flex-initial px-4 py-2 rounded-xl bg-slate-800/80 hover:bg-slate-800 text-xs font-semibold text-white flex items-center justify-center gap-1.5 transition-colors cursor-pointer"
                       >
                         <span>{isExpanded ? "Hide Details" : "View Details"}</span>
                         {isExpanded ? (
@@ -933,9 +1426,19 @@ export default function RegisterAdminPage() {
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                           {/* Parish Details Card */}
                           <div className="p-4 rounded-xl bg-slate-900/80 border border-slate-800 space-y-2">
-                            <h4 className="text-xs font-bold uppercase tracking-wider text-amber-400 flex items-center gap-1.5">
-                              <Building className="w-3.5 h-3.5" /> Parish & Contact Info
-                            </h4>
+                            <div className="flex items-center justify-between">
+                              <h4 className="text-xs font-bold uppercase tracking-wider text-amber-400 flex items-center gap-1.5">
+                                <Building className="w-3.5 h-3.5" /> Parish & Contact Info
+                              </h4>
+                              <button
+                                type="button"
+                                onClick={() => handleOpenEditModal(record)}
+                                className="text-[11px] text-amber-400 hover:text-amber-300 flex items-center gap-1 font-medium cursor-pointer"
+                              >
+                                <Pencil className="w-3 h-3" />
+                                <span>Edit Details</span>
+                              </button>
+                            </div>
                             <div className="text-xs space-y-1.5 text-slate-300">
                               <div>
                                 <span className="text-slate-500">Parish: </span>
@@ -996,15 +1499,30 @@ export default function RegisterAdminPage() {
 
                         {/* Section 2: Events & Participants List */}
                         <div className="space-y-4">
-                          <h4 className="text-xs font-bold uppercase tracking-wider text-slate-300 flex items-center justify-between">
-                            <span className="flex items-center gap-1.5">
+                          <div className="flex flex-wrap items-center justify-between gap-2">
+                            <h4 className="text-xs font-bold uppercase tracking-wider text-slate-300 flex items-center gap-1.5">
                               <Trophy className="w-3.5 h-3.5 text-amber-400" /> Registered Events (
                               {eventList.length})
-                            </span>
-                            <span className="text-[11px] font-normal text-slate-400">
-                              Participants table breakdown
-                            </span>
-                          </h4>
+                            </h4>
+                            <div className="flex items-center gap-2">
+                              <button
+                                type="button"
+                                onClick={() => handleOpenAddEventModal(record)}
+                                className="px-2.5 py-1 rounded-lg bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-300 border border-emerald-500/30 text-[11px] font-semibold flex items-center gap-1 transition-colors cursor-pointer"
+                              >
+                                <Plus className="w-3 h-3" />
+                                <span>Add Event</span>
+                              </button>
+                              <button
+                                type="button"
+                                onClick={() => handleOpenEditModal(record)}
+                                className="px-2.5 py-1 rounded-lg bg-amber-500/15 hover:bg-amber-500/25 text-amber-300 border border-amber-500/30 text-[11px] font-semibold flex items-center gap-1 transition-colors cursor-pointer"
+                              >
+                                <Pencil className="w-3 h-3" />
+                                <span>Edit Events / Squads</span>
+                              </button>
+                            </div>
+                          </div>
 
                           {eventList.map((ev) => (
                             <div
@@ -1018,9 +1536,20 @@ export default function RegisterAdminPage() {
                                     {ev.type || "event"}
                                   </span>
                                 </div>
-                                <span className="font-mono text-xs font-semibold text-emerald-400">
-                                  ₹{(ev.fee || 0).toLocaleString("en-IN")}
-                                </span>
+                                <div className="flex items-center gap-3">
+                                  <span className="font-mono text-xs font-semibold text-emerald-400">
+                                    ₹{(ev.fee || 0).toLocaleString("en-IN")}
+                                  </span>
+                                  <button
+                                    type="button"
+                                    onClick={() => handleOpenEditModal(record)}
+                                    title={`Edit ${ev.title} participants`}
+                                    className="text-[11px] text-slate-400 hover:text-amber-400 flex items-center gap-1 transition-colors cursor-pointer"
+                                  >
+                                    <Pencil className="w-3 h-3" />
+                                    <span className="hidden sm:inline">Edit</span>
+                                  </button>
+                                </div>
                               </div>
 
                               {/* Participants Table */}
@@ -1082,6 +1611,598 @@ export default function RegisterAdminPage() {
           </div>
         )}
       </main>
+
+      {/* Add Event Modal */}
+      <AnimatePresence>
+        {addEventRecord && (
+          <div
+            onClick={() => {
+              if (!isSavingAddEvent) {
+                setAddEventRecord(null);
+                setAddEventError(null);
+              }
+            }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm overflow-y-auto"
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              onClick={(e) => e.stopPropagation()}
+              className="w-full max-w-3xl max-h-[90vh] flex flex-col bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl overflow-hidden my-auto"
+            >
+              {/* Modal Header */}
+              <div className="px-6 py-4 bg-slate-950/80 border-b border-slate-800 flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="p-2.5 rounded-xl bg-emerald-500/15 border border-emerald-500/30 text-emerald-400">
+                    <Plus className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-white text-base">Add Event to Registration</h3>
+                    <p className="text-xs text-slate-400">
+                      <span className="text-amber-400 font-semibold">
+                        {addEventRecord.parishDetails?.parishName}
+                      </span>{" "}
+                      • <span className="font-mono">{addEventRecord.registrationId}</span>
+                    </p>
+                  </div>
+                </div>
+                <button
+                  type="button"
+                  disabled={isSavingAddEvent}
+                  onClick={() => {
+                    setAddEventRecord(null);
+                    setAddEventError(null);
+                  }}
+                  className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors cursor-pointer"
+                >
+                  <X className="w-5 h-5" />
+                </button>
+              </div>
+
+              {/* Modal Form Body */}
+              <form onSubmit={handleSaveAddEvent} className="flex-1 overflow-y-auto p-6 space-y-5">
+                {addEventError && (
+                  <div className="p-3.5 rounded-xl bg-rose-500/15 border border-rose-500/30 text-rose-300 text-xs flex items-center gap-2.5">
+                    <AlertCircle className="w-4 h-4 text-rose-400 shrink-0" />
+                    <span>{addEventError}</span>
+                  </div>
+                )}
+
+                {(() => {
+                  const selectedConfig = REGISTRATION_EVENTS.find((ev) => ev.id === selectedAddEventId);
+                  const existingKeys = new Set(Object.keys(addEventRecord.events || {}));
+                  const existingTitles = new Set(
+                    Object.values(addEventRecord.events || {}).map((e) => e.title)
+                  );
+                  const isAlreadyRegistered =
+                    selectedConfig &&
+                    (existingKeys.has(selectedConfig.id) || existingTitles.has(selectedConfig.title));
+                  const previewEventFee = selectedConfig
+                    ? computeEventFee(selectedConfig.type, addEventParticipants.length)
+                    : 0;
+
+                  return (
+                    <>
+                      {/* Event Selector */}
+                      <div className="space-y-2">
+                        <label className="block text-xs font-bold uppercase tracking-wider text-slate-300">
+                          Select Event to Add
+                        </label>
+                        <select
+                          value={selectedAddEventId}
+                          onChange={(e) => handleSelectAddEventChange(e.target.value)}
+                          className="w-full bg-slate-950 border border-slate-800 rounded-xl px-3.5 py-2.5 text-sm text-white focus:outline-none focus:border-emerald-500 transition-colors"
+                        >
+                          <optgroup label="Sports Events">
+                            {REGISTRATION_EVENTS.filter((e) => e.category === "sports").map((ev) => {
+                              const already =
+                                existingKeys.has(ev.id) || existingTitles.has(ev.title);
+                              return (
+                                <option key={ev.id} value={ev.id}>
+                                  {ev.title} ({ev.type === "group" ? "Group - ₹500" : "Individual - ₹200/person"})
+                                  {already ? " — [Already Registered: Will Append Participants]" : ""}
+                                </option>
+                              );
+                            })}
+                          </optgroup>
+                          <optgroup label="Cultural Events">
+                            {REGISTRATION_EVENTS.filter((e) => e.category === "cultural").map((ev) => {
+                              const already =
+                                existingKeys.has(ev.id) || existingTitles.has(ev.title);
+                              return (
+                                <option key={ev.id} value={ev.id}>
+                                  {ev.title} ({ev.type === "group" ? "Group - ₹500" : "Individual - ₹200/person"})
+                                  {already ? " — [Already Registered: Will Append Participants]" : ""}
+                                </option>
+                              );
+                            })}
+                          </optgroup>
+                        </select>
+
+                        {selectedConfig && (
+                          <div className="p-3.5 rounded-xl bg-slate-950/70 border border-slate-800/90 flex flex-wrap items-center justify-between gap-3 text-xs">
+                            <div className="space-y-0.5">
+                              <div className="text-slate-200 font-semibold">
+                                {selectedConfig.specification}
+                              </div>
+                              <div className="text-slate-400 text-[11px]">
+                                {selectedConfig.descriptionHint} (Min: {selectedConfig.minParticipants}, Max:{" "}
+                                {selectedConfig.maxParticipants})
+                              </div>
+                              {isAlreadyRegistered && (
+                                <div className="text-amber-400 text-[11px] font-medium pt-0.5">
+                                  Note: This parish already has an entry for {selectedConfig.title}. Saving will append these participants to the event.
+                                </div>
+                              )}
+                            </div>
+                            <div className="text-right">
+                              <div className="text-[11px] text-slate-400">Event Fee</div>
+                              <div className="text-base font-black text-emerald-400 font-mono">
+                                ₹{previewEventFee.toLocaleString("en-IN")}
+                              </div>
+                            </div>
+                          </div>
+                        )}
+                      </div>
+
+                      {/* Participants Editor */}
+                      <div className="space-y-3">
+                        <div className="flex items-center justify-between">
+                          <label className="text-xs font-bold uppercase tracking-wider text-slate-300">
+                            Participants ({addEventParticipants.length})
+                          </label>
+                          <button
+                            type="button"
+                            onClick={handleAddEventAddParticipant}
+                            className="px-3 py-1.5 rounded-xl bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-300 border border-emerald-500/30 text-xs font-semibold flex items-center gap-1.5 transition-colors cursor-pointer"
+                          >
+                            <Plus className="w-3.5 h-3.5" />
+                            <span>Add Participant</span>
+                          </button>
+                        </div>
+
+                        <div className="space-y-2.5">
+                          {addEventParticipants.map((p, idx) => (
+                            <div
+                              key={p.id || idx}
+                              className="p-3 rounded-xl bg-slate-950/60 border border-slate-800 grid grid-cols-1 sm:grid-cols-12 gap-2.5 items-center"
+                            >
+                              <div className="sm:col-span-4">
+                                <label className="block text-[10px] uppercase text-slate-500 mb-1">
+                                  #{idx + 1} Full Name *
+                                </label>
+                                <input
+                                  type="text"
+                                  required
+                                  placeholder="Participant Name"
+                                  value={p.name}
+                                  onChange={(e) =>
+                                    handleAddEventParticipantChange(p.id, "name", e.target.value)
+                                  }
+                                  className="w-full px-3 py-2 rounded-lg bg-slate-900 border border-slate-800 text-xs text-white focus:outline-none focus:border-emerald-500"
+                                />
+                              </div>
+
+                              <div className="sm:col-span-2">
+                                <label className="block text-[10px] uppercase text-slate-500 mb-1">
+                                  Gender *
+                                </label>
+                                <select
+                                  required
+                                  value={p.gender || ""}
+                                  onChange={(e) =>
+                                    handleAddEventParticipantChange(p.id, "gender", e.target.value)
+                                  }
+                                  className="w-full px-2.5 py-2 rounded-lg bg-slate-900 border border-slate-800 text-xs text-white focus:outline-none focus:border-emerald-500"
+                                >
+                                  <option value="">Select</option>
+                                  <option value="Male">Male</option>
+                                  <option value="Female">Female</option>
+                                </select>
+                              </div>
+
+                              <div className="sm:col-span-3">
+                                <label className="block text-[10px] uppercase text-slate-500 mb-1">
+                                  Role
+                                </label>
+                                <input
+                                  type="text"
+                                  placeholder="Role (e.g. Player, Captain)"
+                                  value={p.role || ""}
+                                  onChange={(e) =>
+                                    handleAddEventParticipantChange(p.id, "role", e.target.value)
+                                  }
+                                  className="w-full px-3 py-2 rounded-lg bg-slate-900 border border-slate-800 text-xs text-white focus:outline-none focus:border-emerald-500"
+                                />
+                              </div>
+
+                              <div className="sm:col-span-2">
+                                <label className="block text-[10px] uppercase text-slate-500 mb-1">
+                                  Notes
+                                </label>
+                                <input
+                                  type="text"
+                                  placeholder="Optional"
+                                  value={p.notes || ""}
+                                  onChange={(e) =>
+                                    handleAddEventParticipantChange(p.id, "notes", e.target.value)
+                                  }
+                                  className="w-full px-2.5 py-2 rounded-lg bg-slate-900 border border-slate-800 text-xs text-white focus:outline-none focus:border-emerald-500"
+                                />
+                              </div>
+
+                              <div className="sm:col-span-1 flex justify-end sm:pt-4">
+                                <button
+                                  type="button"
+                                  onClick={() => handleAddEventRemoveParticipant(p.id)}
+                                  title="Remove participant"
+                                  className="p-2 rounded-lg bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/20 transition-colors cursor-pointer"
+                                >
+                                  <Trash2 className="w-3.5 h-3.5" />
+                                </button>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </>
+                  );
+                })()}
+
+                {/* Modal Footer */}
+                <div className="flex items-center justify-end gap-2.5 pt-4 border-t border-slate-800">
+                  <button
+                    type="button"
+                    disabled={isSavingAddEvent}
+                    onClick={() => {
+                      setAddEventRecord(null);
+                      setAddEventError(null);
+                    }}
+                    className="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-semibold text-slate-200 transition-colors cursor-pointer disabled:opacity-50"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    disabled={isSavingAddEvent}
+                    className="px-5 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-xs font-semibold text-white transition-colors flex items-center gap-1.5 shadow-lg shadow-emerald-600/20 cursor-pointer disabled:opacity-50"
+                  >
+                    {isSavingAddEvent ? (
+                      <>
+                        <RefreshCw className="w-3.5 h-3.5 animate-spin" />
+                        <span>Saving Event...</span>
+                      </>
+                    ) : (
+                      <>
+                        <Plus className="w-3.5 h-3.5" />
+                        <span>Add Event to Entry</span>
+                      </>
+                    )}
+                  </button>
+                </div>
+              </form>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+
+      {/* Edit Registration Modal */}
+      <AnimatePresence>
+        {editCandidate && (
+          <div
+            onClick={() => {
+              if (!isSavingEdit) {
+                setEditCandidate(null);
+                setEditError(null);
+              }
+            }}
+            className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm overflow-y-auto"
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95 }}
+              animate={{ opacity: 1, scale: 1 }}
+              exit={{ opacity: 0, scale: 0.95 }}
+              onClick={(e) => e.stopPropagation()}
+              className="w-full max-w-4xl max-h-[92vh] flex flex-col bg-slate-900 border border-slate-800 rounded-2xl shadow-2xl overflow-hidden my-auto"
+            >
+              {/* Modal Header */}
+              <div className="px-6 py-4 bg-slate-950/80 border-b border-slate-800 flex items-center justify-between">
+                <div className="flex items-center gap-3">
+                  <div className="p-2.5 rounded-xl bg-amber-500/15 border border-amber-500/30 text-amber-400">
+                    <Pencil className="w-5 h-5" />
+                  </div>
+                  <div>
+                    <h3 className="font-bold text-white text-base">Edit Registration Entry</h3>
+                    <p className="text-xs text-slate-400 font-mono">{editCandidate.registrationId}</p>
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-3">
+                  <div className="text-right hidden sm:block">
+                    <div className="text-[10px] uppercase tracking-wider text-slate-400">Recalculated Total Fee</div>
+                    <div className="text-base font-black text-emerald-400 font-mono">
+                      ₹{computeEventsTotalFee(editEvents).toLocaleString("en-IN")}
+                    </div>
+                  </div>
+                  <button
+                    type="button"
+                    disabled={isSavingEdit}
+                    onClick={() => {
+                      setEditCandidate(null);
+                      setEditError(null);
+                    }}
+                    className="p-1.5 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors cursor-pointer"
+                  >
+                    <X className="w-5 h-5" />
+                  </button>
+                </div>
+              </div>
+
+              {/* Modal Body */}
+              <form onSubmit={handleSaveEdit} className="flex-1 overflow-y-auto p-6 space-y-6">
+                {editError && (
+                  <div className="p-3.5 rounded-xl bg-rose-500/15 border border-rose-500/30 text-rose-300 text-xs flex items-center gap-2.5">
+                    <AlertCircle className="w-4 h-4 text-rose-400 shrink-0" />
+                    <span>{editError}</span>
+                  </div>
+                )}
+
+                {/* Section 1: Parish & Representative Details */}
+                <div className="p-4 rounded-xl bg-slate-950/60 border border-slate-800 space-y-4">
+                  <h4 className="text-xs font-bold uppercase tracking-wider text-amber-400 flex items-center gap-1.5">
+                    <Building className="w-3.5 h-3.5" /> Parish & Representative Details
+                  </h4>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                      <label className="block text-[11px] font-semibold text-slate-300 mb-1">
+                        Parish Name *
+                      </label>
+                      <input
+                        type="text"
+                        required
+                        value={editParishDetails.parishName}
+                        onChange={(e) =>
+                          setEditParishDetails({ ...editParishDetails, parishName: e.target.value })
+                        }
+                        className="w-full px-3.5 py-2 rounded-xl bg-slate-900 border border-slate-800 text-xs text-white focus:outline-none focus:border-amber-500"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-[11px] font-semibold text-slate-300 mb-1">
+                        Representative Name *
+                      </label>
+                      <input
+                        type="text"
+                        required
+                        value={editParishDetails.representativeName}
+                        onChange={(e) =>
+                          setEditParishDetails({
+                            ...editParishDetails,
+                            representativeName: e.target.value,
+                          })
+                        }
+                        className="w-full px-3.5 py-2 rounded-xl bg-slate-900 border border-slate-800 text-xs text-white focus:outline-none focus:border-amber-500"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-[11px] font-semibold text-slate-300 mb-1">
+                        Contact Number *
+                      </label>
+                      <input
+                        type="text"
+                        required
+                        value={editParishDetails.contactNumber}
+                        onChange={(e) =>
+                          setEditParishDetails({
+                            ...editParishDetails,
+                            contactNumber: e.target.value,
+                          })
+                        }
+                        className="w-full px-3.5 py-2 rounded-xl bg-slate-900 border border-slate-800 text-xs text-white focus:outline-none focus:border-amber-500"
+                      />
+                    </div>
+
+                    <div>
+                      <label className="block text-[11px] font-semibold text-slate-300 mb-1">
+                        Email Address *
+                      </label>
+                      <input
+                        type="email"
+                        required
+                        value={editParishDetails.email}
+                        onChange={(e) =>
+                          setEditParishDetails({ ...editParishDetails, email: e.target.value })
+                        }
+                        className="w-full px-3.5 py-2 rounded-xl bg-slate-900 border border-slate-800 text-xs text-white focus:outline-none focus:border-amber-500"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                {/* Section 2: Registered Events & Participants */}
+                <div className="space-y-4">
+                  <div className="flex flex-wrap items-center justify-between gap-2">
+                    <h4 className="text-xs font-bold uppercase tracking-wider text-slate-300 flex items-center gap-1.5">
+                      <Trophy className="w-3.5 h-3.5 text-amber-400" /> Registered Events (
+                      {Object.keys(editEvents).length})
+                    </h4>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const target = editCandidate;
+                        setEditCandidate(null);
+                        handleOpenAddEventModal(target);
+                      }}
+                      className="px-3 py-1.5 rounded-xl bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-300 border border-emerald-500/30 text-xs font-semibold flex items-center gap-1.5 transition-colors cursor-pointer"
+                    >
+                      <Plus className="w-3.5 h-3.5" />
+                      <span>Add Another Event</span>
+                    </button>
+                  </div>
+
+                  {Object.entries(editEvents).map(([eventKey, ev]) => (
+                    <div
+                      key={eventKey}
+                      className="rounded-xl bg-slate-950/70 border border-slate-800 overflow-hidden"
+                    >
+                      <div className="px-4 py-3 bg-slate-950 border-b border-slate-800 flex flex-wrap items-center justify-between gap-2">
+                        <div className="flex items-center gap-2">
+                          <span className="font-bold text-sm text-white">{ev.title}</span>
+                          <span className="text-[10px] uppercase font-semibold px-2 py-0.5 rounded bg-slate-800 text-slate-300">
+                            {ev.type || "group"}
+                          </span>
+                          <span className="font-mono text-xs font-semibold text-emerald-400">
+                            ₹{(ev.fee || 0).toLocaleString("en-IN")}
+                          </span>
+                        </div>
+
+                        <div className="flex items-center gap-2">
+                          <button
+                            type="button"
+                            onClick={() => handleEditAddParticipant(eventKey)}
+                            className="px-2.5 py-1 rounded-lg bg-emerald-500/15 hover:bg-emerald-500/25 text-emerald-300 border border-emerald-500/30 text-[11px] font-semibold flex items-center gap-1 transition-colors cursor-pointer"
+                          >
+                            <Plus className="w-3 h-3" />
+                            <span>Add Participant</span>
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => handleEditRemoveEvent(eventKey)}
+                            title="Remove this event from registration"
+                            className="px-2.5 py-1 rounded-lg bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/25 text-[11px] font-semibold flex items-center gap-1 transition-colors cursor-pointer"
+                          >
+                            <Trash2 className="w-3 h-3" />
+                            <span>Remove Event</span>
+                          </button>
+                        </div>
+                      </div>
+
+                      <div className="p-3 space-y-2">
+                        {ev.participants.map((p, idx) => (
+                          <div
+                            key={p.id || idx}
+                            className="p-2.5 rounded-lg bg-slate-900/90 border border-slate-800/80 grid grid-cols-1 sm:grid-cols-12 gap-2 items-center"
+                          >
+                            <div className="sm:col-span-4">
+                              <label className="block text-[10px] uppercase text-slate-500 mb-0.5">
+                                #{idx + 1} Name *
+                              </label>
+                              <input
+                                type="text"
+                                required
+                                value={p.name}
+                                onChange={(e) =>
+                                  handleEditParticipantChange(eventKey, p.id, "name", e.target.value)
+                                }
+                                placeholder="Participant Name"
+                                className="w-full px-2.5 py-1.5 rounded-lg bg-slate-950 border border-slate-800 text-xs text-white focus:outline-none focus:border-amber-500"
+                              />
+                            </div>
+
+                            <div className="sm:col-span-2">
+                              <label className="block text-[10px] uppercase text-slate-500 mb-0.5">
+                                Gender *
+                              </label>
+                              <select
+                                required
+                                value={p.gender || ""}
+                                onChange={(e) =>
+                                  handleEditParticipantChange(eventKey, p.id, "gender", e.target.value)
+                                }
+                                className="w-full px-2 py-1.5 rounded-lg bg-slate-950 border border-slate-800 text-xs text-white focus:outline-none focus:border-amber-500"
+                              >
+                                <option value="">Select</option>
+                                <option value="Male">Male</option>
+                                <option value="Female">Female</option>
+                              </select>
+                            </div>
+
+                            <div className="sm:col-span-3">
+                              <label className="block text-[10px] uppercase text-slate-500 mb-0.5">
+                                Role
+                              </label>
+                              <input
+                                type="text"
+                                value={p.role || ""}
+                                onChange={(e) =>
+                                  handleEditParticipantChange(eventKey, p.id, "role", e.target.value)
+                                }
+                                placeholder="Role"
+                                className="w-full px-2.5 py-1.5 rounded-lg bg-slate-950 border border-slate-800 text-xs text-white focus:outline-none focus:border-amber-500"
+                              />
+                            </div>
+
+                            <div className="sm:col-span-2">
+                              <label className="block text-[10px] uppercase text-slate-500 mb-0.5">
+                                Notes
+                              </label>
+                              <input
+                                type="text"
+                                value={p.notes || ""}
+                                onChange={(e) =>
+                                  handleEditParticipantChange(eventKey, p.id, "notes", e.target.value)
+                                }
+                                placeholder="Notes"
+                                className="w-full px-2.5 py-1.5 rounded-lg bg-slate-950 border border-slate-800 text-xs text-white focus:outline-none focus:border-amber-500"
+                              />
+                            </div>
+
+                            <div className="sm:col-span-1 flex justify-end sm:pt-3.5">
+                              <button
+                                type="button"
+                                onClick={() => handleEditRemoveParticipant(eventKey, p.id)}
+                                title="Remove participant"
+                                className="p-1.5 rounded-lg bg-rose-500/10 hover:bg-rose-500/20 text-rose-400 border border-rose-500/20 transition-colors cursor-pointer"
+                              >
+                                <Trash2 className="w-3.5 h-3.5" />
+                              </button>
+                            </div>
+                          </div>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                {/* Modal Footer */}
+                <div className="flex items-center justify-end gap-2.5 pt-4 border-t border-slate-800">
+                  <button
+                    type="button"
+                    disabled={isSavingEdit}
+                    onClick={() => {
+                      setEditCandidate(null);
+                      setEditError(null);
+                    }}
+                    className="px-4 py-2.5 rounded-xl bg-slate-800 hover:bg-slate-700 text-xs font-semibold text-slate-200 transition-colors cursor-pointer disabled:opacity-50"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    disabled={isSavingEdit}
+                    className="px-5 py-2.5 rounded-xl bg-amber-500 hover:bg-amber-400 text-xs font-bold text-slate-950 transition-colors flex items-center gap-1.5 shadow-lg shadow-amber-500/20 cursor-pointer disabled:opacity-50"
+                  >
+                    {isSavingEdit ? (
+                      <>
+                        <RefreshCw className="w-3.5 h-3.5 animate-spin" />
+                        <span>Saving Changes...</span>
+                      </>
+                    ) : (
+                      <>
+                        <Save className="w-3.5 h-3.5" />
+                        <span>Save Changes</span>
+                      </>
+                    )}
+                  </button>
+                </div>
+              </form>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
 
       {/* Delete Confirmation Modal */}
       <AnimatePresence>
